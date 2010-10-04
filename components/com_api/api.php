@@ -1,11 +1,14 @@
 <?php
 defined( '_JEXEC' ) or die( 'Restricted access' );
-include_once JPATH_COMPONENT.'/controllers/api.php';
 
-JModel::addIncludePath(JPATH_COMPONENT.'/models');
-JTable::addIncludePath(JPATH_COMPONENT.'/tables');
+jimport('joomla.application.component.controller');
 
-$command 	= JRequest::getCmd('task', 'display');
+include_once JPATH_COMPONENT.'/base/controller.php';
+include_once JPATH_COMPONENT.'/base/model.php';
+include_once JPATH_COMPONENT.'/base/plugin.php';
+include_once JPATH_COMPONENT.'/controllers/main.php';
+
+$command 	= JRequest::getCmd('task', 'dispatch');
 
 $controller = new ApiControllerMain();
 $controller->execute($command);
