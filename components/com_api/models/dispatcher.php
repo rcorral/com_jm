@@ -12,7 +12,7 @@ class ApiModelDispatcher extends ApiModel {
 		$this->set('plugin_path', JPATH_SITE.'/plugins/api');
   	}
 
-	public function dispatch($params) {
+	public function dispatch($params, $request) {
 		jimport('joomla.filesystem.file');
 		$plgfile	= $this->get('plugin_path').'/'.strtolower($params['component']).'.php';
 		
@@ -22,25 +22,26 @@ class ApiModelDispatcher extends ApiModel {
 		
 		include_once $plgfile;
 		
-		$class 	= 'ApiPlg'.ucwords($params['component']);
+		$class 	= 'plgAPI'.ucwords($params['component']);
 		
 		if (!class_exists($class)) :
 			JError::raiseError(400, JText::_('API_PLUGIN_CLASS_NOT_FOUND'));
 		endif;
 		
-		$handler	= new $class($params);
+		$handler	= new $class($params, $request);
 		$method		= $params['method'];
 		
-		if (!method_exists($method, $handler)) :
-			//JError::raiseError(400, JText::_('API_PLUGIN_METHOD_NOT_FOUND'));
+		if (!method_exists($handler, $method)) :
+			JError::raiseError(400, JText::_('API_PLUGIN_METHOD_NOT_FOUND'));
 		endif;
 		
-		if (!is_callable($method, array($handler))) :
-			//JError::raiseError(400, JText::_('API_PLUGIN_METHOD_NOT_CALLABLE'));
+		if (!is_callable(array($handler, $method))) :
+			JError::raiseError(400, JText::_('API_PLUGIN_METHOD_NOT_CALLABLE'));
 		endif;
 		
-		$handler->$method();
-		
+		$response 	= $handler->$method();
+		$output		= $handler->encode();
+		return $output;
 	}
 
 }
