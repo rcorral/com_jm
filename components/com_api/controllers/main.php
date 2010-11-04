@@ -17,16 +17,8 @@ class ApiControllerMain extends ApiController {
 	
 	public function dispatch() {
 		$this->resetDocumentType();
-		
-		$params					= array();
-		$params['component']	= JRequest::getCmd('app', '');
-		$params['method']		= JRequest::getCmd('method', '');
-		$params['format']		= JRequest::getCmd('output', 'json');
-		
-		$request				= JRequest::get();
-		
-		$model					= JModel::getInstance('Dispatcher', 'ApiModel');
-		$output					= $model->dispatch($params, $request);
+		$request				= JRequest::get('METHOD');
+		$output					= JModel::getInstance('Dispatcher', 'ApiModel')->dispatch($request);
 		echo $output;
 	}
 	

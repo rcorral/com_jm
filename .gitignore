@@ -6,7 +6,12 @@
 /administrator/*
 
 # Component Exceptions
+!/components/
+/components/*
 !/components/com_api/
+
+!/administrator/components/
+/administrator/components/*
 !/administrator/components/com_api/
 
 # Site Language files

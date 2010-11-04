@@ -19,9 +19,10 @@ class plgAPIContent extends ApiPlugin {
 	}
 	
 	public function articles() {
-		
-		echo 'this is the content list function';
-		
+		$db	= JFactory::getDBO();
+		$db->setQuery('SELECT * FROM #__content LIMIT 10');
+		$articles	= $db->loadObjectList();
+		$this->setResponse($articles);
 	}
 	
 }
