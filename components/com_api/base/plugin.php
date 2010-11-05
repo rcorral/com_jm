@@ -6,23 +6,24 @@ jimport('joomla.plugin.plugin');
 
 class ApiPlugin extends JObject {
 	
-	protected $params		= null;
-	protected $format		= null;
-	protected $response		= null;
-	protected $request		= null;
+	protected $user				= null;
+	protected $params			= null;
+	protected $format			= null;
+	protected $response			= null;
+	protected $request			= null;
+	protected $request_method	= null;
 	
 	static	$instances		= array();
 	static	$plg_prefix		= 'plgAPI';
 	static	$plg_path		= '/plugins/api/';
 	
-	public static function getInstance($request) {
-		$component	= strtolower($request['app']);
+	public static function getInstance($name) {
 		
-		if (isset(self::$instances[$component])) :
-			return self::$instances[$component];
+		if (isset(self::$instances[$name])) :
+			return self::$instances[$name];
 		endif;
 		
-		$plugin	= JPluginHelper::getPlugin('api', $component);
+		$plugin	= JPluginHelper::getPlugin('api', $name);
 
 		if (empty($plugin)) :
 			JError::raiseError(400, JText::_('API_PLUGIN_CLASS_NOT_FOUND'));
@@ -30,7 +31,7 @@ class ApiPlugin extends JObject {
 
 		jimport('joomla.filesystem.file');
 
-		$plgfile	= JPATH_BASE.self::$plg_path.$component.'.php';
+		$plgfile	= JPATH_BASE.self::$plg_path.$name.'.php';
 
 		if (!JFile::exists($plgfile)) :
 			JError::raiseError(400, JText::_('API_FILE_NOT_FOUND'));
@@ -38,33 +39,26 @@ class ApiPlugin extends JObject {
 
 		include_once $plgfile;
 		
-		$class 	= self::$plg_prefix.ucwords($component);
+		$class 	= self::$plg_prefix.ucwords($name);
 
 		if (!class_exists($class)) :
 			JError::raiseError(400, JText::_('API_PLUGIN_CLASS_NOT_FOUND'));
 		endif;
 
-		$handler	=  new $class($request, $plugin->params);
+		$handler	=  new $class($plugin->params);	
 		
+		self::$instances[$name] = $handler;
 		
-		self::$instances[$component] = $handler;
-		
-		return self::$instances[$component];
+		return self::$instances[$name];
 	}
 	
-	public function __construct($request=array(), $params=null)
+	public function __construct($params=null)
 	{
 		$this->set('params', new JParameter($params));
-		
-		$this->set('component', $request['app']);
-		$this->set('method', $request['method']);
-		$this->set('format', $request['output']);
-		
-		unset($request['app']);
-		unset($request['method']);
-		unset($request['output']);
-		
-		$this->set('request', $request);
+		$this->set('component', JRequest::getCmd('app'));
+		$this->set('method', JRequest::getCmd('method'));
+		$this->set('format', JRequest::getCmd('output'));
+		$this->set('request_method', JRequest::getMethod());
 	}
 	
 	public function __call($name, $arguments) {
@@ -76,14 +70,11 @@ class ApiPlugin extends JObject {
 	}
 	
 	public function encode() {
-		$format = $this->format;
-		
-		if ($format == 'xml') :
+		if ($this->format == 'xml') :
 			return $this->toXML();
 		else :
 			return $this->toJSON();
-		endif;
-		
+		endif;	
 	}
 	
 	protected function toJSON() {

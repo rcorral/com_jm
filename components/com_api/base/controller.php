@@ -46,6 +46,9 @@ class ApiController extends JController {
 		$document	= &JFactory::getDocument();
 		$raw		= &JDocument::getInstance('raw');
 		$document	= $raw;
+		
+		JResponse::clearHeaders();
+		
 	}
 	
 }
