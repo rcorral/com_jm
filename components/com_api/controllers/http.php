@@ -15,9 +15,9 @@ class ApiControllerHttp extends ApiController {
 		$auth	= JModel::getInstance('Authentication', 'ApiModel');
 		
 		$user	= $auth->authenticateRequest();
-//JError::raiseError(404, JText::_('testing'));
+		
 		if ($user === false) :
-			JError::raiseError(403, $auth->getError());
+			ApiError::raiseError(403, $auth->getError());
 		endif;
 		
 		jimport('joomla.plugin.helper');
@@ -27,18 +27,15 @@ class ApiControllerHttp extends ApiController {
 		$method		= $handler->get('method');
 		
 		if (!method_exists($handler, $method)) :
-			JError::raiseError(404, JText::_('API_PLUGIN_METHOD_NOT_FOUND'));
+			ApiError::raiseError(404, JText::_('API_PLUGIN_METHOD_NOT_FOUND'));
 		endif;
 		
 		if (!is_callable(array($handler, $method))) :
-			JError::raiseError(404, JText::_('API_PLUGIN_METHOD_NOT_CALLABLE'));
+			ApiError::raiseError(404, JText::_('API_PLUGIN_METHOD_NOT_CALLABLE'));
 		endif;
 		
 		$response 	= $handler->$method();
 		$output		= $handler->encode();
-		
-		//JResponse::setHeader('status', $this->_error->code.' '.str_replace( "\n", ' ', $this->_error->message ));
-		JResponse::setHeader('status', '404 Not Found');
 		
 		echo $output;
 	}
