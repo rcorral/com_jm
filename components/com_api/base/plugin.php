@@ -82,7 +82,38 @@ class ApiPlugin extends JObject {
 	}
 	
 	protected function toXML() {
-		return;
+		//JResponse::setHeader('Content-Type', 'text/xml');
+		//print_r($GLOBALS['_JRESPONSE']->headers);
+		$response = $this->get('response');
+		$xml = new SimpleXMLElement('<?xml version="1.0"?><response></response>');
+		
+		$this->_toXMLRecursive($response, &$xml);
+		
+		return $xml->asXML();
+	}
+	
+	private function _toXMLRecursive($element, &$xml) {
+		
+		if (!is_array($element) && !is_object($element)) :
+			return null;
+		endif;
+		
+		if (is_object($element)) :
+			$element = get_object_vars($element);
+		endif;
+		
+		foreach($element as $key => $value) :
+			$this->_handleMultiDimensions($key, $value, &$xml);
+		endforeach;
+	}
+	
+	private function _handleMultiDimensions($key, $value, &$xml) {
+		if (is_array($value) || is_object($value)) :
+			$node = $xml->addChild($key);
+			$this->_toXMLRecursive($value, &$node);
+		else :
+			$node = $xml->addChild($key, htmlspecialchars($value));
+		endif;
 	}
 	
 }
