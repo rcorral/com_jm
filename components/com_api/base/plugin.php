@@ -26,7 +26,7 @@ class ApiPlugin extends JObject {
 		$plugin	= JPluginHelper::getPlugin('api', $name);
 
 		if (empty($plugin)) :
-			JError::raiseError(400, JText::_('API_PLUGIN_CLASS_NOT_FOUND'));
+			ApiError::raiseError(400, JText::_('COM_API_PLUGIN_CLASS_NOT_FOUND'));
 		endif;
 
 		jimport('joomla.filesystem.file');
@@ -34,7 +34,7 @@ class ApiPlugin extends JObject {
 		$plgfile	= JPATH_BASE.self::$plg_path.$name.'.php';
 
 		if (!JFile::exists($plgfile)) :
-			JError::raiseError(400, JText::_('API_FILE_NOT_FOUND'));
+			ApiError::raiseError(400, JText::_('COM_API_FILE_NOT_FOUND'));
 		endif;
 
 		include_once $plgfile;
@@ -42,7 +42,7 @@ class ApiPlugin extends JObject {
 		$class 	= self::$plg_prefix.ucwords($name);
 
 		if (!class_exists($class)) :
-			JError::raiseError(400, JText::_('API_PLUGIN_CLASS_NOT_FOUND'));
+			ApiError::raiseError(400, JText::_('COM_API_PLUGIN_CLASS_NOT_FOUND'));
 		endif;
 
 		$handler	=  new $class($plugin->params);	
@@ -62,7 +62,7 @@ class ApiPlugin extends JObject {
 	}
 	
 	public function __call($name, $arguments) {
-		JError::raiseError(400, JText::_('API_PLUGIN_METHOD_UNREACHABLE'));
+		ApiError::raiseError(400, JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'));
 	}
 	
 	protected function setResponse($data) {

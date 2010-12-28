@@ -27,11 +27,11 @@ class ApiControllerHttp extends ApiController {
 		$method		= $handler->get('method');
 		
 		if (!method_exists($handler, $method)) :
-			ApiError::raiseError(404, JText::_('API_PLUGIN_METHOD_NOT_FOUND'));
+			ApiError::raiseError(404, JText::_('COM_API_PLUGIN_METHOD_NOT_FOUND'));
 		endif;
 		
 		if (!is_callable(array($handler, $method))) :
-			ApiError::raiseError(404, JText::_('API_PLUGIN_METHOD_NOT_CALLABLE'));
+			ApiError::raiseError(404, JText::_('COM_API_PLUGIN_METHOD_NOT_CALLABLE'));
 		endif;
 		
 		$response 	= $handler->$method();

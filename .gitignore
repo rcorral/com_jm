@@ -15,6 +15,7 @@
 !/administrator/components/com_api/
 
 # Site Language files
+!/language/
 /language/*
 !/language/en-GB
 /language/en-GB/*
