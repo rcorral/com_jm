@@ -13,43 +13,6 @@ class ApiModelAuthentication extends ApiModel {
 		$this->set('domain_checking', true);
   	}
 	
-	public function generateToken() {
-		$user_id			= JFactory::getUser()->get('id');
-		$table 				= JTable::getInstance('Token', 'ApiTable');
-		$table->user_id		= 7097;
-		$table->domain		= 'localhost';
-		$table->created		= gmdate("Y-m-d H:i:s");
-		$table->created_by	= $user_id;
-		$table->hash		= $this->generateUniqueHash();
-		$table->store();
-	}
-	
-	private function generateUniqueHash() {
-		$seed	= $this->makeRandomSeed();
-		$hash	= sha1(uniqid($seed.microtime()));
-		
-		$this->_db->setQuery('SELECT COUNT(*) FROM #__api_tokens WHERE hash = "'.$hash.'"');
-		$exists	= $this->_db->loadResult();
-		
-		if ($exists) :
-			return $this->generateUniqueHash();
-		else :
-			return $hash;
-		endif;
-	}
-	
-	private function makeRandomSeed() {
-		$string	= 'abcdefghijklmnopqrstuvwxyz';
-		$alpha	= str_split($string.strtoupper($string));
-		$last	= count($alpha)-1;
-		
-		$seed	= null;
-		for ($i=0; $i<16; $i++) :
-			$seed .= $alpha[mt_rand(0, $last)];
-		endfor;
-		return $seed;
-	}
-	
 	public function authenticateRequest() {
 		if ($this->get('auth_method') == 'key') :
 			$user_id = $this->authenticateKey();
