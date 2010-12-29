@@ -66,7 +66,7 @@ class ApiModelAuthentication extends ApiModel {
 	}
 	
 	public function loadTokenByHash($hash) {
-		$this->_db->setQuery("SELECT * FROM #__api_tokens WHERE hash = '".$hash."'");
+		$this->_db->setQuery("SELECT * FROM #__api_keys WHERE hash = '".$hash."'");
 		$token	= $this->_db->loadObject();
 		return $token;
 	}

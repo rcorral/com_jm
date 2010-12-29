@@ -3,7 +3,7 @@
 // no direct access
 defined('_JEXEC') or die;
 
-class ApiTableToken extends JTable
+class ApiTableKey extends JTable
 {
 	
 	var $id			= null;
@@ -19,6 +19,6 @@ class ApiTableToken extends JTable
 	 */
 	function __construct(&$db)
 	{
-		parent::__construct('#__api_tokens', 'id', $db);
+		parent::__construct('#__api_keys', 'id', $db);
 	}
 }

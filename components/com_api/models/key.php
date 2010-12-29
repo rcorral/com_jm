@@ -14,8 +14,8 @@ class ApiModelKey extends ApiModel {
 			$where = 'WHERE user_id = '.$this->_db->Quote($user_id);
 		endif;
 		
-		$query = "SELECT hash, domain, enabled, created "
-				."FROM #__api_tokens "
+		$query = "SELECT id, hash, domain, enabled, created "
+				."FROM #__api_keys "
 				.$where
 				;
 		$this->_db->setQuery($query);
@@ -25,10 +25,10 @@ class ApiModelKey extends ApiModel {
 	
 	public function save($data) {
 		$creator			= JFactory::getUser()->get('id');
-		$table 				= JTable::getInstance('Token', 'ApiTable');
-		$table->user_id		= $data['user_id'];
-		$table->domain		= $data['domain'];
-		$table->enabled		= $data['enabled'];
+		$table 				= JTable::getInstance('Key', 'ApiTable');
+		
+		$table->bind($data);
+		
 		$table->created		= gmdate("Y-m-d H:i:s");
 		$table->created_by	= $creator;
 		$table->hash		= $this->generateUniqueHash();
