@@ -1,5 +1,5 @@
 <?php
-defined('_JEXEC') or die('Restricted access'); 
+defined('_JEXEC') or die('Restricted access');
 ?>
 
 <h1 class="componentheading"><?php echo JText::_('COM_API_COMPONENT_HEADING');?></h1>

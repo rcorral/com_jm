@@ -23,15 +23,18 @@ class ApiModelKey extends ApiModel {
 		return $tokens;
 	}
 	
-	public function generateToken() {
-		$user_id			= JFactory::getUser()->get('id');
+	public function save($data) {
+		$creator			= JFactory::getUser()->get('id');
 		$table 				= JTable::getInstance('Token', 'ApiTable');
-		$table->user_id		= 7097;
-		$table->domain		= 'localhost';
+		$table->user_id		= $data['user_id'];
+		$table->domain		= $data['domain'];
+		$table->enabled		= $data['enabled'];
 		$table->created		= gmdate("Y-m-d H:i:s");
-		$table->created_by	= $user_id;
+		$table->created_by	= $creator;
 		$table->hash		= $this->generateUniqueHash();
 		$table->store();
+		
+		return $table;
 	}
 	
 	private function generateUniqueHash() {

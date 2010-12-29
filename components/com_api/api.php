@@ -21,7 +21,7 @@ if (file_exists($c_path)) :
 	include_once $c_path;
 	$c_name	= 'ApiController'.ucwords($c);
 else :
-	JError::raiseError(404, JText::_('API_PLUGIN_CONTROLLER_NOT_FOUND'));
+	JError::raiseError(404, JText::_('COM_API_CONTROLLER_NOT_FOUND'));
 endif;
 
 $command = JRequest::getCmd('task', 'display');
