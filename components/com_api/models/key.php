@@ -8,7 +8,7 @@ class ApiModelKey extends ApiModel {
 		parent::__construct($config);
 	}
 	
-	public function listTokens() {
+	public function getList() {
 		$where = null;
 		if($user_id	= $this->getState('user_id')) :
 			$where = 'WHERE user_id = '.$this->_db->Quote($user_id);
@@ -27,12 +27,29 @@ class ApiModelKey extends ApiModel {
 		$creator			= JFactory::getUser()->get('id');
 		$table 				= JTable::getInstance('Key', 'ApiTable');
 		
-		$table->bind($data);
+		if (!$table->bind($data)) :
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		endif;
+		
+		$table->domain		= $this->validateDomain($table->domain);
+		if ($table->domain === false) :
+			return false;
+		endif;
 		
 		$table->created		= gmdate("Y-m-d H:i:s");
 		$table->created_by	= $creator;
 		$table->hash		= $this->generateUniqueHash();
-		$table->store();
+		
+		if (!$table->check()) :
+			$this->setError($table->getError());
+			return false;
+		endif;
+		
+		if (!$table->store()) :
+			$this->setError($table->getError());
+			return false;
+		endif;
 		
 		return $table;
 	}
@@ -61,6 +78,24 @@ class ApiModelKey extends ApiModel {
 			$seed .= $alpha[mt_rand(0, $last)];
 		endfor;
 		return $seed;
+	}
+	
+	private function validateDomain($domain) {
+		
+		$sanitized	= preg_replace('/(http|https|ftp):\/\//', '', $domain);
+		
+		if(!preg_match('/^([0-9a-z-_\.]+\.+[0-9a-z\.]+)|localhost$/i',$sanitized)) :
+			$this->setError(JText::_('COM_API_INVALID_DOMAIN_MSG'));
+			return false;
+		else :
+			$this->_db->setQuery("SELECT COUNT(*) FROM #__api_keys WHERE domain = ".$this->_db->Quote($sanitized));
+			$exists = $this->_db->loadResult();
+			if ($exists > 0) :
+				$this->setError(JText::_('COM_API_DUPLICATE_DOMAIN_MSG'));
+				return false;
+			endif;
+			return $sanitized;
+		endif;
 	}
 	
 }

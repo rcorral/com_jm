@@ -17,8 +17,7 @@ class ApiViewKeys extends ApiView {
 	
 		$model	= JModel::getInstance('Key', 'ApiModel');
 		$model->setState('user_id', $user->get('id'));
-		
-		$tokens	= $model->listTokens();
+		$tokens	= $model->getList();
 		
 		$new_token_link = JRoute::_('index.php?option=com_api&view=keys&layout=new');
 		

@@ -19,8 +19,7 @@ class ApiControllerKeys extends ApiController {
 
 	public function cancel() {
 		JRequest::checkToken() or jexit(JText::_("COM_API_INVALID_TOKEN"));
-		$return = JRequest::getVar('return', 'index.php', 'post');
-		$this->setRedirect($return);
+		$this->setRedirect(JRoute::_('index.php?option=com_api&view=keys'));
 	}
 	
 	public function save() {

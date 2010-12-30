@@ -5,7 +5,10 @@ JFactory::getDocument()->addScriptDeclaration("
 	function submitbutton(pressbutton) {
 		if (pressbutton == 'save') {
 			var domain = document.adminForm.domain.value;
-			if (domain == '') {
+			var regex_sanitize = /(http|https|ftp):\/\//i
+			var sanitized = domain.replace(regex_sanitize, '');
+			var regex_validate = /^([0-9a-z-_\.]+\.+[0-9a-z\.])+|localhost$/i;
+			if (regex_validate.test(sanitized) == false) {
 				alert('".JText::_("COM_API_INVALID_DOMAIN_MSG")."');
 				return false;
 			}
