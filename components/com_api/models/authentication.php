@@ -57,8 +57,11 @@ class ApiModelAuthentication extends ApiModel {
 		if ($this->get('domain_checking')) :
 			$server_name = JRequest::getVar('SERVER_NAME', '', 'server');
 			if ($server_name != $token->domain) :
-				$this->setError(JText::_('COM_API_KEY_DOES_NOT_MATCH_DOMAIN'));
-				return false;
+				$pattern = '/\.'.$token->domain.'$/i';
+				if (!preg_match($pattern, $server_name)) :
+					$this->setError(JText::_('COM_API_KEY_DOES_NOT_MATCH_DOMAIN'));
+					return false;
+				endif;
 			endif;
 		endif;
 		

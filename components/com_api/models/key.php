@@ -27,19 +27,27 @@ class ApiModelKey extends ApiModel {
 		$creator			= JFactory::getUser()->get('id');
 		$table 				= JTable::getInstance('Key', 'ApiTable');
 		
+		$old	= JTable::getInstance('Key', 'ApiTable');
+		if ($data['id']) :
+			$old->load($data['id']);
+		endif;
+		
 		if (!$table->bind($data)) :
 			$this->setError($this->_db->getErrorMsg());
 			return false;
 		endif;
 		
-		$table->domain		= $this->validateDomain($table->domain);
+		$table->domain		= ($old->domain != $table->domain) ? $this->validateDomain($table->domain) : $table->domain;
 		if ($table->domain === false) :
 			return false;
 		endif;
 		
 		$table->created		= gmdate("Y-m-d H:i:s");
 		$table->created_by	= $creator;
-		$table->hash		= $this->generateUniqueHash();
+		
+		if (!$table->id && !$table->hash) :
+			$table->hash		= $this->generateUniqueHash();
+		endif;
 		
 		if (!$table->check()) :
 			$this->setError($table->getError());
@@ -80,7 +88,7 @@ class ApiModelKey extends ApiModel {
 		return $seed;
 	}
 	
-	private function validateDomain($domain) {
+	public function validateDomain($domain) {
 		
 		$sanitized	= preg_replace('/(http|https|ftp):\/\//', '', $domain);
 		
