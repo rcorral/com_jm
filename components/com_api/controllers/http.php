@@ -24,17 +24,17 @@ class ApiControllerHttp extends ApiController {
 		$name		= JRequest::getCmd('app');
 		$handler	= ApiPlugin::getInstance($name);
 		$handler->set('user', $user);
-		$method		= $handler->get('method');
+		$resource	= $handler->get('resource');
 		
-		if (!method_exists($handler, $method)) :
+		if (!method_exists($handler, $resource)) :
 			ApiError::raiseError(404, JText::_('COM_API_PLUGIN_METHOD_NOT_FOUND'));
 		endif;
 		
-		if (!is_callable(array($handler, $method))) :
+		if (!is_callable(array($handler, $resource))) :
 			ApiError::raiseError(404, JText::_('COM_API_PLUGIN_METHOD_NOT_CALLABLE'));
 		endif;
 		
-		$response 	= $handler->$method();
+		$response 	= $handler->$resource();
 		$output		= $handler->encode();
 		
 		echo $output;

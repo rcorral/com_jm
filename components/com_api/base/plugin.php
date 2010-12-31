@@ -56,7 +56,7 @@ class ApiPlugin extends JObject {
 	{
 		$this->set('params', new JParameter($params));
 		$this->set('component', JRequest::getCmd('app'));
-		$this->set('method', JRequest::getCmd('method'));
+		$this->set('resource', JRequest::getCmd('resource'));
 		$this->set('format', JRequest::getCmd('output'));
 		$this->set('request_method', JRequest::getMethod());
 	}
