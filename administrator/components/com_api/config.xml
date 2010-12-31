@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params addpath="/administrator/components/com_api/elements">
+		<param name="domain_checking" type="radio" default="1" label="COM_API_DOMAIN_CHECKING" description="COM_API_DOMAIN_CHECKING_DESC">
+			<option value="0">COM_API_DISABLED</option>
+			<option value="1">COM_API_ENABLED</option>
+		</param>
+		<param name="key_registration" type="radio" default="1" label="COM_API_KEY_REGISTRATION" description="COM_API_KEY_REGISTRATION_DESC">
+			<option value="0">COM_API_DISABLED</option>
+			<option value="1">COM_API_ENABLED</option>
+		</param>
+		<param name="key_registration_access" type="regusergroup" default="1" label="COM_API_KEY_REGISTRATION_ACCESS" description="COM_API_KEY_REGISTRATION_ACCESS_DESC"/>
+			
+		<param name="resource_access" type="list" default="protected" label="COM_API_RESOURCE_ACCESS" description="COM_API_RESOURCE_ACCESS_DESC">
+			<option value="protected">COM_API_PROTECTED</option>
+			<option value="public">COM_API_PUBLIC</option>
+		</param>
+		<param name="auth_method" type="list" default="key" label="COM_API_AUTH_METHOD" description="COM_API_AUTH_METHOD_DESC">
+			<option value="key">COM_API_KEY</option>
+		</param>
+	</params>
+</config>
