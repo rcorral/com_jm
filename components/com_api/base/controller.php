@@ -34,6 +34,20 @@ class ApiController extends JController {
 		
 	}
 	
+	public function display() {
+		$app	= JFactory::getApplication();
+		$view 	= JRequest::getVar('view', '');
+		if (!$view) :
+			if ($app->isAdmin()) :
+				JRequest::setVar('view', 'cpanel');
+			endif;
+		endif;
+		
+		parent::display();
+	
+	}
+	
+	
 	/**
 	 * Resets the document type to format=raw 
 	 *
