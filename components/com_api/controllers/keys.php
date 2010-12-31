@@ -8,13 +8,44 @@ class ApiControllerKeys extends ApiController {
 	
 	public function display() {
 		
-		if (!JFactory::getUser()->get('id')) :
-			$uri = JFactory::getURI()->toString();
-			$redirect = JRoute::_('index.php?option=com_user&view=login&return='.base64_encode($uri));
-			JFactory::getApplication()->redirect($redirect, JText::_('COM_API_LOGIN_MSG'));
+		if (!$this->checkAccess()) :
+			$user_id = JFactory::getUser()->get('id');
+			
+			if (!$user_id) :
+				$uri = JFactory::getURI()->toString();
+				$redirect = JRoute::_('index.php?option=com_user&view=login&return='.base64_encode($uri));
+				$msg = JText::_('COM_API_LOGIN_MSG');
+			else :
+				$redirect = 'index.php';
+				$msg = JText::_('COM_API_NOT_AUTH_MSG');
+			endif;
+			JFactory::getApplication()->redirect($redirect, $msg);
+			return;
 		endif;
 		
 		parent::display(false);
+	}
+
+	private function checkAccess() {
+		$user	= JFactory::getUser();
+
+		if ($user->get('gid') == 25) :
+			return true;
+		endif;
+		
+		$params	= JComponentHelper::getParams('com_api');
+		
+		if (!$params->get('key_registration')) :
+			return false;
+		endif;
+		
+		$access_level = $params->get('key_registration_access');
+		
+		if ($user->get('gid') < $access_level) :
+			return false;
+		endif;
+		
+		return true;
 	}
 
 	public function cancel() {

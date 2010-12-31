@@ -9,8 +9,9 @@ class ApiModelAuthentication extends ApiModel {
 	
 	public function __construct($config=array()) {
     	parent::__construct($config);
-		$this->set('auth_method', 'key');
-		$this->set('domain_checking', true);
+		$params	= JComponentHelper::getParams('com_api');
+		$this->set('auth_method', $params->get('auth_method', 'key'));
+		$this->set('domain_checking', $params->get('domain_checking', 1));
   	}
 	
 	public function authenticateRequest() {
