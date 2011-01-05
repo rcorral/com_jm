@@ -12,6 +12,7 @@ class ApiPlugin extends JObject {
 	protected $response			= null;
 	protected $request			= null;
 	protected $request_method	= null;
+	protected $resource_acl		= array();
 	
 	static	$instances		= array();
 	static	$plg_prefix		= 'plgAPI';
@@ -32,37 +33,93 @@ class ApiPlugin extends JObject {
 		jimport('joomla.filesystem.file');
 
 		$plgfile	= JPATH_BASE.self::$plg_path.$name.'.php';
+		$param_path = JPATH_BASE.self::$plg_path.$name.'.xml';
 
 		if (!JFile::exists($plgfile)) :
 			ApiError::raiseError(400, JText::_('COM_API_FILE_NOT_FOUND'));
 		endif;
 
 		include_once $plgfile;
-		
 		$class 	= self::$plg_prefix.ucwords($name);
 
 		if (!class_exists($class)) :
 			ApiError::raiseError(400, JText::_('COM_API_PLUGIN_CLASS_NOT_FOUND'));
 		endif;
 
-		$handler	=  new $class($plugin->params);	
+		$handler	=  new $class();
+		
+		$cparams	= JComponentHelper::getParams('com_api');
+		$params		= new JParameter($plugin->params, $param_path);
+		$cparams->merge($params);
+		
+		$handler->set('params', $cparams);
+		$handler->set('component', JRequest::getCmd('app'));
+		$handler->set('resource', JRequest::getCmd('resource'));
+		$handler->set('format', JRequest::getCmd('output'));
+		$handler->set('request_method', JRequest::getMethod());
 		
 		self::$instances[$name] = $handler;
 		
 		return self::$instances[$name];
 	}
 	
-	public function __construct($params=null)
+	public function __construct()
 	{
-		$this->set('params', new JParameter($params));
-		$this->set('component', JRequest::getCmd('app'));
-		$this->set('resource', JRequest::getCmd('resource'));
-		$this->set('format', JRequest::getCmd('output'));
-		$this->set('request_method', JRequest::getMethod());
+		
 	}
 	
 	public function __call($name, $arguments) {
 		ApiError::raiseError(400, JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'));
+	}
+	
+	public function setResourceAccess($resource, $access, $method='GET') {
+		$method = strtoupper($method);
+		
+		$this->resource_acl[$resource][$method] = $access;
+		return true;
+	}
+	
+	public function getResourceAccess($resource, $method='GET', $returnParamsDefault=true) {
+		$method = strtoupper($method);
+		
+		if (isset($this->resource_acl[$resource]) && isset($this->resource_acl[$resource][$method])) :
+			return $this->resource_acl[$resource][$method];
+		else :
+			if ($returnParamsDefault) :
+				return $this->params->get('resource_access');
+			else :
+				return false;
+			endif;
+		endif;
+	}
+	
+	public function fetchResource($resource=null) {
+		
+		if ($resource == null) :
+			$resource = $this->get('resource');
+		endif;
+		
+		if (!method_exists($this, $resource)) :
+			ApiError::raiseError(404, JText::_('COM_API_PLUGIN_METHOD_NOT_FOUND'));
+		endif;
+		
+		if (!is_callable(array($this, $resource))) :
+			ApiError::raiseError(404, JText::_('COM_API_PLUGIN_METHOD_NOT_CALLABLE'));
+		endif;
+		
+		$access		= $this->getResourceAccess($resource, $this->request_method);
+		
+		if ($access == 'protected') :
+			$user = APIAuthentication::authenticateRequest();
+			if ($user === false) :
+				ApiError::raiseError(403, APIAuthentication::getAuthError());
+			endif;
+			$this->set('user', $user);
+		endif;
+		
+		call_user_func(array($this, $resource));
+		$output		= $this->encode();
+		return $output;
 	}
 	
 	protected function setResponse($data) {
@@ -87,7 +144,7 @@ class ApiPlugin extends JObject {
 		$response = $this->get('response');
 		$xml = new SimpleXMLElement('<?xml version="1.0"?><response></response>');
 		
-		$this->_toXMLRecursive($response, &$xml);
+		$this->_toXMLRecursive($response, $xml);
 		
 		return $xml->asXML();
 	}
@@ -103,14 +160,14 @@ class ApiPlugin extends JObject {
 		endif;
 		
 		foreach($element as $key => $value) :
-			$this->_handleMultiDimensions($key, $value, &$xml);
+			$this->_handleMultiDimensions($key, $value, $xml);
 		endforeach;
 	}
 	
 	private function _handleMultiDimensions($key, $value, &$xml) {
 		if (is_array($value) || is_object($value)) :
 			$node = $xml->addChild($key);
-			$this->_toXMLRecursive($value, &$node);
+			$this->_toXMLRecursive($value, $node);
 		else :
 			$node = $xml->addChild($key, htmlspecialchars($value));
 		endif;
