@@ -5,9 +5,9 @@ jimport('joomla.application.component.controller');
 
 $frontside = JPATH_SITE.'/components/com_api';
 
-include_once $frontside.'/base/controller.php';
-include_once $frontside.'/base/model.php';
-include_once $frontside.'/base/view.php';
+JLoader::register('APIController', $frontside.'/libraries/controller.php');
+JLoader::register('APIModel', $frontside.'/libraries/model.php');
+JLoader::register('APIView', $frontside.'/libraries/view.php');
 
 $view	= JRequest::getCmd('view', '');
 if ($view) :

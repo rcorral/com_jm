@@ -3,11 +3,13 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-include_once JPATH_COMPONENT.'/base/controller.php';
-include_once JPATH_COMPONENT.'/base/model.php';
-include_once JPATH_COMPONENT.'/base/plugin.php';
-include_once JPATH_COMPONENT.'/base/view.php';
-include_once JPATH_COMPONENT.'/base/error.php';
+JLoader::register('APIController', JPATH_COMPONENT.'/libraries/controller.php');
+JLoader::register('APIModel', JPATH_COMPONENT.'/libraries/model.php');
+JLoader::register('APIView', JPATH_COMPONENT.'/libraries/view.php');
+JLoader::register('APIPlugin', JPATH_COMPONENT.'/libraries/plugin.php');
+JLoader::register('APIError', JPATH_COMPONENT.'/libraries/error.php');
+JLoader::register('APIAuthentication', JPATH_COMPONENT.'/libraries/authentication.php');
+JLoader::register('APIAuthenticationKey', JPATH_COMPONENT.'/libraries/authenticationkey.php');
 
 $view	= JRequest::getCmd('view', '');
 if ($view) :
