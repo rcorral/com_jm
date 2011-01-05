@@ -18,5 +18,6 @@
 		<param name="auth_method" type="list" default="key" label="COM_API_AUTH_METHOD" description="COM_API_AUTH_METHOD_DESC">
 			<option value="key">COM_API_KEY</option>
 		</param>
+		<param name="request_limit" type="text" default="150" label="COM_API_REQUEST_LIMIT" description="COM_API_REQUEST_LIMIT_DESC" />
 	</params>
 </config>
