@@ -117,9 +117,68 @@ class ApiPlugin extends JObject {
 			$this->set('user', $user);
 		endif;
 		
+		if (!$this->checkRequestLimit()) :
+			ApiError::raiseError(403, JText::_('COM_API_RATE_LIMIT_EXCEEDED'));
+		endif;
+		
+		$this->log();
+		
 		call_user_func(array($this, $resource));
 		$output		= $this->encode();
 		return $output;
+	}
+	
+	private function checkRequestLimit() {
+		$limit = $this->params->get('request_limit', 0);
+		if ($limit == 0) :
+			return true;
+		endif;
+		
+		$hash = JRequest::getVar('key', '');
+		$ip_address = JRequest::getVar('REMOTE_ADDR', '', 'server');
+		
+		$time = $this->params->get('request_limit_time', 'hour');
+		switch($time) :
+			case 'day':
+			$offset = 60*60*24;
+			break;
+			
+			case 'minute':
+			$offset = 60;
+			break;
+			
+			case 'hour':
+			default:
+			$offset = 60*60;
+			break;
+		endswitch;
+		
+		$query_time = time() - $offset;
+		
+		$db = JFactory::getDBO();
+		$query = "SELECT COUNT(*) FROM #__api_logs "
+				."WHERE `time` >= ".$db->Quote($query_time)." "
+				."AND (`hash` = ".$db->Quote($hash)." OR `ip_address` = ".$db->Quote($ip_address).")"
+				;
+		
+		$db->setQuery($query);
+		$result = $db->loadResult();
+		
+		if ($result >= $limit) :
+			return false;
+		else :
+			return true;
+		endif;
+		
+	}
+	
+	private function log() {
+		$table = JTable::getInstance('Log', 'ApiTable');
+		$table->hash = JRequest::getVar('key', '');
+		$table->ip_address = JRequest::getVar('REMOTE_ADDR', '', 'server');
+		$table->time = time();
+		$table->request = JFactory::getURI()->getQuery();
+		$table->store();
 	}
 	
 	protected function setResponse($data) {

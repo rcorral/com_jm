@@ -19,5 +19,10 @@
 			<option value="key">COM_API_KEY</option>
 		</param>
 		<param name="request_limit" type="text" default="150" label="COM_API_REQUEST_LIMIT" description="COM_API_REQUEST_LIMIT_DESC" />
+		<param name="request_limit_time" type="list" default="hour" label="COM_API_REQUEST_LIMIT_TIME" description="COM_API_REQUEST_LIMIT_TIME_DESC">
+			<option value="hour">COM_API_HOUR</option>
+			<option value="day">COM_API_DAY</option>
+			<option value="minute">COM_API_MINUTE</option>
+		</param>
 	</params>
 </config>
