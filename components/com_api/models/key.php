@@ -82,11 +82,26 @@ class ApiModelKey extends ApiModel {
 		return $table;
 	}
 	
+	public function delete($cid) {
+		if (is_array($cid)) :
+			$where = "id IN (".implode(", ", $cid).")";
+		else :
+			$where = "id = ".(int)$cid;
+		endif;
+		
+		$this->_db->setQuery("DELETE FROM #__api_keys WHERE ".$where);
+		if (!$this->_db->query()) :
+			$this->setError($this->_db->getErrorMsg());
+			return false;
+		endif;
+		return true;
+	}
+	
 	private function generateUniqueHash() {
 		$seed	= $this->makeRandomSeed();
 		$hash	= sha1(uniqid($seed.microtime()));
 		
-		$this->_db->setQuery('SELECT COUNT(*) FROM #__api_tokens WHERE hash = "'.$hash.'"');
+		$this->_db->setQuery('SELECT COUNT(*) FROM #__api_keys WHERE hash = "'.$hash.'"');
 		$exists	= $this->_db->loadResult();
 		
 		if ($exists) :

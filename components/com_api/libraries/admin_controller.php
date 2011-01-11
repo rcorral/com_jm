@@ -21,6 +21,15 @@ class ApiControllerAdmin extends ApiController {
 	public function __construct($config=array()) {
 		parent::__construct($config);
 		$this->registerTask('apply', 'save');
+		$this->registerTask('add', 'edit');
+		
+		$default_url = 'index.php?option='.$this->get('option');
+		$view = JRequest::getVar('view','');
+		if ($view)
+			$default_url .= '&view='.$view;
+			
+		$this->set('default_url', $default_url);
+		
 	}
 	
 	public function display() {
@@ -34,9 +43,46 @@ class ApiControllerAdmin extends ApiController {
 	
 	}
 	
+	public function edit() {
+		$app 	= JFactory::getApplication();
+		$view	= $this->getEntityName();
+		$layout = 'default';
+		JRequest::setVar('view', $view);
+		JRequest::setVar('layout', $layout);
+		parent::display();
+	}
+	
 	public function cancel() {
 		JRequest::checkToken() or jexit(JText::_('INVALID_TOKEN'));
-		$this->setRedirect(JRequest::getVar('ret', 'index.php?option='.$this->get('option')), $msg);
+		$this->setRedirect(JRequest::getVar('ret', $this->get('default_url')), $msg);
+	}
+	
+	public function remove($hash='post') {
+		JRequest::checkToken($hash) or jexit(JText::_('INVALID_TOKEN'));
+		$name	= $this->getEntityName();
+		$post 	= JRequest::get('post');
+		$model 	= $this->getModel($name);
+		
+		$cid	= JRequest::getVar('cid', array(), $hash, 'array');
+		if (empty($cid)) :
+			$cid = JRequest::getVar('id', 0, $hash, 'int');
+		endif;
+		
+		if ($cid) :
+			if (!$model->delete($cid)) :
+				$msg	= $model->getError();
+				$type	= 'error';
+			else :
+				$msg	= JText::_('COM_API_DELETE_SUCCESS');
+				$type	= 'message';
+			endif;
+		else :
+			$msg	= JText::_('COM_API_NO_SELECTION');
+			$type	= 'error';
+		endif;
+		
+		$url = isset($post['ret']) ? $post['ret'] : JRequest::getVar('HTTP_REFERER', $this->get('default_url'), 'server');
+		$this->setRedirect($url, $msg, $type);
 	}
 	
 	public function save() {
@@ -47,7 +93,7 @@ class ApiControllerAdmin extends ApiController {
 		
 		if (!$item = $model->save($post)) :
 			$msg = $model->getError();
-			$url = JRequest::getVar('HTTP_REFERER', 'index.php', 'server');
+			$url = JRequest::getVar('HTTP_REFERER', $this->get('default_url'), 'server');
 			$this->setRedirect($url, $msg, 'error');
 			return;
 		endif;
@@ -59,7 +105,7 @@ class ApiControllerAdmin extends ApiController {
 		elseif (isset($post['ret'])) :
 			$url = $post['ret'];
 		else :
-			$url = JRequest::getVar('HTTP_REFERER', 'index.php', 'server');
+			$url = JRequest::getVar('HTTP_REFERER', $this->get('default_url'), 'server');
 		endif;
 		$this->setRedirect($url, $msg);
 	}
@@ -76,7 +122,7 @@ class ApiControllerAdmin extends ApiController {
 			$type = 'message';
 		endif;
 		
-		$this->setRedirect(JRequest::getVar('HTTP_REFERER', 'index.php', 'server'), $msg, $type);
+		$this->setRedirect(JRequest::getVar('HTTP_REFERER', $this->get('default_url'), 'server'), $msg, $type);
 	}
 	
 	public function unpublish() {
@@ -90,7 +136,7 @@ class ApiControllerAdmin extends ApiController {
 			$type = 'message';
 		endif;
 		
-		$this->setRedirect(JRequest::getVar('HTTP_REFERER', 'index.php', 'server'), $msg, $type);
+		$this->setRedirect(JRequest::getVar('HTTP_REFERER', $this->get('default_url'), 'server'), $msg, $type);
 	}
 	
 	protected function changeState($state, $cids=array(), $table_class=null) {
