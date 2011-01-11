@@ -7,6 +7,12 @@ defined('_JEXEC') or die('Restricted access');
 		<form action="index.php" method="post" name='adminForm'>
 		<table width='100%' cellpadding='5' cellspacing='0' class='admintable form-validate'>
 			<tr>
+				<td class="key"><?php echo JText::_('COM_API_USER');?></td>
+				<td>
+					<?php echo JHTML::_('list.users', 'user_id', $this->row->user_id, false, null, 'name', false); ?>
+				</td>
+			</tr>
+			<tr>
 				<td class="key"><?php echo JText::_('COM_API_DOMAIN');?></td>
 				<td>
 					<input type="text" class="inputbox api_form_input" name="domain" size="55" value="<?php echo $this->row->domain;?>" />
