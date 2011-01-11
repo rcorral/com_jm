@@ -12,7 +12,7 @@ class ApiTableKey extends JTable
 	var $domain		= null;
 	var $created	= null;
 	var $created_by	= null;
-	var $enabled	= null;
+	var $published	= null;
 
 	/**
 	 * @param	JDatabase	A database connector object

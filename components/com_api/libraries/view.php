@@ -35,6 +35,7 @@ class ApiView extends JView {
 	protected function getMainViews() {
 		$views = array(
 					array('name' => JText::_('COM_API_CONTROL_PANEL'), 'view' => 'cpanel'),
+					array('name' => JText::_('COM_API_KEYS'), 'view' => 'keys'),
 				);
 		return $views;
 	}

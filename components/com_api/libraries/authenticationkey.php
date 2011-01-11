@@ -16,7 +16,7 @@ class ApiAuthenticationKey extends ApiAuthentication {
 			return false;
 		endif;
 		
-		if (!$token->enabled) :
+		if (!$token->published) :
 			$this->setError(JText::_('COM_API_KEY_DISABLED'));
 			return false;
 		endif;

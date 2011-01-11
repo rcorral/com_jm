@@ -6,6 +6,17 @@ class ApiModelKey extends ApiModel {
 	
 	public function __construct($config=array()) {
 		parent::__construct($config);
+		
+		$id = JRequest::getInt('id', 0);
+		if (!$id) :
+			$cid = JRequest::getVar('cid', array());
+			$id = $cid[0];
+		endif;
+		
+		if ($id) :
+			$this->setState('id', $id);
+		endif;
+		
 	}
 	
 	public function getList() {
@@ -14,7 +25,7 @@ class ApiModelKey extends ApiModel {
 			$where = 'WHERE user_id = '.$this->_db->Quote($user_id);
 		endif;
 		
-		$query = "SELECT id, hash, domain, enabled, created "
+		$query = "SELECT id, hash, domain, published, created "
 				."FROM #__api_keys "
 				.$where
 				;
@@ -59,6 +70,15 @@ class ApiModelKey extends ApiModel {
 			return false;
 		endif;
 		
+		return $table;
+	}
+	
+	public function getData() {
+		
+		$table = JTable::getInstance('Key', 'ApiTable');
+		if ($this->getState('id', 0))
+			$table->load($this->getState('id'));
+			
 		return $table;
 	}
 	

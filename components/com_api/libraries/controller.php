@@ -28,25 +28,11 @@ class ApiController extends JController {
 	
 	public function __construct($config=array()) {
 		parent::__construct($config);
-		
-		JModel::addIncludePath(JPATH_COMPONENT.'/models');
-		JTable::addIncludePath(JPATH_COMPONENT.'/tables');
+		$this->set('option', JRequest::getCmd('option'));
+		JModel::addIncludePath(JPATH_SITE.'/components/com_api/models');
+		JTable::addIncludePath(JPATH_SITE.'/components/com_api/tables');
 		
 	}
-	
-	public function display() {
-		$app	= JFactory::getApplication();
-		$view 	= JRequest::getVar('view', '');
-		if (!$view) :
-			if ($app->isAdmin()) :
-				JRequest::setVar('view', 'cpanel');
-			endif;
-		endif;
-		
-		parent::display();
-	
-	}
-	
 	
 	/**
 	 * Resets the document type to format=raw 
