@@ -13,6 +13,7 @@ class ApiPlugin extends JObject {
 	protected $request			= null;
 	protected $request_method	= null;
 	protected $resource_acl		= array();
+	protected $cache_folder		= 'com_ostraining';
 	
 	static	$instances		= array();
 	static	$plg_prefix		= 'plgAPI';
@@ -68,9 +69,9 @@ class ApiPlugin extends JObject {
 		
 	}
 	
-	public function __call($name, $arguments) {
-		ApiError::raiseError(400, JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'));
-	}
+	//public function __call($name, $arguments) {
+	//	ApiError::raiseError(400, JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'));
+	//}
 	
 	public function setResourceAccess($resource, $access, $method='GET') {
 		$method = strtoupper($method);
@@ -230,6 +231,50 @@ class ApiPlugin extends JObject {
 		else :
 			$node = $xml->addChild($key, htmlspecialchars($value));
 		endif;
+	}
+	
+	protected function cacheCallback($object, $method, $args=array(), $cache_lifetime=null, $overrideConfig=false) {
+		$cache_lifetime = $cache_lifetime ? $cache_lifetime : 86400/2;
+		
+		$cache= & JFactory::getCache($this->get('cache_folder'),'callback');
+
+		if ($overrideConfig) :
+			$conf =& JFactory::getConfig();
+			$cacheactive = $conf->getValue('config.caching');
+			@$lifetime=$cache->lifetime;
+			$cache->setCaching(1); //enable caching
+		endif;
+		
+		$cache->setLifeTime($cache_lifetime);
+
+		$callback	= array($object, $method);
+
+		$data = $cache->call($callback, $args); 
+		
+		if ($data === false) :
+			// Copy current model for cache ID serialization
+			$obj_copy = clone $object;
+			
+			// Remove errors to return model to original state at cache call
+			if ($obj_copy->getError()) :
+				$obj_copy->set('_errors', array());
+			endif;
+			
+			$callback	= array($obj_copy, $method);
+			// Workaround for getting cache ID and manually removing cached results
+			// Need a better way to do this
+			$id	= $cache->_makeId($callback, $args);
+			$cache->remove($id, self::CACHE_GROUP);
+			
+			$data = array();
+		endif;
+		
+		if ($overrideConfig) :
+			$cache->setCaching($cacheactive);
+			$cache->setLifeTime($lifetime);
+		endif;
+		
+		return $data;
 	}
 	
 }
