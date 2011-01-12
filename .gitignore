@@ -22,6 +22,7 @@
 !/language/en-GB/en-GB.com_api.ini
 
 # Administrator Language files
+!/administrator/language/
 /administrator/language/*
 !/administrator/language/en-GB
 /administrator/language/en-GB/*
