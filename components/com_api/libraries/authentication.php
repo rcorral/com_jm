@@ -48,12 +48,12 @@ class ApiAuthentication extends JObject {
 		
 	}
 	
-	private static function setAuthError($msg) {
+	public static function setAuthError($msg) {
 		self::$auth_errors[] = $msg;
 		return true;
 	}
 	
-	private static function getAuthError() {
+	public static function getAuthError() {
 		if (empty(self::$auth_errors)) :
 			return false;
 		endif;

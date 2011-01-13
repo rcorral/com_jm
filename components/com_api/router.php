@@ -4,8 +4,22 @@ function ApiBuildRoute( &$query )
 {
 	$segments = array();
 
+	if (isset($query['app'])) :
+		return $segments;
+	endif;
+
 	if (isset($query['view'])) {
+		$segments[0] = $query['view'];
 		unset($query['view']);
+	}
+
+	if (isset($query['layout'])) {
+		$segments[1] = $query['layout'];
+		if ($query['layout'] == 'edit' && isset($query['id'])) :
+			$segments[2] = $query['id'];
+			unset($query['id']);
+		endif;
+		unset($query['layout']);
 	}
 
 	return $segments;
@@ -19,7 +33,17 @@ function ApiParseRoute( $segments )
 {
 	$vars = array();
 
-	$vars['view'] = 'api';
-
+	if (isset($segments[0])) :
+		$vars['view'] = $segments[0];
+	endif;
+	
+	if (isset($segments[1])) :
+		$vars['layout'] = $segments[1];
+	endif;
+	
+	if ($vars['layout'] == 'edit' && isset($segments[2])) :
+		$vars['id'] = $segments[2];
+	endif;
+	
 	return $vars;
 }

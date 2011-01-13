@@ -3,13 +3,16 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-JLoader::register('APIController', JPATH_COMPONENT.'/libraries/controller.php');
-JLoader::register('APIModel', JPATH_COMPONENT.'/libraries/model.php');
-JLoader::register('APIView', JPATH_COMPONENT.'/libraries/view.php');
-JLoader::register('APIPlugin', JPATH_COMPONENT.'/libraries/plugin.php');
-JLoader::register('APIError', JPATH_COMPONENT.'/libraries/error.php');
-JLoader::register('APIAuthentication', JPATH_COMPONENT.'/libraries/authentication.php');
-JLoader::register('APIAuthenticationKey', JPATH_COMPONENT.'/libraries/authenticationkey.php');
+$library_path = JPATH_COMPONENT.'/libraries';
+
+JLoader::register('APIController', $library_path.'/controller.php');
+JLoader::register('APIModel', $library_path.'/model.php');
+JLoader::register('APIView', $library_path.'/view.php');
+JLoader::register('APIPlugin', $library_path.'/plugin.php');
+JLoader::register('APIError', $library_path.'/error.php');
+JLoader::register('APICache', $library_path.'/cache.php');
+JLoader::register('APIAuthentication', $library_path.'/authentication.php');
+JLoader::register('APIAuthenticationKey', $library_path.'/authenticationkey.php');
 
 $view	= JRequest::getCmd('view', '');
 if ($view) :
