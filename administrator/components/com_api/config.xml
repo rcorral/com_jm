@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<params addpath="/administrator/components/com_api/elements">
-		<param name="domain_checking" type="radio" default="1" label="COM_API_DOMAIN_CHECKING" description="COM_API_DOMAIN_CHECKING_DESC">
-			<option value="0">COM_API_DISABLED</option>
-			<option value="1">COM_API_ENABLED</option>
-		</param>
 		<param name="key_registration" type="radio" default="1" label="COM_API_KEY_REGISTRATION" description="COM_API_KEY_REGISTRATION_DESC">
 			<option value="0">COM_API_DISABLED</option>
 			<option value="1">COM_API_ENABLED</option>

@@ -21,23 +21,7 @@ class ApiAuthenticationKey extends ApiAuthentication {
 			return false;
 		endif;
 		
-		if ($this->get('domain_checking')) :
-			$ip = JRequest::getVar('REMOTE_ADDR', '', 'server');
-			if ($ip != $token->domain) :
-				if (!APICache::callback($this, 'checkDomain', array($ip, $token->domain), APICache::HALF_DAY, true)) :
-					$this->setError(JText::_('COM_API_KEY_DOES_NOT_MATCH_DOMAIN'));
-					return false;
-				endif;
-			endif;
-		endif;
-		
 		return $token->user_id;
-	}
-	
-	public function checkDomain($ip, $domain) {
-		// A simple IP check.  There must be a better way to do this.
-		$expected_ip = gethostbyname($domain);		
-		return $ip == $expected_ip;
 	}
 	
 	public function loadTokenByHash($hash) {
