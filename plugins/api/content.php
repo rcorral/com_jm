@@ -9,6 +9,8 @@ class plgAPIContent extends ApiPlugin {
 	public function __construct()
 	{
 		parent::__construct();
+		ApiResource::addIncludePath(dirname(__FILE__).'/content');
+		
 	}
 	
 	public function articles() {

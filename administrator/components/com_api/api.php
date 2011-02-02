@@ -6,7 +6,7 @@ jimport('joomla.application.component.controller');
 $frontside = JPATH_SITE.'/components/com_api';
 
 JLoader::register('APIController', $frontside.'/libraries/controller.php');
-JLoader::register('ApiControllerAdmin', $frontside.'/libraries/admin_controller.php');
+JLoader::register('ApiControllerAdmin', $frontside.'/libraries/admin/controller.php');
 JLoader::register('APIModel', $frontside.'/libraries/model.php');
 JLoader::register('APIView', $frontside.'/libraries/view.php');
 

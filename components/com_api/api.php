@@ -11,8 +11,9 @@ JLoader::register('APIView', $library_path.'/view.php');
 JLoader::register('APIPlugin', $library_path.'/plugin.php');
 JLoader::register('APIError', $library_path.'/error.php');
 JLoader::register('APICache', $library_path.'/cache.php');
+JLoader::register('APIResource', $library_path.'/resource.php');
 JLoader::register('APIAuthentication', $library_path.'/authentication.php');
-JLoader::register('APIAuthenticationKey', $library_path.'/authenticationkey.php');
+JLoader::register('APIAuthenticationKey', $library_path.'/authentication/key.php');
 
 $view	= JRequest::getCmd('view', '');
 if ($view) :

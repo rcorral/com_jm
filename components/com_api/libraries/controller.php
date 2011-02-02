@@ -34,21 +34,4 @@ class ApiController extends JController {
 		
 	}
 	
-	/**
-	 * Resets the document type to format=raw 
-	 *
-	 * @return void
-	 * @since 0.1
-	 * @todo Figure out if there is a better way to do this
-	*/
-	
-	protected function resetDocumentType() {
-		$document	= &JFactory::getDocument();
-		$raw		= &JDocument::getInstance('raw');
-		$document	= $raw;
-		
-		JResponse::clearHeaders();
-		
-	}
-	
 }

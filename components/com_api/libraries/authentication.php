@@ -2,7 +2,7 @@
 defined('_JEXEC') or die;
 jimport('joomla.application.component.model');
 
-class ApiAuthentication extends JObject {
+abstract class ApiAuthentication extends JObject {
 	
 	protected	$auth_method		= null;
 	protected	$domain_checking	= null;
@@ -14,10 +14,7 @@ class ApiAuthentication extends JObject {
 		$this->set('domain_checking', $params->get('domain_checking', 1));
   	}
 	
-	public function authenticate() {
-		// Must be overriden by child authentication class
-		ApiError::raiseError(403, JText::_('COM_API_AUTHENTICATION_FAILED'));
-	}
+	abstract public function authenticate();
 	
 	public static function authenticateRequest() {
 		$params			= JComponentHelper::getParams('com_api');
