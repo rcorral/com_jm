@@ -7,7 +7,9 @@
 	<property name="component.admin_path" value="administrator/components/${component.name}" />
 	<property name="component.admin_language" value="administrator/language/en-GB/en-GB.${component.name}.ini" />
 	
-	<property name="package.path" value="../phing/packages/${component.name}" />
+	<property name="zip.path" value="../phing/packages" />
+	<property name="package.path" value="${zip.path}/${component.name}" />
+	
 	<property name="package.name" value="${component.name}.zip" />
 
 	<target name="build_package">
@@ -25,12 +27,12 @@
 			</then>
 		</if>
 		
-		<available file="packages/${package.name}" property="package.zip.exists" value="1" />
+		<available file="${zip.path}/${package.name}" property="package.zip.exists" value="1" />
 		<if>
 			<equals arg1="${package.zip.exists}" arg2="1" />
 			<then>
 				<echo message="Deleting existing package zip..." />
-				<delete dir="packages/${package.name}" />
+				<delete dir="${zip.path}/${package.name}" />
 			</then>
 		</if>
 	</target>
@@ -48,13 +50,17 @@
 		<copy todir="${package.path}/site">
 			<fileset dir="${component.site_path}"/>
 		</copy>
+		
 		<copy file="${component.admin_path}/${component.short}.xml" todir="${package.path}"/>
+		
 		<copy file="${component.admin_path}/install.${component.short}.php" todir="${package.path}/install"/>
 		<copy file="${component.admin_path}/uninstall.${component.short}.php" todir="${package.path}/install"/>
 		<copy file="${component.admin_path}/install.mysql.sql" todir="${package.path}/install"/>
+		
 		<copy file="${component.admin_language}" todir="${package.path}/admin/language/en-GB"/>
 		<copy file="${component.site_language}" todir="${package.path}/site/language/en-GB"/>
-		<zip destfile="../phing/packages/${package.name}" basedir="${package.path}" />
+		
+		<zip destfile="${zip.path}/${package.name}" basedir="${package.path}" />
 	</target>
 
 </project>
