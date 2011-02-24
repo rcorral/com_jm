@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `#__api_keys` (
   `created_by` int(11) NOT NULL,
   `published` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+);
 
 CREATE TABLE IF NOT EXISTS `#__api_logs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -17,4 +17,4 @@ CREATE TABLE IF NOT EXISTS `#__api_logs` (
   `request` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `search` (`hash`,`ip_address`,`time`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+);

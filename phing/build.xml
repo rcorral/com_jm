@@ -44,7 +44,6 @@
 				<exclude name="${component.short}.xml" />
 				<exclude name="install.${component.short}.php" />
 				<exclude name="uninstall.${component.short}.php" />
-				<exclude name="install.mysql.sql" />
 			</fileset>
 		</copy>
 		<copy todir="${package.path}/site">
@@ -55,7 +54,6 @@
 		
 		<copy file="${component.admin_path}/install.${component.short}.php" todir="${package.path}/install"/>
 		<copy file="${component.admin_path}/uninstall.${component.short}.php" todir="${package.path}/install"/>
-		<copy file="${component.admin_path}/install.mysql.sql" todir="${package.path}/install"/>
 		
 		<copy file="${component.admin_language}" todir="${package.path}/admin/language/en-GB"/>
 		<copy file="${component.site_language}" todir="${package.path}/site/language/en-GB"/>

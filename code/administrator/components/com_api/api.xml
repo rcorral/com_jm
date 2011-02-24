@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component" version="1.5" method="upgrade">
-	<name>Joomla! API</name>
+	<name>API</name>
 	<creationDate>February 2011</creationDate>
 	<author>Brian Edgerton</author>
 	<copyright>2011 Edge Web Works, LLC</copyright>
@@ -13,7 +13,7 @@
 
 	<install>
         <sql>
-            <file charset="utf8" driver="mysql">install/install.mysql.sql</file>
+            <file charset="utf8" driver="mysql">install.mysql.sql</file>
         </sql>
     </install>
 
@@ -30,8 +30,8 @@
         <folder>views</folder>
     </files>
 
-    <languages>
-        <language tag="en-GB">languages/site/en-GB.com_api.ini</language>
+    <languages folder="site/language">
+        <language tag="en-GB">en-GB/en-GB.com_api.ini</language>
     </languages>
 
 	<administration>
@@ -44,9 +44,9 @@
 			<filename>config.xml</filename>
 			<filename>index.html</filename>
 			<filename>LICENSE.php</filename>
+			<filename>install.mysql.sql</filename>
 			<folder>controllers</folder>
 			<folder>elements</folder>
-			<folder>helpers</folder>
 			<folder>views</folder>
     	</files>
 	</administration>
