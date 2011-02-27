@@ -41,4 +41,6 @@ defined('_JEXEC') or die('Restricted access');
 	<?php endfor; ?>
 </table>
 
-<a class="api_new_token" href="<?php echo $this->new_token_link;?>"><?php echo JText::_('COM_API_NEW_KEY');?></a>
+<?php if ($this->can_register) : ?>
+	<a class="api_new_token" href="<?php echo $this->new_token_link;?>"><?php echo JText::_('COM_API_NEW_KEY');?></a>
+<?php endif; ?>
