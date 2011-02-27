@@ -35,10 +35,16 @@ defined('_JEXEC') or die('Restricted access');
 			<td class="api_table_count"><?php echo $i+1;?></td>
 			<td class="api_table_domain"><a href="<?php echo $edit_link;?>"><?php echo $t->domain;?></a></td>
 			<td class="api_table_key"><?php echo $t->hash;?></td>
-			<td class="api_table_published"><img src="<?php echo JURI::root()."administrator/images/".$img;?>" /></td>
-			<td class="api_table_delete"><a href="<?php echo $delete_link;?>">Delete</a></td>
+			<td class="api_table_published" align="center"><img src="<?php echo JURI::root()."administrator/images/".$img;?>" /></td>
+			<td class="api_table_delete">
+				<?php if ($this->can_register) : ?>
+					<a href="<?php echo $delete_link;?>">Delete</a>
+				<?php endif; ?>
+			</td>
 		</tr>
 	<?php endfor; ?>
 </table>
 
-<a class="api_new_token" href="<?php echo $this->new_token_link;?>"><?php echo JText::_('COM_API_NEW_KEY');?></a>
+<?php if ($this->can_register) : ?>
+	<a class="api_new_token" href="<?php echo $this->new_token_link;?>"><?php echo JText::_('COM_API_NEW_KEY');?></a>
+<?php endif; ?>

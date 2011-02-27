@@ -13,6 +13,18 @@ defined('_JEXEC') or die('Restricted access');
 
 class ApiViewKeys extends ApiView {
 	
+	public $can_register = null;
+	
+	public function __construct() {
+		parent::__construct();
+		
+		$user = JFactory::getUser();
+		$params = JComponentHelper::getParams('com_api');
+		
+		$this->set('can_register', $params->get('key_registration', false) && $user->get('gid') >= $params->get('key_registration_access', 18));
+		
+	}
+	
 	public function display($tpl = null) {
 		
 		JHTML::stylesheet('com_api.css', 'components/com_api/assets/css/');
@@ -20,7 +32,7 @@ class ApiViewKeys extends ApiView {
 		if ($this->routeLayout($tpl)) :
 			return;
 		endif;
-	
+		
 		$user	= JFactory::getUser();
 	
 		$model	= JModel::getInstance('Key', 'ApiModel');
@@ -43,6 +55,7 @@ class ApiViewKeys extends ApiView {
 	}
 	
 	protected function displayEdit($tpl=null) {
+		
 		JHTML::script('joomla.javascript.js', 'includes/js/');
 		
 		$this->assignRef('return', $_SERVER['HTTP_REFERER']);
@@ -54,6 +67,9 @@ class ApiViewKeys extends ApiView {
 				JFactory::getApplication()->redirect($_SERVER['HTTP_REFERER'], JText::_('COM_API_UNAUTHORIZED_EDIT_KEY'));
 				return false;
 			endif;
+		elseif (!$this->can_register) :
+			JFactory::getApplication()->redirect(JRoute::_('index.php?option=com_api&view=keys'), JText::_('COM_API_UNAUTHORIZED_REGISTER'));
+			return false;
 		endif;
 		
 		$this->assignRef('key', $key);

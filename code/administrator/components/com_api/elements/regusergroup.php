@@ -37,7 +37,7 @@ class JElementRegUserGroup extends JElement
 		}
 
 		$gtree[0]->disable = true;
-		
+		unset($gtree[0]);
 		return JHTML::_('select.genericlist',   $gtree, $ctrl, $attribs, 'value', 'text', $value, $control_name.$name );
 	}
 }

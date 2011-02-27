@@ -15,23 +15,7 @@ jimport('joomla.application.component.controller');
 class ApiControllerKeys extends ApiController {
 	
 	public function display() {
-		
-		if (!$this->checkAccess()) :
-			$user_id = JFactory::getUser()->get('id');
-			
-			if (!$user_id) :
-				$uri = JFactory::getURI()->toString();
-				$redirect = JRoute::_('index.php?option=com_user&view=login&return='.base64_encode($uri));
-				$msg = JText::_('COM_API_LOGIN_MSG');
-			else :
-				$redirect = 'index.php';
-				$msg = JText::_('COM_API_NOT_AUTH_MSG');
-			endif;
-			JFactory::getApplication()->redirect($redirect, $msg);
-			return;
-		endif;
-		
-		parent::display(false);
+		parent::display();
 	}
 
 	private function checkAccess() {
@@ -65,6 +49,11 @@ class ApiControllerKeys extends ApiController {
 		JRequest::checkToken() or jexit(JText::_("COM_API_INVALID_TOKEN"));
 		
 		$id		= JRequest::getInt('id', 0, 'post');
+		if (!$id && !$this->checkAccess()) :
+			JFactory::getApplication()->redirect('index.php', JText::_('COM_API_NOT_AUTH_MSG'));
+			exit();
+		endif;
+		
 		$domain	= JRequest::getVar('domain', '', 'post', 'string');
 		
 		$data	= array(
@@ -87,6 +76,11 @@ class ApiControllerKeys extends ApiController {
 	
 	public function delete() {
 		JRequest::checkToken('request') or jexit(JText::_("COM_API_INVALID_TOKEN"));
+		
+		if (!$this->checkAccess()) :
+			JFactory::getApplication()->redirect('index.php', JText::_('COM_API_NOT_AUTH_MSG'));
+			exit();
+		endif;
 		
 		$user_id	= JFactory::getUser()->get('id');
 		$id 		= JRequest::getInt('id', 0);
