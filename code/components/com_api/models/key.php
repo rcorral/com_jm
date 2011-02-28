@@ -139,15 +139,16 @@ class ApiModelKey extends ApiModel {
 		if(!preg_match('/^([0-9a-z-_\.]+\.+[0-9a-z\.]+)|localhost$/i',$sanitized)) :
 			$this->setError(JText::_('COM_API_INVALID_DOMAIN_MSG'));
 			return false;
-		else :
+		elseif ($sanitized != 'localhost') :
 			$this->_db->setQuery("SELECT COUNT(*) FROM #__api_keys WHERE domain = ".$this->_db->Quote($sanitized));
 			$exists = $this->_db->loadResult();
 			if ($exists > 0) :
 				$this->setError(JText::_('COM_API_DUPLICATE_DOMAIN_MSG'));
 				return false;
 			endif;
-			return $sanitized;
 		endif;
+		
+		return $sanitized;
 	}
 	
 }
