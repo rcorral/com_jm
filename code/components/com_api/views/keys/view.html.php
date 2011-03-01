@@ -19,6 +19,13 @@ class ApiViewKeys extends ApiView {
 		parent::__construct();
 		
 		$user = JFactory::getUser();
+		
+		if (!$user->get('id'))
+		{
+			JFactory::getApplication()->redirect('index.php', JText::_('COM_API_NOT_AUTH_MSG'));
+			exit();
+		}
+		
 		$params = JComponentHelper::getParams('com_api');
 		
 		$this->set('can_register', $params->get('key_registration', false) && $user->get('gid') >= $params->get('key_registration_access', 18));
