@@ -23,10 +23,33 @@ Please feel free to make suggestions for ways to make this framework better or m
 
 How do I use it?
 -----------------------------
-  
+There are a few ways you can install this on your site.
+
+## Phing
+If you don't have Phing installed, get it *[here](http://phing.info/trac/)*. From the repository root:
+
+	cd phing
+	phing
+	
+That should create a folder at phing/packages with an installable zip.
+
+## Symbolic Link
+On a *NIX system, run the following commands from the repository root:
+
+	./scripts/symlink.sh
+	
+It will then ask you for the full path to your site root.  You will then need to run the SQL found in administrator/components/com_api/install.mysql.sql on your site database.
+
+## Manual Install
+This is the same concept as using the symlink, except you'll need to copy the component files to your site (or run your site from within the "code" folder) and then run install.mysql.sql.
 
 Roadmap
 -----------------------------
-
+- API/Method documentation
+- Viewable logs
+- Plugin SEF URL's
+- Automatic XML generation
+- Backend API key check-in/check-out
+- Per API key request limiting
 
 
