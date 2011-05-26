@@ -31,9 +31,14 @@ abstract class ApiResource {
 		endif;	
 	}
 	
-	final public function getInstance($name, ApiPlugin $plugin, $prefix='ApiResource')
+	final public function getInstance($name, ApiPlugin $plugin, $prefix=null)
 	{
 
+		if (is_null($prefix))
+		{
+			$prefix = $plugin->get('component').'ApiResource';
+		}
+		
 		$type = preg_replace('/[^A-Z0-9_\.-]/i', '', $name);
 		$resourceClass = $prefix.ucfirst($type);
 
