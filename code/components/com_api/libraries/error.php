@@ -16,7 +16,7 @@ class ApiError extends JError
 
 		$exception = new JException($msg, $code, E_ERROR, $info, $backtrace);
 
-		JResponse::setHeader('status', $exception->code.' '.str_replace( "\n", ' ', $exception->message ));
+		JResponse::setHeader('status', $exception->code);
 		JResponse::setBody(json_encode($exception));
 
 		echo JResponse::toString();
