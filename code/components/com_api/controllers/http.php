@@ -22,9 +22,23 @@ class ApiControllerHttp extends ApiController {
 		$this->resetDocumentType();
 		jimport('joomla.plugin.helper');
 		$name		= JRequest::getCmd('app');
-		$handler	= ApiPlugin::getInstance($name);
-		$output		= $handler->fetchResource();
-		echo $output;
+	
+		try
+		{
+			echo ApiPlugin::getInstance($name)->fetchResource();
+		} 
+		catch (Exception $e)
+		{
+			echo $this->sendError($e);
+		}
+	}
+	
+	private function sendError($exception)
+	{
+		JResponse::setHeader('status', $exception->getCode());
+		$error = new JException($exception->getMessage(), $exception->getCode());
+		JFactory::getDocument()->setMimeEncoding('application/json');
+		return json_encode($error);
 	}
 	
 	/**
