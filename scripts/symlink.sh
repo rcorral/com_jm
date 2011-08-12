@@ -53,10 +53,16 @@ if [ -L $SITE_PATH/language/en-GB/en-GB.com_api.ini ]; then
 	rm -rf $SITE_PATH/language/en-GB/en-GB.com_api.ini
 fi
 
+if [ -L $SITE_PATH/plugins/api ]; then
+	echo "Deleting old plugins api directory"
+	rm -rf $SITE_PATH/plugins/api
+fi
+
 ln -s $CODE_PATH/components/com_api $SITE_PATH/components/
 ln -s $CODE_PATH/administrator/components/com_api $SITE_PATH/administrator/components/
 ln -s $CODE_PATH/language/en-GB/* $SITE_PATH/language/en-GB/
 ln -s $CODE_PATH/administrator/language/en-GB/* $SITE_PATH/administrator/language/en-GB/
+ln -s $CODE_PATH/plugins/api $SITE_PATH/plugins/
 
 echo "Links created successfully"
 exit

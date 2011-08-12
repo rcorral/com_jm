@@ -12,30 +12,29 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-$frontside = JPATH_SITE.'/components/com_api';
+$front_end = JPATH_SITE .DS. 'components' .DS. 'com_api';
 
-JLoader::register('APIController', $frontside.'/libraries/controller.php');
-JLoader::register('ApiControllerAdmin', $frontside.'/libraries/admin/controller.php');
-JLoader::register('APIModel', $frontside.'/libraries/model.php');
-JLoader::register('APIView', $frontside.'/libraries/view.php');
+JLoader::register( 'APIController', $front_end .DS. 'libraries' .DS. 'controller.php' );
+JLoader::register( 'ApiControllerAdmin',
+	$front_end .DS. 'libraries' .DS. 'admin' .DS. 'controller.php' );
+JLoader::register( 'APIModel', $front_end .DS. 'libraries' .DS. 'model.php' );
+JLoader::register( 'APIView', $front_end .DS. 'libraries' .DS. 'view.php' );
 
-$view	= JRequest::getCmd('view', '');
-$c		= JRequest::getCmd('c', '');
-if ($view && !$c) :
+$view       = JRequest::getCmd( 'view', '' );
+$controller = JRequest::getCmd( 'c', '' );
+if ( $view && !$c ) {
 	$c	= $view;
-endif;
+}
 
-$c_path	= JPATH_COMPONENT_ADMINISTRATOR.'/controllers/'.strtolower($c).'.php';
+$c_path	= JPATH_COMPONENT_ADMINISTRATOR .DS. 'controllers' .DS. strtolower( $controller ) . '.php';
 
-if (file_exists($c_path)) :
+if ( file_exists( $c_path ) ) {
 	include_once $c_path;
-	$c_name	= 'ApiController'.ucwords($c);
-else :
+	$c_name	= 'ApiController' . ucwords( $c );
+} else {
 	$c_name = 'ApiControllerAdmin';
-endif;
-
-$command = JRequest::getCmd('task', 'display');
+}
 
 $controller = new $c_name();
-$controller->execute($command);
+$controller->execute( JRequest::getCmd( 'task', 'display' ) );
 $controller->redirect();
