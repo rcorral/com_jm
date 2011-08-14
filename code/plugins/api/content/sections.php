@@ -12,7 +12,7 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class ApiResourceSections extends ApiResource {
+class ContentApiResourceSections extends ApiResource {
 	
 	public function get() {
 		$db = JFactory::getDBO();

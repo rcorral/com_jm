@@ -12,23 +12,23 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-class ApiControllerHttp extends ApiController {
-	
-	public function __construct($config=array()) {
-		parent::__construct($config);
+class ApiControllerHttp extends ApiController
+{
+	public function __construct( $config = array() )
+	{
+		parent::__construct( $config );
 	}
-	
-	public function display() {
+
+	public function display()
+	{
 		$this->resetDocumentType();
-		jimport('joomla.plugin.helper');
-		$name		= JRequest::getCmd('app');
-	
-		try
-		{
-			echo ApiPlugin::getInstance($name)->fetchResource();
-		} 
-		catch (Exception $e)
-		{
+
+		jimport( 'joomla.plugin.helper' );
+		$name = JRequest::getCmd( 'app' );
+
+		try {
+			echo ApiPlugin::getInstance( $name )->fetchResource();
+		}  catch ( Exception $e ) {
 			echo $this->sendError($e);
 		}
 	}

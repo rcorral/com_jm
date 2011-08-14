@@ -12,35 +12,33 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-$library_path = JPATH_COMPONENT.'/libraries';
+$library_path = JPATH_COMPONENT .DS. 'libraries';
 
-JLoader::register('APIController', $library_path.'/controller.php');
-JLoader::register('APIModel', $library_path.'/model.php');
-JLoader::register('APIView', $library_path.'/view.php');
-JLoader::register('APIPlugin', $library_path.'/plugin.php');
-JLoader::register('APIError', $library_path.'/error.php');
-JLoader::register('APICache', $library_path.'/cache.php');
-JLoader::register('APIResource', $library_path.'/resource.php');
-JLoader::register('APIAuthentication', $library_path.'/authentication.php');
-JLoader::register('APIAuthenticationKey', $library_path.'/authentication/key.php');
+JLoader::register( 'APIController', $library_path .DS. 'controller.php' );
+JLoader::register( 'APIModel', $library_path .DS. 'model.php' );
+JLoader::register( 'APIView', $library_path .DS. 'view.php' );
+JLoader::register( 'APIPlugin', $library_path .DS. 'plugin.php' );
+JLoader::register( 'APIError', $library_path .DS. 'error.php' );
+JLoader::register( 'APICache', $library_path .DS. 'cache.php' );
+JLoader::register( 'APIResource', $library_path .DS. 'resource.php' );
+JLoader::register( 'APIAuthentication', $library_path .DS. 'authentication.php' );
+JLoader::register( 'APIAuthenticationKey', $library_path .DS. 'authentication' .DS. 'key.php' );
 
-$view	= JRequest::getCmd('view', '');
-if ($view) :
-	$c	= $view;
-else :
-	$c	= JRequest::getCmd('c', 'http');
-endif;
+$view	= JRequest::getCmd( 'view', '' );
+if ( $view ) {
+	$controller = $view;
+} else {
+	$controller = JRequest::getCmd( 'c', 'http' );
+}
 
-$c_path	= JPATH_COMPONENT.'/controllers/'.strtolower($c).'.php';
-if (file_exists($c_path)) :
+$c_path	= JPATH_COMPONENT .DS. 'controllers' .DS. strtolower( $controller ) . '.php';
+if ( file_exists( $c_path ) ) {
 	include_once $c_path;
-	$c_name	= 'ApiController'.ucwords($c);
-else :
-	JError::raiseError(404, JText::_('COM_API_CONTROLLER_NOT_FOUND'));
-endif;
-
-$command = JRequest::getCmd('task', 'display');
+	$c_name	= 'ApiController' . ucwords( $controller );
+} else {
+	JError::raiseError( 404, JText::_( 'COM_API_CONTROLLER_NOT_FOUND' ) );
+}
 
 $controller = new $c_name();
-$controller->execute($command);
+$controller->execute( JRequest::getCmd( 'task', 'display' ) );
 $controller->redirect();

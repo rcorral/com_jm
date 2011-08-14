@@ -12,26 +12,25 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class ApiResourceArticles extends ApiResource {
-	
-	public function get() {
+class ContentApiResourceArticles extends ApiResource
+{
+	public function get()
+	{
 		$db = JFactory::getDBO();
 		$query = "SELECT * FROM #__content";
-		
-		if ($categoryid = JRequest::getInt('categoryid', 0))
-		{
-			$query .= " WHERE catid = ".$categoryid;
+
+		if ( $categoryid = JRequest::getInt( 'categoryid', 0 ) ) {
+			$query .= " WHERE `catid` = {$categoryid}";
 		}
-		
-		$db->setQuery($query);
+
+		$db->setQuery( $query );
 		$articles = $db->loadObjectList();
-		$this->plugin->setResponse($articles);
+
+		$this->plugin->setResponse( $articles );
 	}
 
-	public function post() {
-		$this->plugin->setResponse('here is a post request');
+	public function post()
+	{
+		$this->plugin->setResponse( 'here is a post request' );
 	}
-
-
-
 }

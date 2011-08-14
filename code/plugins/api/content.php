@@ -12,13 +12,11 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class plgAPIContent extends ApiPlugin {
-	
+class plgAPIContent extends ApiPlugin
+{
 	public function __construct()
 	{
 		parent::__construct();
-		ApiResource::addIncludePath(dirname(__FILE__).'/content');
-		
+		ApiResource::addIncludePath( JPATH_PLUGINS .DS. 'api' .DS. 'content' );
 	}
-	
 }

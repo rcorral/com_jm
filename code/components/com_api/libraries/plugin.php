@@ -14,38 +14,37 @@ jimport('joomla.plugin.plugin');
 
 class ApiPlugin extends JObject {
 	
-	protected $user				= null;
-	protected $params			= null;
-	protected $format			= null;
-	protected $response			= null;
-	protected $request			= null;
-	protected $request_method	= null;
-	protected $request_headers	= null;
-	protected $resource_acl		= array();
-	protected $cache_folder		= 'com_api';
-	protected $content_types	= array(
-									'application/json' 	=> 'json',
-									'application/xml'	=> 'xml'
-								);
-	
-	static	$instances		= array();
-	static	$plg_prefix		= 'plgAPI';
-	static	$plg_path		= '/plugins/api/';
-	
-	
+	protected $user            = null;
+	protected $params          = null;
+	protected $format          = null;
+	protected $response        = null;
+	protected $request         = null;
+	protected $request_method  = null;
+	protected $request_headers = null;
+	protected $resource_acl    = array();
+	protected $cache_folder    = 'com_api';
+	protected $content_types   = array(
+		'application/json' 	=> 'json',
+		'application/xml'	=> 'xml'
+		);
+
+	static	$instances  = array();
+	static	$plg_prefix = 'plgAPI';
+	static	$plg_path   = '/plugins/api/';
+
 	public static function getInstance($name) 
 	{	
-		if (isset(self::$instances[$name])) :
+		if ( isset( self::$instances[$name] ) ) {
 			return self::$instances[$name];
-		endif;
+		}
 		
 		$plugin	= JPluginHelper::getPlugin('api', $name);
 
-		if (empty($plugin)) :
+		if ( empty( $plugin ) ){
 			ApiError::raiseError(400, JText::_('COM_API_PLUGIN_CLASS_NOT_FOUND'));
-		endif;
+		}
 
-		jimport('joomla.filesystem.file');
+		jimport( 'joomla.filesystem.file' );
 
 		$plgfile	= JPATH_BASE.self::$plg_path.$name.'.php';
 		$param_path = JPATH_BASE.self::$plg_path.$name.'.xml';
@@ -139,7 +138,7 @@ class ApiPlugin extends JObject {
 	 */
 	final public function getResourceAccess($resource, $method='GET', $returnParamsDefault=true) {
 		$method = strtoupper($method);
-		
+
 		if (isset($this->resource_acl[$resource]) && isset($this->resource_acl[$resource][$method]))
 		{
 			return $this->resource_acl[$resource][$method];
@@ -162,49 +161,43 @@ class ApiPlugin extends JObject {
 	 * @param	string	$resource_name	Requested resource name
 	 * @return	string
 	 */
-	final public function fetchResource($resource_name=null) {
-		
-		if ($resource_name == null)
-		{
-			$resource_name = $this->get('resource');
+	final public function fetchResource( $resource_name = null )
+	{
+		if ( $resource_name == null ) {
+			$resource_name = $this->get( 'resource' );
 		}
-		
-		$resource_obj = ApiResource::getInstance($resource_name, $this);
-			
-		if ($resource_obj === false)
-		{
-			$this->checkInternally($resource_name);
+
+		$resource_obj = ApiResource::getInstance( $resource_name, $this );
+
+		if ( $resource_obj === false ) {
+			$this->checkInternally( $resource_name );
 		}
-		
-		$access		= $this->getResourceAccess($resource_name, $this->request_method);
-		
-		if ($access == 'protected')
-		{
+
+		$access = $this->getResourceAccess( $resource_name, $this->request_method );
+
+		if ( $access == 'protected' ) {
 			$user = APIAuthentication::authenticateRequest();
-			if ($user === false) 
-			{
-				ApiError::raiseError(403, APIAuthentication::getAuthError());
+			if ( $user === false ) {
+				ApiError::raiseError( 403, APIAuthentication::getAuthError() );
 			}
-			$this->set('user', $user);
+
+			$this->set( 'user', $user );
 		}
-		
-		if (!$this->checkRequestLimit()) 
-		{
-			ApiError::raiseError(403, JText::_('COM_API_RATE_LIMIT_EXCEEDED'));
+
+		if ( !$this->checkRequestLimit() )  {
+			ApiError::raiseError( 403, JText::_('COM_API_RATE_LIMIT_EXCEEDED') );
 		}
-		
+
 		$this->log();
-		
-		if ($resource_obj !== false)
-		{
+
+		if ($resource_obj !== false) {
 			$resource_obj->invoke();
+		} else {
+			call_user_func( array( $this, $resource_name ) );
 		}
-		else
-		{
-			call_user_func(array($this, $resource_name));
-		}
-		
-		$output		= $this->encode();
+
+		$output = $this->encode();
+
 		return $output;
 	}
 	
@@ -213,18 +206,16 @@ class ApiPlugin extends JObject {
 	 * @param	string	$resource_name	Requested resource name
 	 * @return boolean
 	 */
-	final private function checkInternally($resource_name) 
+	final private function checkInternally( $resource_name )
 	{
-		if (!method_exists($this, $resource_name))
-		{
-			ApiError::raiseError(404, JText::_('COM_API_PLUGIN_METHOD_NOT_FOUND'));
+		if ( !method_exists( $this, $resource_name ) ) {
+			ApiError::raiseError( 404, JText::_('COM_API_PLUGIN_METHOD_NOT_FOUND') );
 		}
 
-		if (!is_callable(array($this, $resource_name)))
-		{
-			ApiError::raiseError(404, JText::_('COM_API_PLUGIN_METHOD_NOT_CALLABLE'));
+		if ( !is_callable( array( $this, $resource_name ) ) ) {
+			ApiError::raiseError( 404, JText::_('COM_API_PLUGIN_METHOD_NOT_CALLABLE') );
 		}
-		
+
 		return true;
 	}
 	
