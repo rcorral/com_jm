@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="1.5" type="plugin" group="api" method="upgrade">
+	<name>Api - Language</name>
+	<version>1.0</version>
+	<creationDate>August 2011</creationDate>
+	<author>Rafael Corral</author>
+	<authorEmail>rafael@corephp.com</authorEmail>
+	<authorUrl>http://www.rafaelcorral.com</authorUrl>
+	<copyright>2011</copyright>
+	<license>GNU General Public License v2</license>
+	<description>This plugin exposes the Joomla language to the Joomla! API</description>
+
+	<files>
+		<filename plugin="language">language.php</filename>
+		<folder>language</folder>
+	</files>
+
+	<languages folder="languages">
+		<language tag="en-GB">en-GB.plg_api_language.ini</language>
+	</languages>
+	<params>
+	</params>
+</install>

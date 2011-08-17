@@ -12,21 +12,18 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class ContentApiResourceCategories extends ApiResource
+class LanguageApiResourceLanguages extends ApiResource
 {
 	public function get()
 	{
-		$db = JFactory::getDBO();
-		$query = 'SELECT * FROM #__categories';
-		
-		if ( $section = JRequest::getInt( 'sectionid' ) ) {
-			$query .= " WHERE section = {$section}";
-		}
+		jimport( 'joomla.language.helper' );
 
-		$db->setQuery( $query );
-		$categories = $db->loadObjectList( 'id' );
+		$client = JRequest::getCmd( 'client', 'site' );
 
-		$this->plugin->setResponse( $categories );
+		$languages = JLanguageHelper::createLanguageList(
+			$value, constant( 'JPATH_' . strtoupper( $client ) ), true );
+
+		$this->plugin->setResponse( $languages );
 	}
 
 	public function post()

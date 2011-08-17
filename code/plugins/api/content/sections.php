@@ -12,18 +12,21 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class ContentApiResourceSections extends ApiResource {
-	
-	public function get() {
+class ContentApiResourceSections extends ApiResource
+{
+	public function get()
+	{
 		$db = JFactory::getDBO();
-		$db->setQuery("SELECT * FROM #__sections");
-		$sections = $db->loadObjectList();
-		$this->plugin->setResponse($sections);
+		$db->setQuery( 'SELECT * FROM #__sections' );
+		$sections = $db->loadObjectList( 'id' );
+
+		$this->plugin->setResponse( $sections );
 	}
 
-	public function post() {
+	public function post()
+	{
 		$post = JRequest::get('post');
-		
+
 		$alias = JFilterOutput::stringURLSafe($post['title']);
 		$table = JTable::getInstance('Section', 'JTable');
 		$table->title = $post['title'];
@@ -32,8 +35,7 @@ class ContentApiResourceSections extends ApiResource {
 		$table->description = $post['introtext'];
 		$table->published = 1;
 		$table->store();
-		
+
 		$this->plugin->setResponse($table);
 	}
-
 }
