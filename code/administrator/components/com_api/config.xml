@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
 	<params addpath="/administrator/components/com_api/elements">
-		<param name="key_registration" type="radio" default="1" label="COM_API_KEY_REGISTRATION" description="COM_API_KEY_REGISTRATION_DESC">
+		<param name="key_registration" type="radio" default="0" label="COM_API_KEY_REGISTRATION" description="COM_API_KEY_REGISTRATION_DESC">
 			<option value="0">COM_API_DISABLED</option>
 			<option value="1">COM_API_ENABLED</option>
 		</param>
@@ -18,7 +18,7 @@
 		<param name="auth_method" type="list" default="key" label="COM_API_AUTH_METHOD" description="COM_API_AUTH_METHOD_DESC">
 			<option value="key">COM_API_KEY</option>
 		</param>
-		<param name="request_limit" type="text" default="150" label="COM_API_REQUEST_LIMIT" description="COM_API_REQUEST_LIMIT_DESC" />
+		<param name="request_limit" type="text" default="1500" label="COM_API_REQUEST_LIMIT" description="COM_API_REQUEST_LIMIT_DESC" />
 		<param name="request_limit_time" type="list" default="hour" label="COM_API_REQUEST_LIMIT_TIME" description="COM_API_REQUEST_LIMIT_TIME_DESC">
 			<option value="hour">COM_API_HOUR</option>
 			<option value="day">COM_API_DAY</option>

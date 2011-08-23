@@ -12,26 +12,59 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class ContentApiResourceArticle extends ApiResource {
-	
-	public function get() {
+class ContentApiResourceArticle extends ApiResource
+{
+	public function get()
+	{
 		$db = JFactory::getDBO();
-		$query = "SELECT * FROM #__content";
-		
-		if ($id = JRequest::getInt('id', 0))
-		{
-			$query .= " WHERE id = ".$id;
+
+		jimport( 'joomla.html.parameter' );
+
+		$extras = explode( ',', JRequest::getVar( 'extras' ) );
+		$all_extras = in_array( 'all', $extras );
+
+		$select = 'c.*';
+		$join = '';
+		$where = '';
+
+		if ( $all_extras || in_array( 'frontpage', $extras ) ) {
+			$select .= ', f.`content_id` AS is_frontpage';
+			$join .= ' LEFT JOIN #__content_frontpage AS f ON c.`id` = f.`content_id`';
 		}
-		
-		$db->setQuery($query);
-		$article = $db->loadObjectList();
-		$this->plugin->setResponse($article);
+
+		$query = "SELECT {$select}
+			FROM #__content AS c
+			{$join}
+				WHERE c.`id` = " . JRequest::getInt( 'id', 0 );
+
+		$db->setQuery( $query );
+		$article = $db->loadObject();
+
+		if ( $all_extras || in_array( 'parseparams', $extras ) ) {
+			$_meta    = new JParameter( $article->metadata );
+			$_attribs = new JParameter( $article->attribs );
+			$article->attribs = $_attribs->_registry['_default']['data'];
+			$article->metadata = $_meta->_registry['_default']['data'];
+		}
+
+		$this->plugin->setResponse( $article );
 	}
 
-	public function post() {
-		$this->plugin->setResponse('here is a post request');
+	public function post()
+	{
+		jimport( 'joomla.utilities.utility' );
+		require_once JPATH_ADMINISTRATOR .DS. 'components' .DS. 'com_content' .DS. 'controller.php';
+
+		// Set variables to be used
+		APIHelper::setSessionUser();
+		JRequest::setVar( JUtility::getToken(), '1' );
+			// This needs to be here to avoid the redirects
+		APIHelper::loadFakeMainframe();
+global $mainframe;print_r($mainframe);die();
+		ContentController::saveContent();
+
+		APIHelper::restoreMainframe();
+
+		$this->plugin->setResponse( 'here is a post request' );
 	}
-
-
-
 }
