@@ -10,7 +10,23 @@
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-class JApplicationFake
+class JApplicationFake extends JSite
 {
+	function __construct( $config )
+	{
+		parent::__construct( $config );
+	}
+
+	function getInstance( $config = array() )
+	{
+		static $instance;
+
+		if ( !$instance ) {
+			$instance = new JApplicationFake( $config );
+		}
+
+		return $instance;
+	}
+
 	function redirect(){}
 }

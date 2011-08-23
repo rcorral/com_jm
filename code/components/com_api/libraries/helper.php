@@ -46,7 +46,7 @@ class APIHelper
 		}
 
 		$mainframe_backup = $mainframe;
-		$mainframe = new JApplicationFake();
+		$mainframe = JApplicationFake::getInstance();
 	}
 
 	function restoreMainframe()

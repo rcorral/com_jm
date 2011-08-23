@@ -21,7 +21,7 @@ class LanguageApiResourceLanguages extends ApiResource
 		$client = JRequest::getCmd( 'client', 'site' );
 
 		$languages = JLanguageHelper::createLanguageList(
-			$value, constant( 'JPATH_' . strtoupper( $client ) ), true );
+			'', constant( 'JPATH_' . strtoupper( $client ) ), true );
 
 		$this->plugin->setResponse( $languages );
 	}

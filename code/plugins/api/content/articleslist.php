@@ -28,10 +28,11 @@ class ContentApiResourceArticleslist extends ApiResource
 		$query = "SELECT c.`id`, c.`title`, c.`state`, c.`access`, c.`publish_up`,
 		 	u.`name`
 				FROM #__content AS c
-				LEFT JOIN #__users AS u ON c.`created_by` = u.id";
+				LEFT JOIN #__users AS u ON c.`created_by` = u.id
+					WHERE c.`state` != -2";
 
 		if ( $categoryid = JRequest::getInt( 'categoryid', 0 ) ) {
-			$query .= " WHERE c.`catid` = {$categoryid}";
+			$query .= " AND c.`catid` = {$categoryid}";
 		}
 
 		$query .= " ORDER BY c.`title` LIMIT {$limitstart}, {$limit}";

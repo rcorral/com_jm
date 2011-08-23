@@ -20,7 +20,7 @@ abstract class ApiAuthentication extends JObject
 
 	public function __construct( $params )
 	{
-    	parent::__construct( $config );
+    	parent::__construct( $params );
 
 		$this->set( 'auth_method', $params->get( 'auth_method', 'key' ) );
 		$this->set( 'domain_checking', $params->get( 'domain_checking', 1 ) );

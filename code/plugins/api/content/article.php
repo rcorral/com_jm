@@ -52,6 +52,8 @@ class ContentApiResourceArticle extends ApiResource
 
 	public function post()
 	{
+		$response = new stdClass;
+
 		jimport( 'joomla.utilities.utility' );
 		require_once JPATH_ADMINISTRATOR .DS. 'components' .DS. 'com_content' .DS. 'controller.php';
 
@@ -60,11 +62,17 @@ class ContentApiResourceArticle extends ApiResource
 		JRequest::setVar( JUtility::getToken(), '1' );
 			// This needs to be here to avoid the redirects
 		APIHelper::loadFakeMainframe();
-global $mainframe;print_r($mainframe);die();
-		ContentController::saveContent();
+
+		require_once JPATH_ADMINISTRATOR .DS. 'components' .DS. 'com_content' .DS. 'helper.php';
+
+		if ( false === ContentController::saveContent() ) {
+			$response->error = JError::getErrors();
+		} else {
+			$response->success = JText::_( 'Successfully saved changes to article' );
+		}
 
 		APIHelper::restoreMainframe();
 
-		$this->plugin->setResponse( 'here is a post request' );
+		$this->plugin->setResponse( $response );
 	}
 }

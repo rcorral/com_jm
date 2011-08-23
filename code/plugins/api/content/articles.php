@@ -17,11 +17,13 @@ class ContentApiResourceArticles extends ApiResource
 	public function get()
 	{
 		$db = JFactory::getDBO();
-		$query = "SELECT * FROM #__content";
+		$where = ' WHERE `state` != -2';
 
 		if ( $categoryid = JRequest::getInt( 'categoryid', 0 ) ) {
-			$query .= " WHERE `catid` = {$categoryid}";
+			$query .= " AND `catid` = {$categoryid}";
 		}
+		
+		$query = "SELECT * FROM #__content";
 
 		$db->setQuery( $query );
 		$articles = $db->loadObjectList();
