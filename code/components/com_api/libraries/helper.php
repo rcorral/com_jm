@@ -33,25 +33,4 @@ class APIHelper
 		$session  =& JFactory::getSession();
 		$session->clear( 'user' );
 	}
-
-	function loadFakeMainframe()
-	{
-		global $mainframe, $mainframe_backup;
-		static $has_loaded = false;
-
-		if ( !$has_loaded ) {
-			require JPATH_COMPONENT .DS. 'libraries' .DS. 'helpers' .DS. 'fakeapplication.php';
-
-			$has_loaded = true;
-		}
-
-		$mainframe_backup = $mainframe;
-		$mainframe = JApplicationFake::getInstance();
-	}
-
-	function restoreMainframe()
-	{
-		global $mainframe, $mainframe_backup;
-		$mainframe = $mainframe_backup;
-	}
 }

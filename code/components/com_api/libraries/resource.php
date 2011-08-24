@@ -12,7 +12,7 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-abstract class ApiResource {
+abstract class ApiResource extends JObject {
 	
 	protected $plugin;
 	protected $allowed_methods = array('GET', 'POST', 'PUT', 'DELETE', 'HEAD');
