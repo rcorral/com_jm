@@ -22,15 +22,15 @@ JLoader::register( 'APIView', $front_end .DS. 'libraries' .DS. 'view.php' );
 
 $view       = JRequest::getCmd( 'view', '' );
 $controller = JRequest::getCmd( 'c', '' );
-if ( $view && !$c ) {
-	$c	= $view;
+if ( $view && !$controller ) {
+	$controller	= $view;
 }
 
 $c_path	= JPATH_COMPONENT_ADMINISTRATOR .DS. 'controllers' .DS. strtolower( $controller ) . '.php';
 
 if ( file_exists( $c_path ) ) {
 	include_once $c_path;
-	$c_name	= 'ApiController' . ucwords( $c );
+	$c_name	= 'ApiController' . ucwords( $controller );
 } else {
 	$c_name = 'ApiControllerAdmin';
 }

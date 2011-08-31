@@ -11,24 +11,27 @@
 defined('_JEXEC') or die;
 jimport('joomla.application.component.model');
 
-class ApiModelKey extends ApiModel {
-	
-	public function __construct($config=array()) {
-		parent::__construct($config);
-		
-		$id = JRequest::getInt('id', 0);
-		if (!$id) :
-			$cid = JRequest::getVar('cid', array());
-			$id = $cid[0];
-		endif;
-		
-		if ($id) :
+class ApiModelKey extends ApiModel
+{	
+	public function __construct( $config = array() )
+	{
+		parent::__construct( $config );
+
+		$id = JRequest::getInt( 'id', false );
+
+		if ( !$id ) {
+			$cid = JRequest::getVar( 'cid', array() );
+			$id = @$cid[0];
+		}
+
+		if ( $id ) {
 			$this->setState('id', $id);
-		endif;
+		}
 		
 	}
-	
-	public function getList() {
+
+	public function getList()
+	{
 		$where = null;
 		if($user_id	= $this->getState('user_id')) :
 			$where = 'WHERE user_id = '.$this->_db->Quote($user_id);

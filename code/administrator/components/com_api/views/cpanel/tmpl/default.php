@@ -8,8 +8,9 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 */
 defined('_JEXEC') or die;
-?>
 
+$template = JFactory::getApplication()->getTemplate(true)->template;
+?>
 <div id="cpanel">
 	<?php for ($i=0; $i<count($this->views); $i++) : 
 			$view = $this->views[$i];
@@ -19,7 +20,7 @@ defined('_JEXEC') or die;
 		<div style="float:left;">
 			<div class="icon">
 				<a href="<?php echo $link;?>">
-					<img src='templates/khepri/images/header/icon-48-generic.png' alt='<?php echo $view['name'];?>' />
+					<img src='templates/<?php echo $template; ?>/images/header/icon-48-generic.png' alt='<?php echo $view['name'];?>' />
 					<span><?php echo $view['name'];?></span>
 					<?php if ($count) : ?>
 						<span class="modified_count"><?php echo $count; ?></span>
