@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install version="1.5" type="plugin" group="api" method="upgrade">
-	<name>Api - Content</name>
+<extension version="1.7" type="plugin" group="api" method="upgrade">
+	<name>plg_api_content</name>
 	<version>1.0</version>
 	<creationDate>November 2010</creationDate>
 	<author>Brian Edgerton</author>
@@ -12,12 +12,13 @@
 
 	<files>
 		<filename plugin="content">content.php</filename>
-		<folder>content</folder>
+		<folder>resources</folder>
 	</files>
 
 	<languages folder="languages">
 		<language tag="en-GB">en-GB.plg_api_content.ini</language>
+		<language tag="en-GB">en-GB.plg_api_content.sys.ini</language>
 	</languages>
 	<params>
 	</params>
-</install>
+</extension>

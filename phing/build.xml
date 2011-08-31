@@ -6,10 +6,11 @@
 	<property name="component.site_language" value="language/en-GB/en-GB.${component.name}.ini" />
 	<property name="component.admin_path" value="administrator/components/${component.name}" />
 	<property name="component.admin_language" value="administrator/language/en-GB/en-GB.${component.name}.ini" />
-	
+	<property name="component.admin_language_sys" value="administrator/language/en-GB/en-GB.${component.name}.sys.ini" />
+
 	<property name="zip.path" value="../phing/packages" />
 	<property name="package.path" value="${zip.path}/${component.name}" />
-	
+
 	<property name="package.name" value="${component.name}.zip" />
 
 	<target name="build_package">
@@ -26,7 +27,7 @@
 				<delete dir="${package.path}" />
 			</then>
 		</if>
-		
+
 		<available file="${zip.path}/${package.name}" property="package.zip.exists" value="1" />
 		<if>
 			<equals arg1="${package.zip.exists}" arg2="1" />
@@ -42,22 +43,21 @@
 		<copy todir="${package.path}/admin">
 			<fileset dir="${component.admin_path}">
 				<exclude name="${component.short}.xml" />
-				<exclude name="install.${component.short}.php" />
-				<exclude name="uninstall.${component.short}.php" />
+				<exclude name="script.php" />
 			</fileset>
 		</copy>
 		<copy todir="${package.path}/site">
 			<fileset dir="${component.site_path}"/>
 		</copy>
-		
+
 		<copy file="${component.admin_path}/${component.short}.xml" todir="${package.path}"/>
 		
-		<copy file="${component.admin_path}/install.${component.short}.php" todir="${package.path}/install"/>
-		<copy file="${component.admin_path}/uninstall.${component.short}.php" todir="${package.path}/install"/>
-		
+		<copy file="${component.admin_path}/script.php" todir="${package.path}"/>
+
 		<copy file="${component.admin_language}" todir="${package.path}/admin/language/en-GB"/>
+		<copy file="${component.admin_language_sys}" todir="${package.path}/admin/language/en-GB"/>
 		<copy file="${component.site_language}" todir="${package.path}/site/language/en-GB"/>
-		
+
 		<zip destfile="${zip.path}/${package.name}" basedir="${package.path}" />
 	</target>
 

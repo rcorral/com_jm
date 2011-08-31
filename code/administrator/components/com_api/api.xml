@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="component" version="1.5" method="upgrade">
-	<name>API</name>
-	<creationDate>February 2011</creationDate>
+<extension type="component" version="1.7" method="upgrade">
+	<name>com_api</name>
+	<creationDate>September 2011</creationDate>
 	<author>Brian Edgerton</author>
 	<copyright>2011 Edge Web Works, LLC</copyright>
 	<authorEmail>brian@edgewebworks.com</authorEmail>
 	<authorUrl>edgewebworks.com</authorUrl>
 	<version>0.1</version>
-	<description></description>
-	<installfile>install/install.api.php</installfile>
-    <uninstallfile>install/uninstall.api.php</uninstallfile>
+	<description>COM_API_XML_DESCRIPTION</description>
+
+	<scriptfile>scriptphp</scriptfile>
 
 	<install>
         <sql>
@@ -30,15 +30,13 @@
         <folder>views</folder>
     </files>
 
-    <languages folder="site/language">
-        <language tag="en-GB">en-GB/en-GB.com_api.ini</language>
+    <languages folder="site">
+        <language tag="en-GB">language/en-GB/en-GB.com_api.ini</language>
     </languages>
 
 	<administration>
-		<languages folder="admin/language">
-			<language tag="en-GB">en-GB/en-GB.com_api.ini</language>
-		</languages>
-		<menu>Joomla! API</menu>
+		<menu>COM_API_MENU</menu>
+
 		<files folder="admin">
 			<filename>api.php</filename>
 			<filename>config.xml</filename>
@@ -49,5 +47,10 @@
 			<folder>elements</folder>
 			<folder>views</folder>
     	</files>
+
+		<languages folder="admin">
+			<language tag="en-GB">language/en-GB/en-GB.com_api.ini</language>
+			<language tag="en-GB">language/en-GB/en-GB.com_api.sys.ini</language>
+		</languages>
 	</administration>
-</install>
+</extension>

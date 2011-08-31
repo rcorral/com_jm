@@ -56,6 +56,10 @@ for lang in ${adminlangs[@]}
 		echo "Deleting old $lang admin language file"
 		rm -rf $SITE_PATH/administrator/language/en-GB/en-GB.$lang.ini
 	fi
+	if [ -L $SITE_PATH/administrator/language/en-GB/en-GB.$lang.sys.ini ]; then
+		echo "Deleting old $lang.sys admin language file"
+		rm -rf $SITE_PATH/administrator/language/en-GB/en-GB.$lang.sys.ini
+	fi
 done
 
 # Site language files
