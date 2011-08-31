@@ -1,4 +1,4 @@
-Joomla! API - Generic API framework for Joomla! 1.5
+Joomla! API - Generic API framework for Joomla! 1.6
 ================================
 
 What is it?
