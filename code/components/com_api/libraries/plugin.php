@@ -12,10 +12,10 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class ApiPlugin extends JObject {
+class ApiPlugin extends JPlugin {
 	
 	protected $user            = null;
-	protected $params          = null;
+	public    $params          = null;
 	protected $format          = null;
 	protected $response        = null;
 	protected $request         = null;
@@ -38,42 +38,43 @@ class ApiPlugin extends JObject {
 			return self::$instances[$name];
 		}
 
-		$plugin	= JPluginHelper::getPlugin('api', $name);
+		$plugin	= JPluginHelper::getPlugin( 'api', $name );
 
-		if ( empty( $plugin ) ){
-			ApiError::raiseError(400, JText::_('COM_API_PLUGIN_CLASS_NOT_FOUND'));
+		if ( empty( $plugin ) ) {
+			ApiError::raiseError( 400, JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ) );
 		}
 
 		jimport( 'joomla.filesystem.file' );
 
-		$plgfile	= JPATH_BASE.self::$plg_path.$name.'.php';
-		$param_path = JPATH_BASE.self::$plg_path.$name.'.xml';
+		$plgfile	= JPATH_BASE.self::$plg_path.$name.DS.$name.'.php';
+		$param_path = JPATH_BASE.self::$plg_path.$name.DS.$name.'.xml';
 
-		if (!JFile::exists($plgfile)) :
-			ApiError::raiseError(400, JText::_('COM_API_FILE_NOT_FOUND'));
-		endif;
+		if ( !JFile::exists( $plgfile ) ) {
+			ApiError::raiseError( 400, JText::_( 'COM_API_FILE_NOT_FOUND' ) );
+		}
 
 		include $plgfile;
-		$class 	= self::$plg_prefix.ucwords($name);
+		$class 	= self::$plg_prefix . ucwords( $name );
 
-		if (!class_exists($class)) :
-			ApiError::raiseError(400, JText::_('COM_API_PLUGIN_CLASS_NOT_FOUND'));
-		endif;
+		if ( !class_exists( $class ) ) {
+			ApiError::raiseError( 400, JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ) );
+		}
 
-		$handler	=  new $class();
+		$handler =  new $class();
 
-		$cparams	= JComponentHelper::getParams('com_api');
-		$params		= new JParameter($plugin->params, $param_path);
-		$cparams->merge($params);
+		$cparams = JComponentHelper::getParams( 'com_api' );
+		$params  = new JRegistry;
+		$params->loadString( $plugin->params );
+		$cparams->merge( $params );
 
-		$handler->set('params', $cparams);
-		$handler->set('component', JRequest::getCmd('app'));
-		$handler->set('resource', JRequest::getCmd('resource'));
-		$handler->set('format', $handler->negotiateContent(JRequest::getCmd('output', null)));
-		$handler->set('request_method', JRequest::getMethod());
-		
+		$handler->set( 'params', $cparams );
+		$handler->set( 'component', JRequest::getCmd( 'app' ) );
+		$handler->set( 'resource', JRequest::getCmd( 'resource' ) );
+		$handler->set( 'format', $handler->negotiateContent( JRequest::getCmd( 'output', null ) ) );
+		$handler->set( 'request_method', JRequest::getMethod() );
+
 		self::$instances[$name] = $handler;
-		
+
 		return self::$instances[$name];
 	}
 	

@@ -33,12 +33,12 @@ class ApiControllerHttp extends ApiController
 		}
 	}
 	
-	private function sendError($exception)
+	private function sendError( $exception )
 	{
-		JResponse::setHeader('status', $exception->getCode());
-		$error = new JException($exception->getMessage(), $exception->getCode());
-		JFactory::getDocument()->setMimeEncoding('application/json');
-		return json_encode($error);
+		JResponse::setHeader( 'status', $exception->getCode() );
+		$error = new JException( $exception->getMessage(), $exception->getCode() );
+		JFactory::getDocument()->setMimeEncoding( 'application/json' );
+		return json_encode( $error );
 	}
 	
 	/**
@@ -47,15 +47,9 @@ class ApiControllerHttp extends ApiController
 	 * @return void
 	 * @since 0.1
 	 * @todo Figure out if there is a better way to do this
-	*/
-	
-	private function resetDocumentType() {
-		$document	= &JFactory::getDocument();
-		$raw		= &JDocument::getInstance('raw');
-		$document	= $raw;
-		
+	 */	
+	private function resetDocumentType()
+	{
 		JResponse::clearHeaders();
-		
 	}
-	
 }

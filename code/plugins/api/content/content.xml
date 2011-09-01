@@ -8,7 +8,7 @@
 	<authorUrl>http://www.edgewebworks.com</authorUrl>
 	<copyright>2010 Edge Web Works, LLC</copyright>
 	<license>GNU General Public License v2</license>
-	<description>This plugin exposes com_content to the Joomla! API</description>
+	<description>PLG_API_CONTENT_XML_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="content">content.php</filename>

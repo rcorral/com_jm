@@ -19,6 +19,6 @@ class plgAPIContent extends ApiPlugin
 		parent::__construct();
 		$this->loadLanguage();
 
-		ApiResource::addIncludePath( JPATH_PLUGINS .DS. 'api' .DS. 'content' );
+		ApiResource::addIncludePath( JPATH_PLUGINS .DS. 'api' .DS. 'content' .DS. 'resources' );
 	}
 }

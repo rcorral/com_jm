@@ -12,13 +12,19 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class plgAPILanguage extends ApiPlugin
-{
-	public function __construct()
+class plgSystemApi extends JPlugin
+{	
+	function __construct( &$subject, $config )
 	{
-		parent::__construct();
-		$this->loadLanguage();
+		parent::__construct( $subject, $config );
+	}
 
-		ApiResource::addIncludePath( JPATH_PLUGINS .DS. 'api' .DS. 'language' .DS. 'resources' );
+	function onAfterRoute()
+	{
+		$app = JFactory::getApplication();
+
+		if ( 'com_api' == JRequest::getVar( 'option' ) && $app->isSite() ) {
+			JRequest::setVar( 'format', 'raw' );
+		}
 	}
 }

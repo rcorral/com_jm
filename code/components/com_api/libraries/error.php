@@ -8,12 +8,4 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 */
 
-
-
-class ApiError extends JError
-{
-	public static function raiseError($code, $msg)
-	{
-		throw new Exception($msg, $code);
-	}
-}
+class ApiError extends JError {}

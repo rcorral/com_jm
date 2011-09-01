@@ -8,7 +8,7 @@
 	<authorUrl>http://www.rafaelcorral.com</authorUrl>
 	<copyright>2011</copyright>
 	<license>GNU General Public License v2</license>
-	<description>This plugin exposes users to the Joomla! API</description>
+	<description>PLG_API_USERS_XML_DESCRIPTION</description>
 
 	<files>
 		<filename plugin="users">users.php</filename>

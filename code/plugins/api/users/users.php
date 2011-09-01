@@ -19,6 +19,6 @@ class plgAPIUsers extends ApiPlugin
 		parent::__construct();
 		$this->loadLanguage();
 
-		ApiResource::addIncludePath( JPATH_PLUGINS .DS. 'api' .DS. 'users' );
+		ApiResource::addIncludePath( JPATH_PLUGINS .DS. 'api' .DS. 'users' .DS. 'resources' );
 	}
 }

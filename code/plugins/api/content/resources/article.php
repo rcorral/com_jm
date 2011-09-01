@@ -41,8 +41,10 @@ class ContentApiResourceArticle extends ApiResource
 		$article = $db->loadObject();
 
 		if ( $all_extras || in_array( 'parseparams', $extras ) ) {
-			$_meta    = new JParameter( $article->metadata );
-			$_attribs = new JParameter( $article->attribs );
+			$_meta    = new JRegistry;
+			$_meta->loadString( $article->metadata );
+			$_attribs = new JRegistry;
+			$_attribs->loadString( $article->attribs );
 			$article->attribs = $_attribs->_registry['_default']['data'];
 			$article->metadata = $_meta->_registry['_default']['data'];
 		}
