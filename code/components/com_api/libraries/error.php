@@ -8,9 +8,11 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 */
 
+
+
 class ApiError extends JError
 {
-	function raiseError($code, $msg)
+	public static function raiseError($code, $msg)
 	{
 		throw new Exception($msg, $code);
 	}

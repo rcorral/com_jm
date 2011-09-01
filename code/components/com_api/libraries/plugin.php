@@ -37,7 +37,7 @@ class ApiPlugin extends JObject {
 		if ( isset( self::$instances[$name] ) ) {
 			return self::$instances[$name];
 		}
-		
+
 		$plugin	= JPluginHelper::getPlugin('api', $name);
 
 		if ( empty( $plugin ) ){
@@ -53,19 +53,19 @@ class ApiPlugin extends JObject {
 			ApiError::raiseError(400, JText::_('COM_API_FILE_NOT_FOUND'));
 		endif;
 
-		include_once $plgfile;
+		include $plgfile;
 		$class 	= self::$plg_prefix.ucwords($name);
 
 		if (!class_exists($class)) :
 			ApiError::raiseError(400, JText::_('COM_API_PLUGIN_CLASS_NOT_FOUND'));
 		endif;
-		
+
 		$handler	=  new $class();
-		
+
 		$cparams	= JComponentHelper::getParams('com_api');
 		$params		= new JParameter($plugin->params, $param_path);
 		$cparams->merge($params);
-		
+
 		$handler->set('params', $cparams);
 		$handler->set('component', JRequest::getCmd('app'));
 		$handler->set('resource', JRequest::getCmd('resource'));

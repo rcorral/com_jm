@@ -30,7 +30,9 @@ defined('_JEXEC') or die('Restricted access');
 			<tr>
 				<td class="key"><?php echo JText::_('COM_API_PUBLISHED');?></td>
 				<td>
-					<?php echo JHTML::_('select.booleanlist', 'published', 'class="inputbox"', $this->row->published); ?>
+					<fieldset class="radio">
+						<?php echo JHTML::_( 'select.booleanlist', 'published', 'class="inputbox"', $this->row->published ); ?>
+					</fieldset>
 				</td>
 			</tr>
 			<?php if ($this->row->hash) : ?>
