@@ -24,7 +24,7 @@ abstract class ApiResource extends JObject
 
 	final public function invoke()
 	{
-		$method_name = $this->plugin->get('request_method');
+		$method_name = $this->plugin->get( 'request_method' );
 
 		if ( in_array( $method_name, $this->allowed_methods )
 			&& method_exists( $this, $method_name )
