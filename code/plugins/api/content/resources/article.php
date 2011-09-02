@@ -16,40 +16,10 @@ class ContentApiResourceArticle extends ApiResource
 {
 	public function get()
 	{
-		$db = JFactory::getDBO();
+		require_once JPATH_ADMINISTRATOR . '/components/com_content/models/article.php';
+		$model = JModel::getInstance( 'article', 'contentModel' );
 
-		jimport( 'joomla.html.parameter' );
-
-		$extras = explode( ',', JRequest::getVar( 'extras' ) );
-		$all_extras = in_array( 'all', $extras );
-
-		$select = 'c.*';
-		$join = '';
-		$where = '';
-
-		if ( $all_extras || in_array( 'frontpage', $extras ) ) {
-			$select .= ', f.`content_id` AS is_frontpage';
-			$join .= ' LEFT JOIN #__content_frontpage AS f ON c.`id` = f.`content_id`';
-		}
-
-		$query = "SELECT {$select}
-			FROM #__content AS c
-			{$join}
-				WHERE c.`id` = " . JRequest::getInt( 'id', 0 );
-
-		$db->setQuery( $query );
-		$article = $db->loadObject();
-
-		if ( $all_extras || in_array( 'parseparams', $extras ) ) {
-			$_meta    = new JRegistry;
-			$_meta->loadString( $article->metadata );
-			$_attribs = new JRegistry;
-			$_attribs->loadString( $article->attribs );
-			$article->attribs = $_attribs->_registry['_default']['data'];
-			$article->metadata = $_meta->_registry['_default']['data'];
-		}
-
-		$this->plugin->setResponse( $article );
+		$this->plugin->setResponse( $model->getItem( JRequest::getInt( 'id', 0 ) )->getProperties() );
 	}
 
 	public function post()
