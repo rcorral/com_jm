@@ -16,15 +16,23 @@ class ContentApiResourceCategories extends ApiResource
 {
 	public function get()
 	{
-		$db = JFactory::getDBO();
-		$query = 'SELECT * FROM #__categories';
-		
-		if ( $section = JRequest::getInt( 'sectionid' ) ) {
-			$query .= " WHERE section = {$section}";
-		}
+		$categories = JHtml::_( 'category.options', 'com_content' );
 
-		$db->setQuery( $query );
-		$categories = $db->loadObjectList( 'id' );
+		// Verify permissions.  If the action attribute is set, then we scan the options.
+		$action	= 'core.edit.own';
+
+		// Get the current user object.
+		$user = JFactory::getUser( APIHelper::getAPIUserId() );
+
+		foreach( $categories as $i => $cat ) {
+			// To take save or create in a category you need to have create rights for that category
+			// unless the item is already in that category.
+			// Unset the option if the user isn't authorised for it. In this field assets are always categories.
+			if ( $user->authorise( 'core.create', 'con_content.category.' . $cat->value ) != true
+			) {
+				unset( $categories[$i] );
+			}
+		}
 
 		$this->plugin->setResponse( $categories );
 	}

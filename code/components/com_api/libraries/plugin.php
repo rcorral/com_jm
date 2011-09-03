@@ -146,7 +146,7 @@ class ApiPlugin extends JPlugin
 			return $this->resource_acl[$resource][$method];
 		} else {
 			if ( $returnParamsDefault ) {
-				return $this->params->get( 'resource_access' );
+				return $this->params->get( 'resource_access', 'protected' );
 			} else {
 				return false;
 			}
@@ -173,9 +173,10 @@ class ApiPlugin extends JPlugin
 		$access = $this->getResourceAccess( $resource_name, $this->request_method );
 
 		if ( $access == 'protected' ) {
-			$user = APIAuthentication::authenticateRequest();
+			$auth_handler = APIAuthentication::getInstance();
+			$user = $auth_handler->authenticateRequest();
 			if ( $user === false ) {
-				ApiError::raiseError( 403, APIAuthentication::getAuthError() );
+				ApiError::raiseError( 403, $auth_handler->getError() );
 			}
 
 			$this->set( 'user', $user );

@@ -16,54 +16,58 @@ abstract class ApiAuthentication extends JObject
 {
 	protected $auth_method     = null;
 	protected $domain_checking = null;
-	static    $auth_errors     = array();
 
 	public function __construct( $params )
 	{
     	parent::__construct( $params );
 
-		$this->set( 'auth_method', $params->get( 'auth_method', 'key' ) );
-		$this->set( 'domain_checking', $params->get( 'domain_checking', 1 ) );
+		$this->set( 'auth_method', $this->get( 'auth_method', 'key' ) );
+		$this->set( 'domain_checking', $this->get( 'domain_checking', 1 ) );
   	}
+
+	public function getInstance( $method = null )
+	{
+		static $instances = array();
+		
+		jimport('joomla.application.component.helper');
+		$params       = JComponentHelper::getParams( 'com_api' );
+
+		if ( null == $method ) {
+			$method = $params->get( 'auth_method', 'key' );
+		}
+
+		if ( isset( $instances[$method] ) ) {
+			return $instances[$method];
+		}
+
+		$className    = 'APIAuthentication' . ucwords( $method );
+		$auth_handler = new $className( $params->toArray() );
+		$instances[$method] = $auth_handler;
+
+		return $instances[$method];
+	}
 
 	abstract public function authenticate();
 
-	public static function authenticateRequest()
+	public function authenticateRequest()
 	{
-		$user_id		= APIHelper::getAPIUserID();
+		$user_id = APIHelper::getAPIUserID();
 
 		if ( $user_id === false ) {
-			self::setAuthError( $auth_handler->getError() );
 			return false;
 		} else {
-			$user = JFactory::getUser($user_id);
+			$user = JFactory::getUser( $user_id );
 			if ( !$user->id ) {
-				self::setAuthError( JText::_( 'COM_API_USER_NOT_FOUND' ) );
+				$this->setError( JText::_( 'COM_API_USER_NOT_FOUND' ) );
 				return false;
 			}
 
 			if ( $user->block == 1 ) {
-				self::setAuthError( JText::_( 'COM_API_BLOCKED_USER' ) );
+				$this->setError( JText::_( 'COM_API_BLOCKED_USER' ) );
 				return false;
 			}
 
 			return $user;	
 		}
 	}
-	
-	public static function setAuthError( $msg )
-	{
-		self::$auth_errors[] = $msg;
-		return true;
-	}
-
-	public static function getAuthError()
-	{
-		if ( empty( self::$auth_errors ) ) {
-			return false;
-		}
-
-		return array_pop( self::$auth_errors );
-	}
-	
 }

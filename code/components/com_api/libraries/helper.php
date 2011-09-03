@@ -14,12 +14,13 @@ class APIHelper
 {
 	function getAPIUserID()
 	{
-		$params			= JComponentHelper::getParams( 'com_api' );
-		$method			= $params->get( 'auth_method', 'key' );
-		$className 		= 'APIAuthentication' . ucwords( $method );
-		$auth_handler 	= new $className( $params );
+		static $user_id;
 
-		return $auth_handler->authenticate();
+		if ( !$user_id ) {
+			$user_id = APIAuthentication::getInstance()->authenticate();
+		}
+
+		return $user_id;
 	}
 
 	function setSessionUser()

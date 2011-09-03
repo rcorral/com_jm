@@ -11,27 +11,30 @@
 defined('_JEXEC') or die;
 jimport('joomla.application.component.model');
 
-class ApiModelKeys extends ApiModel {
+class ApiModelKeys extends ApiModel
+{
 
 	protected $option 		= null;
 	protected $view			= null;
 	protected $context		= null;
 	protected $pagination 	= null;
-	
+
 	protected $list			= null;
 	protected $total		= null;
-	
-  	public function __construct() {
-    	parent::__construct();
-		
-		$this->option 	= JRequest::getCmd('option');
-		$this->view 	= JRequest::getCmd('view');
-		$this->context 	= $this->option.'.categories';
-		
-    	$this->populateState();    
-  	}
 
-	protected function populateState() {
+	public function __construct()
+	{
+		parent::__construct();
+
+		$this->option  = JRequest::getCmd('option');
+		$this->view    = JRequest::getCmd('view');
+		$this->context = $this->option . '.categories';
+
+		$this->populateState();    
+	}
+
+	protected function populateState()
+	{
     	$app = JFactory::getApplication();
 
 		$search 			= $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search', '', 'string');
@@ -75,54 +78,57 @@ class ApiModelKeys extends ApiModel {
 		return $this->list;
 	}
 	
-	private function filterList(&$list) {
-		for($i=0; $i<count($list); $i++) :
+	private function filterList( &$list )
+	{
+		for ( $i = 0; $i < count( $list ); $i++ ) {
 			$row				= $list[$i];
 			$row->checked_out	= false;
 			$row->checked 		= JHTML::_('grid.checkedout', $row, $i );
 			$row->published_html = JHTML::_('grid.published', $row, $i);
 			$row->admin_link 	= 'index.php?option='.$this->get('option').'&view=key&cid[]='.$row->id;
-		endfor;
+		}
 	}
 	
-	public function getTotal($override=false) {
-		if (!$override && $this->get('total') !== null) :
-			return $this->get('list');
-		endif;
-		
-		$where	= $this->buildWhere();
-		$order	= $this->buildOrder();
-		
+	public function getTotal( $override = false )
+	{
+		if ( !$override && $this->get( 'total' ) !== null ) {
+			return $this->get( 'list' );
+		}
+
+		$where = $this->buildWhere();
+		$order = $this->buildOrder();
+
 		$query	= "SELECT COUNT(*) "
-				."FROM #__api_keys AS k"
-				.$where
-				.$order
+				. "FROM #__api_keys AS k"
+				. $where
+				. $order
 				;
-				
-		$this->_db->setQuery($query);
+
+		$this->_db->setQuery( $query );
 		$this->total = $this->_db->loadResult();
+
 		return $this->total;
 	}
 
-
-	private function buildWhere() {
-		$where	= null;
+	private function buildWhere()
+	{
+		$where  = null;
 		$wheres = array();
-		
-		if (!empty($wheres)) :
-			$where = "WHERE ".implode(" AND ", $wheres)." ";
-		endif;
-		
+
+		if ( !empty( $wheres ) ) {
+			$where = " WHERE " . implode( ' AND ', $wheres );
+		}
+
 		return $where;
 	}
 
-	private function buildOrder() {
+	private function buildOrder()
+	{
 		$ordering = null;
-		
-		$ordering = "ORDER BY ".$this->getState('filter.order')." ".$this->getState('filter.order_dir');
-		
+
+		$ordering = " ORDER BY " . $this->getState( 'filter.order' )
+			. ' ' . $this->getState( 'filter.order_dir' );
+
 		return $ordering;
 	}
-	
-
 }
