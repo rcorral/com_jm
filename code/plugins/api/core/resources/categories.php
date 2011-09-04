@@ -12,11 +12,12 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class ContentApiResourceCategories extends ApiResource
+class CoreApiResourceCategories extends ApiResource
 {
 	public function get()
 	{
-		$categories = JHtml::_( 'category.options', 'com_content' );
+		$extension  = JRequest::getWord( 'extension' );
+		$categories = JHtml::_( 'category.options', $extension );
 
 		// Verify permissions.  If the action attribute is set, then we scan the options.
 		$action	= 'core.edit.own';
@@ -28,7 +29,7 @@ class ContentApiResourceCategories extends ApiResource
 			// To take save or create in a category you need to have create rights for that category
 			// unless the item is already in that category.
 			// Unset the option if the user isn't authorised for it. In this field assets are always categories.
-			if ( $user->authorise( 'core.create', 'con_content.category.' . $cat->value ) != true
+			if ( $user->authorise( 'core.create', $extension . '.category.' . $cat->value ) != true
 			) {
 				unset( $categories[$i] );
 			}

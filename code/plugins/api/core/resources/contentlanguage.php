@@ -12,16 +12,13 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class LanguageApiResourceLanguages extends ApiResource
+class CoreApiResourceContentLanguage extends ApiResource
 {
 	public function get()
 	{
-		jimport( 'joomla.language.helper' );
+		require_once JPATH_ROOT . '/libraries/joomla/html/html/contentlanguage.php';
 
-		$client = JRequest::getCmd( 'client', 'site' );
-
-		$languages = JLanguageHelper::createLanguageList(
-			'', constant( 'JPATH_' . strtoupper( $client ) ), true, true );
+		$languages = JHtmlContentLanguage::existing( true, true );
 
 		$this->plugin->setResponse( $languages );
 	}
