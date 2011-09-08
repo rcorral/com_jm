@@ -78,12 +78,12 @@ class ApiPlugin extends JPlugin
 
 		return self::$instances[$name];
 	}
-	
+
 	public function __construct()
 	{
 		
 	}
-	
+
 	//public function __call($name, $arguments) {
 	//	ApiError::raiseError(400, JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'));
 	//}
