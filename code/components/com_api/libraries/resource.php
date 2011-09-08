@@ -88,4 +88,9 @@ abstract class ApiResource extends JObject
 
 		return $paths;
 	}
+
+	final public function getErrorResponse( $error_code = 1, $message = '' )
+	{
+		return array( 'error' => true, 'error_code' => $error_code, 'message' => JText::_( $message ) );
+	}
 }
