@@ -89,13 +89,21 @@ abstract class ApiResource extends JObject
 		return $paths;
 	}
 
-	final public function getSuccessResponse( $message = '' )
+	final public function getSuccessResponse( $code = 200, $message = '', $set_status = true )
 	{
-		return (object) array( 'success' => true, 'message' => JText::_( $message ) );
+		if ( true === $set_status ) {
+			JResponse::setHeader( 'status', $code, true );
+		}
+
+		return (object) array( 'success' => true, 'code' => $code, 'message' => JText::_( $message ) );
 	}
 
-	final public function getErrorResponse( $error_code = 1, $message = '' )
+	final public function getErrorResponse( $code = 400, $message = '', $set_status = true )
 	{
-		return (object) array( 'error' => true, 'error_code' => $error_code, 'message' => JText::_( $message ) );
+		if ( true === $set_status ) {
+			JResponse::setHeader( 'status', $code, true );
+		}
+
+		return (object) array( 'error' => true, 'code' => $code, 'message' => JText::_( $message ) );
 	}
 }
