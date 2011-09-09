@@ -23,8 +23,32 @@ class plgSystemApi extends JPlugin
 	{
 		$app = JFactory::getApplication();
 
+		// Temporary hack until it is possible to get Joomla to add PUT, DELETE support
+		if (  $app->isSite() && in_array( JRequest::getMethod(), array( 'PUT', 'DELETE' ) ) ) {
+			$putdata = $this->getPutParameters(file_get_contents('php://input'));
+			$putdata['format'] = 'raw';
+
+			if ( isset( $putdata['option'] ) && 'com_api' == $putdata['option'] ) {
+				$_REQUEST = array_merge( $_REQUEST, $putdata );
+				$_POST = array_merge( $_POST, $putdata );
+			}
+		}
+
 		if ( 'com_api' == JRequest::getVar( 'option' ) && $app->isSite() ) {
 			JRequest::setVar( 'format', 'raw' );
 		}
+
+	}
+
+	private static function getPutParameters( $input )
+	{
+		$putdata = $input;
+		if ( function_exists('mb_parse_str') ) {
+	    	mb_parse_str( $putdata, $outputdata );
+		} else {
+			parse_str( $putdata, $outputdata );
+		}
+
+    	return $outputdata;
 	}
 }

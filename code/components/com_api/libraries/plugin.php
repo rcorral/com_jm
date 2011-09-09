@@ -42,7 +42,7 @@ class ApiPlugin extends JPlugin
 		$plugin	= JPluginHelper::getPlugin( 'api', $name );
 
 		if ( empty( $plugin ) ) {
-			ApiError::raiseError( 400, JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ) );
+			throw new Exception( JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ), 400 );
 		}
 
 		jimport( 'joomla.filesystem.file' );
@@ -51,14 +51,14 @@ class ApiPlugin extends JPlugin
 		$param_path = JPATH_BASE.self::$plg_path.$name.DS.$name.'.xml';
 
 		if ( !JFile::exists( $plgfile ) ) {
-			ApiError::raiseError( 400, JText::_( 'COM_API_FILE_NOT_FOUND' ) );
+			throw new Exception( JText::_( 'COM_API_FILE_NOT_FOUND' ), 400 );
 		}
 
 		include $plgfile;
 		$class 	= self::$plg_prefix . ucwords( $name );
 
 		if ( !class_exists( $class ) ) {
-			ApiError::raiseError( 400, JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ) );
+			throw new Exception( JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ), 400 );
 		}
 
 		$handler =  new $class();
@@ -85,7 +85,7 @@ class ApiPlugin extends JPlugin
 	}
 
 	//public function __call($name, $arguments) {
-	//	ApiError::raiseError(400, JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'));
+	//	throw new Exception( JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'), 400 );
 	//}
 	
 	/**
@@ -176,14 +176,14 @@ class ApiPlugin extends JPlugin
 			$auth_handler = APIAuthentication::getInstance();
 			$user = $auth_handler->authenticateRequest();
 			if ( $user === false ) {
-				ApiError::raiseError( 403, $auth_handler->getError() );
+				throw new Exception( $auth_handler->getError(), 403 );
 			}
 
 			$this->set( 'user', $user );
 		}
 
 		if ( !$this->checkRequestLimit() )  {
-			ApiError::raiseError( 403, JText::_('COM_API_RATE_LIMIT_EXCEEDED') );
+			throw new Exception( JText::_('COM_API_RATE_LIMIT_EXCEEDED'), 403 );
 		}
 
 		$this->log();
@@ -207,11 +207,11 @@ class ApiPlugin extends JPlugin
 	final private function checkInternally( $resource_name )
 	{
 		if ( !method_exists( $this, $resource_name ) ) {
-			ApiError::raiseError( 404, JText::_('COM_API_PLUGIN_METHOD_NOT_FOUND') );
+			throw new Exception( JText::_('COM_API_PLUGIN_METHOD_NOT_FOUND'), 404 );
 		}
 
 		if ( !is_callable( array( $this, $resource_name ) ) ) {
-			ApiError::raiseError( 404, JText::_('COM_API_PLUGIN_METHOD_NOT_CALLABLE') );
+			throw new Exception( JText::_('COM_API_PLUGIN_METHOD_NOT_CALLABLE'), 404 );
 		}
 
 		return true;
@@ -300,11 +300,11 @@ class ApiPlugin extends JPlugin
 		$method = 'to' . ucfirst( $format_name );
 
 		if ( !method_exists( $this, $method ) ) {
-			ApiError::raiseError( 406, JText::_( 'COM_API_PLUGIN_NO_ENCODER' ) );
+			throw new Exception( JText::_( 'COM_API_PLUGIN_NO_ENCODER' ), 406 );
 		}
 
 		if ( !is_callable( array( $this, $method ) ) ) {
-			ApiError::raiseError( 404, JText::_( 'COM_API_PLUGIN_NO_ENCODER' ) );
+			throw new Exception( JText::_( 'COM_API_PLUGIN_NO_ENCODER' ), 404 );
 		}
 
 		return $this->$method();

@@ -20,6 +20,7 @@ JLoader::register( 'APIView', $library_path .DS. 'view.php' );
 JLoader::register( 'APIHelper', $library_path .DS. 'helper.php' );
 JLoader::register( 'APIPlugin', $library_path .DS. 'plugin.php' );
 JLoader::register( 'APIError', $library_path .DS. 'error.php' );
+JLoader::register( 'APIException', $library_path .DS. 'exception.php' );
 JLoader::register( 'APICache', $library_path .DS. 'cache.php' );
 JLoader::register( 'APIResource', $library_path .DS. 'resource.php' );
 JLoader::register( 'APIAuthentication', $library_path .DS. 'authentication.php' );

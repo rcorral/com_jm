@@ -29,16 +29,16 @@ class ApiControllerHttp extends ApiController
 		try {
 			echo ApiPlugin::getInstance( $name )->fetchResource();
 		}  catch ( Exception $e ) {
-			echo $this->sendError($e);
+			echo $this->sendError( $e );
 		}
 	}
 	
 	private function sendError( $exception )
 	{
 		JResponse::setHeader( 'status', $exception->getCode() );
-		$error = new JException( $exception->getMessage(), $exception->getCode() );
+		$error = new APIException( $exception->getMessage(), $exception->getCode() );
 		JFactory::getDocument()->setMimeEncoding( 'application/json' );
-		return json_encode( $error );
+		return json_encode( $error->toArray() );
 	}
 	
 	/**

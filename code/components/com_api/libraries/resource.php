@@ -32,7 +32,7 @@ abstract class ApiResource extends JObject
 		) {
 			$this->$method_name();
 		} else {
-			ApiError::raiseError( 404, JText::_( 'COM_API_PLUGIN_METHOD_NOT_FOUND' ) );
+			throw new Exception( JText::_( 'COM_API_PLUGIN_METHOD_NOT_FOUND' ), 404 );
 		}
 	}
 
@@ -89,8 +89,13 @@ abstract class ApiResource extends JObject
 		return $paths;
 	}
 
+	final public function getSuccessResponse( $message = '' )
+	{
+		return (object) array( 'success' => true, 'message' => JText::_( $message ) );
+	}
+
 	final public function getErrorResponse( $error_code = 1, $message = '' )
 	{
-		return array( 'error' => true, 'error_code' => $error_code, 'message' => JText::_( $message ) );
+		return (object) array( 'error' => true, 'error_code' => $error_code, 'message' => JText::_( $message ) );
 	}
 }
