@@ -29,6 +29,8 @@ class ContentApiResourceArticle extends ApiResource
 
 		// Include dependencies
 		jimport('joomla.application.component.controller');
+		jimport('joomla.form.form');
+		jimport('joomla.database.table');
 
 		require_once JPATH_ADMINISTRATOR . '/components/com_content/controllers/article.php';
 		require_once JPATH_ADMINISTRATOR . '/components/com_content/models/article.php';
@@ -53,7 +55,7 @@ class ContentApiResourceArticle extends ApiResource
 		} elseif ( !$success ) {
 			$response = $this->getErrorResponse( 400, JText::_('COM_API_ERROR_OCURRED') );
 		} else {
-			$response = $this->getSuccessResponse( 201, JText::_('JLIB_APPLICATION_SAVE_SUCCESS') );
+			$response = $this->getSuccessResponse( 201, $controller->get('message') );
 			// Kind of a weird way of doing this, there has to be a better way?
 			$values	= (array) $app->getUserState($context.'.id');
 			$response->id = array_pop( $values );
