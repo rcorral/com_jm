@@ -36,13 +36,17 @@ class ContentApiResourceArticle extends ApiResource
 		JTable::addIncludePath( JPATH_ADMINISTRATOR . '/components/com_content/tables/' );
 
 		// Fake parameters
-		$_POST['task'] = 'save';
-		$_REQUEST['task'] = 'save';
+		$_POST['task'] = 'apply';
+		$_REQUEST['task'] = 'apply';
 		$_REQUEST[JUtility::getToken()] = 1;
 		$_POST[JUtility::getToken()] = 1;
 
+		$context = 'com_content.edit.article';
+		$app = JFactory::getApplication();
+		// Clear userstate just in case
+		$app->setUserState($context.'.id', array());
 		$controller = new ContentControllerArticle();
-		$success = $controller->save();
+		$success = $controller->execute('apply');
 
 		if ( $controller->getError() ) {
 			$response = $this->getErrorResponse( 400, $controller->getError() );
@@ -50,6 +54,12 @@ class ContentApiResourceArticle extends ApiResource
 			$response = $this->getErrorResponse( 400, JText::_('COM_API_ERROR_OCURRED') );
 		} else {
 			$response = $this->getSuccessResponse( 201, JText::_('JLIB_APPLICATION_SAVE_SUCCESS') );
+			// Kind of a weird way of doing this, there has to be a better way?
+			$values	= (array) $app->getUserState($context.'.id');
+			$response->id = array_pop( $values );
+			$app->setUserState($context.'.id', $values);
+			// Checkin article
+			$controller->getModel()->checkin( $response->id );
 		}
 
 		$this->plugin->setResponse( $response );
