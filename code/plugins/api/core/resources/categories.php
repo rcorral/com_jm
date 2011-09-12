@@ -14,6 +14,9 @@ jimport('joomla.plugin.plugin');
 
 class CoreApiResourceCategories extends ApiResource
 {
+	/**
+	 * HTML list ready response
+	 */
 	public function get()
 	{
 		$extension  = JRequest::getWord( 'extension' );
