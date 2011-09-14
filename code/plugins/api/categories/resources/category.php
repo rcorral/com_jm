@@ -16,22 +16,10 @@ class CategoriesApiResourceCategory extends ApiResource
 {
 	public function get()
 	{
-		$extension  = JRequest::getWord( 'extension' );
+		require_once JPATH_ADMINISTRATOR . '/components/com_categories/models/category.php';
+		$model = JModel::getInstance( 'category', 'categoriesModel' );
 
-		require_once JPATH_ADMINISTRATOR.'/components/com_categories/models/categories.php';
-		require_once JPATH_PLUGINS.'/api/categories/resources/helper.php';
-
-		$model = JModel::getInstance('ApiHelperModel', 'CategoriesModel');
-		$model->_setCache('getstart', $model->getState('list.start'));
-		$categories = $model->getItems();
-
-		if ( false === $categories ) {
-			$response = $this->getErrorResponse( 400, $model->getError() );
-		} else {
-			$response = $categories;
-		}
-
-		$this->plugin->setResponse( $categories );
+		$this->plugin->setResponse( $model->getItem( JRequest::getInt( 'id', 0 ) )->getProperties() );
 	}
 
 	public function post()
