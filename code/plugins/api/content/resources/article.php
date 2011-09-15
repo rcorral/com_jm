@@ -43,8 +43,9 @@ class ContentApiResourceArticle extends ApiResource
 		$_REQUEST[JUtility::getToken()] = 1;
 		$_POST[JUtility::getToken()] = 1;
 
-		$context = 'com_content.edit.article';
 		$app = JFactory::getApplication();
+		$context = 'com_content.edit.article';
+
 		// Clear userstate just in case
 		$app->setUserState($context.'.id', array());
 		$controller = new ContentControllerArticle();
@@ -87,8 +88,10 @@ class ContentApiResourceArticle extends ApiResource
 		$this->post();
 
 		$response = $this->plugin->get( 'response' );
-		if ( $response->success ) {
-			$this->plugin->setResponse( $this->getSuccessResponse( 200, $response->message ) );
+		if ( isset( $response->success ) && $response->success ) {
+			JResponse::setHeader( 'status', 200, true );
+			$response->code = 200;
+			$this->plugin->setResponse( $response );
 		}
 	}
 }

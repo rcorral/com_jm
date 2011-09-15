@@ -17,6 +17,7 @@ class CategoriesApiResourceCategories extends ApiResource
 	public function get()
 	{
 		$extension  = JRequest::getWord( 'extension' );
+		ApiHelper::setSessionUser();
 
 		require_once JPATH_ADMINISTRATOR.'/components/com_categories/models/categories.php';
 		require_once JPATH_PLUGINS.'/api/categories/resources/helper.php';
