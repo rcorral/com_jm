@@ -69,7 +69,7 @@ class ContentApiResourceArticles extends ApiResource
 		} elseif ( 'error' == $controller->get('messageType') ) {
 			$response = $this->getErrorResponse( 400, $controller->get('message') );
 		} else {
-			$response = $this->getSuccessResponse( 201, $controller->get('message') );
+			$response = $this->getSuccessResponse( 200, $controller->get('message') );
 		}
 
 		$this->plugin->setResponse( $response );

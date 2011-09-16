@@ -39,4 +39,42 @@ class CategoriesApiResourceCategories extends ApiResource
 	{
 		$this->plugin->setResponse( 'here is a post request' );
 	}
+
+	public function delete( $id = null )
+	{
+		// Include dependencies
+		jimport('joomla.application.component.controller');
+		jimport('joomla.form.form');
+		jimport('joomla.database.table');
+
+		require_once JPATH_ADMINISTRATOR . '/components/com_categories/controllers/categories.php';
+		require_once JPATH_ADMINISTRATOR . '/components/com_categories/models/category.php';
+		JForm::addFormPath( JPATH_ADMINISTRATOR . '/components/com_categories/models/forms/' );
+
+		// Fake parameters
+		$_POST['task'] = 'trash';
+		$_REQUEST['task'] = 'trash';
+		$_REQUEST[JUtility::getToken()] = 1;
+		$_POST[JUtility::getToken()] = 1;
+
+		JFactory::getLanguage()->load('com_categories', JPATH_ADMINISTRATOR);
+		$controller = new CategoriesControllerCategories();
+		try {
+			$controller->execute('trash');
+		} catch ( JException $e ) {
+			$success = false;
+			$controller->set('messageType', 'error');
+			$controller->set('message', $e->getMessage() );
+		}
+
+		if ( $controller->getError() ) {
+			$response = $this->getErrorResponse( 400, $controller->getError() );
+		} elseif ( 'error' == $controller->get('messageType') ) {
+			$response = $this->getErrorResponse( 400, $controller->get('message') );
+		} else {
+			$response = $this->getSuccessResponse( 200, $controller->get('message') );
+		}
+
+		$this->plugin->setResponse( $response );
+	}
 }

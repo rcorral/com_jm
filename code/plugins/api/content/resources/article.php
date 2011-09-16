@@ -46,8 +46,7 @@ class ContentApiResourceArticle extends ApiResource
 		$app = JFactory::getApplication();
 		$context = 'com_content.edit.article';
 
-		// Clear userstate just in case
-		$app->setUserState($context.'.id', array());
+		// Save article
 		$controller = new ContentControllerArticle();
 		$success = $controller->execute('apply');
 
@@ -64,6 +63,9 @@ class ContentApiResourceArticle extends ApiResource
 			// Checkin article
 			$controller->getModel()->checkin( $response->id );
 		}
+
+		// Clear userstate for future requests
+		$app->setUserState($context.'.id', array());
 
 		$this->plugin->setResponse( $response );
 	}
