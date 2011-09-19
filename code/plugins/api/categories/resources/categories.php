@@ -32,7 +32,7 @@ class CategoriesApiResourceCategories extends ApiResource
 			$response = $categories;
 		}
 
-		$this->plugin->setResponse( $categories );
+		$this->plugin->setResponse( $response );
 	}
 
 	public function post()
