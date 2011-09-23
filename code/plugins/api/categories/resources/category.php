@@ -29,7 +29,9 @@ class CategoriesApiResourceCategory extends ApiResource
 
 		// Include dependencies
 		jimport('joomla.database.table');
-		JFactory::getLanguage()->load('joomla', JPATH_ADMINISTRATOR);
+		$language = JFactory::getLanguage();
+		$language->load('joomla', JPATH_ADMINISTRATOR);
+		$language->load('com_categories', JPATH_ADMINISTRATOR);
 
 		require_once JPATH_ADMINISTRATOR . '/components/com_categories/models/category.php';
 
