@@ -16,43 +16,18 @@ class UsersApiResourceUsers extends ApiResource
 {
 	public function get()
 	{
-		$db = JFactory::getDBO();
-		$_columns = '`id`, `name`';
+		require_once JPATH_ADMINISTRATOR.'/components/com_users/models/users.php';
 
-		$where = '';
-		if ( JRequest::getInt( 'access_level' ) ) {
-			// Does not include registered users in the list
-			$where = ' AND `gid` > 18';
-		}
+		$model = JModel::getInstance('Users', 'UsersModel');
+		$users = $model->getItems();
 
-		$columns = JRequest::getString( 'columns' );
-		$order   = JRequest::getCmd( 'order', 'name' );
-
-		if ( !$columns ) {
-			$columns = $_columns;
-		}
-		
-		preg_match_all( '/`?\w+`?/im', $columns, $matches );
-
-		if ( !empty( $matches[0] ) ) {
-			$columns = '';
-			foreach ( $matches[0] as $match ) {
-				$columns .= "{$match}, ";
-			}
-			$columns = substr( $columns, 0, -2 );
+		if ( false === $users || ( empty( $users ) && $model->getError() ) ) {
+			$response = $this->getErrorResponse( 400, $model->getError() );
 		} else {
-			$columns = $_columns;
+			$response = $users;
 		}
 
-		$query = "SELECT {$columns}
-			FROM #__users
-				WHERE block = 0
-				$where
-					ORDER BY {$order} ASC";
-		$db->setQuery( $query );
-		$users = $db->loadObjectList( 'id' );
-
-		$this->plugin->setResponse( $users );
+		$this->plugin->setResponse( $response );
 	}
 
 	public function post()
