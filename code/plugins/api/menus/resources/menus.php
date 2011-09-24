@@ -17,8 +17,10 @@ class MenusApiResourceMenus extends ApiResource
 	public function get()
 	{
 		require_once JPATH_ADMINISTRATOR.'/components/com_menus/models/menus.php';
+		require_once JPATH_PLUGINS.'/api/menus/resources/helper.php';
 
-		$model = JModel::getInstance('Menus', 'MenusModel');
+		$model = JModel::getInstance('ApiHelperModel', 'MenusModel');
+		$model->_setCache('getstart', $model->getState('list.start'));
 		$menus = $model->getItems();
 
 		if ( false === $menus || ( empty( $menus ) && $model->getError() ) ) {

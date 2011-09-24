@@ -17,8 +17,10 @@ class UsersApiResourceUsers extends ApiResource
 	public function get()
 	{
 		require_once JPATH_ADMINISTRATOR.'/components/com_users/models/users.php';
+		require_once JPATH_PLUGINS.'/api/users/resources/helper.php';
 
-		$model = JModel::getInstance('Users', 'UsersModel');
+		$model = JModel::getInstance('ApiHelperModel', 'UsersModel');
+		$model->_setCache('getstart', $model->getState('list.start'));
 		$users = $model->getItems();
 
 		if ( false === $users || ( empty( $users ) && $model->getError() ) ) {

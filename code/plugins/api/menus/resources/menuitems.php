@@ -19,8 +19,10 @@ class MenusApiResourceMenuItems extends ApiResource
 		ApiHelper::setSessionUser();
 
 		require_once JPATH_ADMINISTRATOR.'/components/com_menus/models/items.php';
+		require_once JPATH_PLUGINS.'/api/menus/resources/helper.php';
 
-		$model = JModel::getInstance('Items', 'MenusModel');
+		$model = JModel::getInstance('ApiHelperModel', 'MenuItemsModel');
+		$model->_setCache('getstart', $model->getState('list.start'));
 		$menuitems = $model->getItems();
 
 		if ( false === $menuitems || ( empty( $menuitems ) && $model->getError() ) ) {
