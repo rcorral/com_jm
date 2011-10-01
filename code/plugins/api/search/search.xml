@@ -15,6 +15,10 @@
 		<folder>resources</folder>
 	</files>
 
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_api_search.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_api_search.sys.ini</language>
+	</languages>
 	<params>
 	</params>
 </extension>

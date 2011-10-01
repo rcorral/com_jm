@@ -54,7 +54,7 @@ if [ -L $SITE_PATH/plugins/system/api ]; then
 fi
 
 # Admin language files
-adminlangs=( com_api plg_api_categories plg_api_content plg_api_core plg_api_language plg_api_menus plg_api_users plg_system_api )
+adminlangs=( com_api plg_api_api plg_api_categories plg_api_content plg_api_core plg_api_language plg_api_menus plg_api_users plg_system_api )
 for lang in ${adminlangs[@]}
 	do
 	if [ -L $SITE_PATH/administrator/language/en-GB/en-GB.$lang.ini ]; then

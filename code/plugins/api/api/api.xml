@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="1.7" type="plugin" group="api" method="upgrade">
-	<name>plg_api_menus</name>
+	<name>plg_api_api</name>
 	<version>1.0</version>
 	<creationDate>September 2011</creationDate>
 	<author>Rafael Corral</author>
-	<authorEmail>rxcorral@gmail.com</authorEmail>
+	<authorEmail>rafael@corephp.com</authorEmail>
 	<authorUrl>http://www.rafaelcorral.com</authorUrl>
-	<copyright>2011 Edge Web Works, LLC</copyright>
+	<copyright>2011</copyright>
 	<license>GNU General Public License v2</license>
-	<description>PLG_API_MENUS_XML_DESCRIPTION</description>
+	<description>PLG_API_API_XML_DESCRIPTION</description>
 
 	<files>
-		<filename plugin="menus">menus.php</filename>
+		<filename plugin="api">api.php</filename>
 		<folder>resources</folder>
 	</files>
 
 	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.plg_api_menus.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_api_menus.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_api_api.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_api_api.sys.ini</language>
 	</languages>
 	<params>
 	</params>

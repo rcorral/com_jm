@@ -14,9 +14,9 @@
 		<filename plugin="api">api.php</filename>
 	</files>
 
-	<languages folder="languages">
-		<language tag="en-GB">en-GB.plg_system_api.ini</language>
-		<language tag="en-GB">en-GB.plg_system_api.sys.ini</language>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_api.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_api.sys.ini</language>
 	</languages>
 	<params>
 	</params>

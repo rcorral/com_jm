@@ -9,7 +9,7 @@
 	<version>0.1</version>
 	<description>COM_API_XML_DESCRIPTION</description>
 
-	<scriptfile>scriptphp</scriptfile>
+	<scriptfile>script.php</scriptfile>
 
 	<install>
         <sql>
