@@ -129,19 +129,3 @@ class com_apiInstallerScript
 		return !in_array( false, $returns );
 	}
 }
-
-if ( !function_exists( 'myPrint' ) ) :
-/**
- * Function for printing data
- * @return 
- */
-function myPrint( $var, $pre = true ){
-	if($pre){
-		echo '<pre>';
-	}
-	print_r($var);
-	if($pre){
-		echo '</pre>';
-	}
-}
-endif;
