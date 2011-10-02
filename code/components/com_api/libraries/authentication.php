@@ -20,9 +20,6 @@ abstract class ApiAuthentication extends JObject
 	public function __construct( $params )
 	{
     	parent::__construct( $params );
-
-		$this->set( 'auth_method', $this->get( 'auth_method', 'key' ) );
-		$this->set( 'domain_checking', $this->get( 'domain_checking', 1 ) );
   	}
 
 	public function getInstance( $method = null )
@@ -30,7 +27,7 @@ abstract class ApiAuthentication extends JObject
 		static $instances = array();
 		
 		jimport('joomla.application.component.helper');
-		$params       = JComponentHelper::getParams( 'com_api' );
+		$params = JComponentHelper::getParams( 'com_api' );
 
 		if ( null == $method ) {
 			$method = $params->get( 'auth_method', 'key' );

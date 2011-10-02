@@ -24,7 +24,7 @@ class ApiApiResourceVersion extends ApiResource
 		$xml = JApplicationHelper::parseXMLInstallFile( JPATH_COMPONENT_ADMINISTRATOR.'/api.xml' );
 
 		if ( false == $xml ) {
-			$response = $this->getErrorResponse( 400, 'COM_API_UNEXPECTED_ERROR' );
+			$response = $this->getErrorResponse( 400, JText::_('COM_API_UNEXPECTED_ERROR') );
 		} else {
 			$response = $this->getSuccessResponse( 200, JText::_('COM_API_SUCCESS') );
 			$response->version = $xml['version'];

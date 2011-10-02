@@ -126,6 +126,6 @@ class com_apiInstallerScript
 			}
 		}
 
-		return !in_array( false, $returns );
+		return !in_array( false, $returns, true );
 	}
 }
