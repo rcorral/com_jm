@@ -29,7 +29,7 @@ class APIHelper
 			$user_id = APIHelper::getAPIUserID();
 		}
 
-		$session  =& JFactory::getSession();
+		$session =& JFactory::getSession();
 		$session->set( 'user', JUser::getInstance( $user_id ) );
 	}
 
