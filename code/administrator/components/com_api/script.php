@@ -82,7 +82,7 @@ class com_apiInstallerScript
 		$enable = array();
 		$new_in_version = array(
 			'api/api', 'api/categories', 'api/content', 'api/core', 'api/language', 'api/menus',
-			'api/search', 'api/users', 'system/api'
+			'api/users', 'system/api'
 			);
 
 		// Loop through plugin types
