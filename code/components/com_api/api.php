@@ -25,6 +25,7 @@ JLoader::register( 'APICache', $library_path .DS. 'cache.php' );
 JLoader::register( 'APIResource', $library_path .DS. 'resource.php' );
 JLoader::register( 'APIAuthentication', $library_path .DS. 'authentication.php' );
 JLoader::register( 'APIAuthenticationKey', $library_path .DS. 'authentication' .DS. 'key.php' );
+JLoader::register( 'APIAuthenticationUser', $library_path .DS. 'authentication' .DS. 'user.php' );
 
 $view	= JRequest::getCmd( 'view', '', 'method' );
 if ( $view ) {

@@ -224,7 +224,7 @@ class ApiPlugin extends JPlugin
 	final private function checkRequestLimit() 
 	{
 		$limit = $this->params->get( 'request_limit', 0 );
-		if ( $limit == 0 || $this->skip_request_limit ) {
+		if ( $limit == 0 || $this->get('skip_request_limit', false) ) {
 			return true;
 		}
 

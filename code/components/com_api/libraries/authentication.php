@@ -30,7 +30,7 @@ abstract class ApiAuthentication extends JObject
 		static $instances = array();
 		
 		jimport('joomla.application.component.helper');
-		$params       = JComponentHelper::getParams( 'com_api' );
+		$params = JComponentHelper::getParams( 'com_api' );
 
 		if ( null == $method ) {
 			$method = $params->get( 'auth_method', 'key' );

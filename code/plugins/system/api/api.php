@@ -19,28 +19,7 @@ class plgSystemApi extends JPlugin
 		parent::__construct( $subject, $config );
 	}
 
-	function onAfterRoute()
-	{
-		$app = JFactory::getApplication();
-
-		// Temporary hack until it is possible to get Joomla to add PUT, DELETE support
-		if (  $app->isSite() && in_array( JRequest::getMethod(), array( 'PUT', 'DELETE' ) ) ) {
-			$putdata = $this->getPutParameters(file_get_contents('php://input'));
-			$putdata['format'] = 'raw';
-
-			if ( isset( $putdata['option'] ) && 'com_api' == $putdata['option'] ) {
-				$_REQUEST = array_merge( $_REQUEST, $putdata );
-				$_POST = array_merge( $_POST, $putdata );
-			}
-		}
-
-		if ( 'com_api' == JRequest::getVar( 'option' ) && $app->isSite() ) {
-			JRequest::setVar( 'format', 'raw' );
-		}
-
-	}
-
-	private static function getPutParameters( $input )
+	public static function getPutParameters( $input )
 	{
 		$putdata = $input;
 		if ( function_exists('mb_parse_str') ) {
@@ -51,4 +30,21 @@ class plgSystemApi extends JPlugin
 
     	return $outputdata;
 	}
+}
+
+$app = JFactory::getApplication();
+
+// Temporary hack until it is possible to get Joomla to add PUT, DELETE support
+if (  $app->isSite() && in_array( JRequest::getMethod(), array( 'PUT', 'DELETE' ) ) ) {
+	$putdata = plgSystemApi::getPutParameters(file_get_contents('php://input'));
+	$putdata['format'] = 'raw';
+
+	if ( isset( $putdata['option'] ) && 'com_api' == $putdata['option'] ) {
+		$_REQUEST = array_merge( $_REQUEST, $putdata );
+		$_POST = array_merge( $_POST, $putdata );
+	}
+}
+
+if ( $app->isSite() && 'com_api' == JRequest::getVar( 'option' ) ) {
+	JRequest::setVar( 'format', 'raw' );
 }

@@ -6,10 +6,10 @@
 	<copyright>2011 Edge Web Works, LLC</copyright>
 	<authorEmail>brian@edgewebworks.com</authorEmail>
 	<authorUrl>edgewebworks.com</authorUrl>
-	<version>0.1</version>
+	<version>0.1.1</version>
 	<description>COM_API_XML_DESCRIPTION</description>
 
-	<scriptfile>scriptphp</scriptfile>
+	<scriptfile>script.php</scriptfile>
 
 	<install>
         <sql>
@@ -24,6 +24,7 @@
         <file>index.html</file>
 		<folder>assets</folder>
         <folder>controllers</folder>
+        <folder>helpers</folder>
 		<folder>libraries</folder>
         <folder>models</folder>
 		<folder>tables</folder>
@@ -45,6 +46,7 @@
 			<filename>install.mysql.sql</filename>
 			<folder>controllers</folder>
 			<folder>elements</folder>
+	        <folder>helpers</folder>
 			<folder>views</folder>
     	</files>
 

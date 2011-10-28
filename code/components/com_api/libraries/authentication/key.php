@@ -42,5 +42,4 @@ class ApiAuthenticationKey extends ApiAuthentication
 
 		return $token;
 	}
-	
 }

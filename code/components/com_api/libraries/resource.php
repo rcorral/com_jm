@@ -95,7 +95,7 @@ abstract class ApiResource extends JObject
 			JResponse::setHeader( 'status', $code, true );
 		}
 
-		return (object) array( 'success' => true, 'code' => $code, 'message' => JText::_( $message ) );
+		return (object) array( 'success' => true, 'code' => $code, 'message' => $message );
 	}
 
 	final public function getErrorResponse( $code = 400, $message = '', $set_status = true )
@@ -104,6 +104,6 @@ abstract class ApiResource extends JObject
 			JResponse::setHeader( 'status', $code, true );
 		}
 
-		return (object) array( 'error' => true, 'code' => $code, 'message' => JText::_( $message ) );
+		return (object) array( 'error' => true, 'code' => $code, 'message' => $message );
 	}
 }
