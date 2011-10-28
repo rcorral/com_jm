@@ -32,7 +32,6 @@ if [ -z $CODE_PATH ]; then
 fi
 
 # Delete old links and create new symlinks
-
 if [ -L $SITE_PATH/components/com_api ]; then
 	echo "Deleting old site component directory"
 	rm -rf $SITE_PATH/components/com_api
@@ -43,18 +42,8 @@ if [ -L $SITE_PATH/administrator/components/com_api ]; then
 	rm -rf $SITE_PATH/administrator/components/com_api
 fi
 
-if [ -L $SITE_PATH/plugins/api ]; then
-	echo "Deleting old plugins api directory"
-	rm -rf $SITE_PATH/plugins/api
-fi
-
-if [ -L $SITE_PATH/plugins/system/api ]; then
-	echo "Deleting old plugins system api directory"
-	rm -rf $SITE_PATH/plugins/system/api
-fi
-
-# Admin language files
-adminlangs=( com_api plg_api_api plg_api_categories plg_api_content plg_api_core plg_api_language plg_api_menus plg_api_users plg_system_api )
+# Delete old admin language files
+adminlangs=( com_api )
 for lang in ${adminlangs[@]}
 	do
 	if [ -L $SITE_PATH/administrator/language/en-GB/en-GB.$lang.ini ]; then
@@ -67,7 +56,7 @@ for lang in ${adminlangs[@]}
 	fi
 done
 
-# Site language files
+# Delete old site language files
 sitelangs=( com_api )
 for lang in ${sitelangs[@]}
 	do
@@ -81,12 +70,7 @@ ln -s $CODE_PATH/components/com_api $SITE_PATH/components/
 ln -s $CODE_PATH/administrator/components/com_api $SITE_PATH/administrator/components/
 ln -s $CODE_PATH/language/en-GB/* $SITE_PATH/language/en-GB/
 ln -s $CODE_PATH/administrator/language/en-GB/* $SITE_PATH/administrator/language/en-GB/
-ln -s $CODE_PATH/plugins/api $SITE_PATH/plugins/
-ln -s $CODE_PATH/plugins/system/api $SITE_PATH/plugins/system/
 
 echo "Links created successfully"
 exit
 
-#mkdir $SITE_PATH/plugins/api
-#ln -s $CODE_PATH/plugins/api/* $SITE_PATH/plugins/api/
-#ln -s $CODE_PATH/language/en-GB/* $SITE_PATH/language/en-GB/

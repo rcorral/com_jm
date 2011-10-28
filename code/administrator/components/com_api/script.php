@@ -85,6 +85,10 @@ class com_apiInstallerScript
 			'api/users', 'system/api'
 			);
 
+		if ( !JFolder::exists( $plgs_path ) ) {
+			return true;
+		}
+
 		// Loop through plugin types
 		$plg_types = JFolder::folders( $plgs_path );
 		foreach ( $plg_types as $plg_type ) {
