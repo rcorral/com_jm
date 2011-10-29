@@ -55,4 +55,9 @@
 			<language tag="en-GB">language/en-GB/en-GB.com_api.sys.ini</language>
 		</languages>
 	</administration>
+
+	<!-- UPDATESERVER DEFINITION -->
+	<updateservers>
+		<server type="extension" priority="1" name="API Update Site"><![CDATA[http://jommobile.com/media/downloads/update.xml]]></server>
+	</updateservers>
 </extension>
