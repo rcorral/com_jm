@@ -84,6 +84,20 @@ class ApiPlugin extends JPlugin
 		
 	}
 
+	public function loadLanguage( $extension = '', $basePath = JPATH_ADMINISTRATOR )
+	{
+		if ( empty( $extension ) ) {
+			if ( !preg_match( '/plgAPI(.*)/i', get_class($this), $r ) ) {
+				return false;
+			}
+			$name = strtolower( $r[1] );
+
+			$extension = 'plg_api_' . $name;
+		}
+
+		parent::loadLanguage( $extension, $basePath );
+	}
+
 	//public function __call($name, $arguments) {
 	//	throw new Exception( JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'), 400 );
 	//}
