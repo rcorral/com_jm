@@ -1,6 +1,6 @@
 <?php 
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -62,7 +62,7 @@ class ApiModelKeys extends ApiModel
 		$order	= $this->buildOrder();
 		
 		$query	= "SELECT k.*, u.name, u.username "
-				."FROM #__api_keys AS k "
+				."FROM #__jm_keys AS k "
 				."LEFT JOIN #__users AS u ON u.id = k.user_id "
 				.$where
 				.$order
@@ -99,7 +99,7 @@ class ApiModelKeys extends ApiModel
 		$order = $this->buildOrder();
 
 		$query	= "SELECT COUNT(*) "
-				. "FROM #__api_keys AS k"
+				. "FROM #__jm_keys AS k"
 				. $where
 				. $order
 				;

@@ -1,6 +1,6 @@
 <?php 
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Rafael Corral
  * @link 	http://www.rafaelcorral.com

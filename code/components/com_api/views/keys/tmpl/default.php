@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -32,11 +32,11 @@ defined('_JEXEC') or die('Restricted access');
 		$delete_link 	= JRoute::_('index.php?option=com_jm&c=keys&task=delete&id='.$t->id.'&'.$this->session_token.'=1');
 	?>
 		<tr class="<?php echo $class;?>">
-			<td class="api_table_count"><?php echo $i+1;?></td>
-			<td class="api_table_domain"><a href="<?php echo $edit_link;?>"><?php echo $t->domain;?></a></td>
-			<td class="api_table_key"><?php echo $t->hash;?></td>
-			<td class="api_table_published" align="center"><img src="<?php echo JURI::root()."administrator/images/".$img;?>" /></td>
-			<td class="api_table_delete">
+			<td class="jm_table_count"><?php echo $i+1;?></td>
+			<td class="jm_table_domain"><a href="<?php echo $edit_link;?>"><?php echo $t->domain;?></a></td>
+			<td class="jm_table_key"><?php echo $t->hash;?></td>
+			<td class="jm_table_published" align="center"><img src="<?php echo JURI::root()."administrator/images/".$img;?>" /></td>
+			<td class="jm_table_delete">
 				<?php if ($this->can_register) : ?>
 					<a href="<?php echo $delete_link;?>">Delete</a>
 				<?php endif; ?>
@@ -46,5 +46,5 @@ defined('_JEXEC') or die('Restricted access');
 </table>
 
 <?php if ($this->can_register) : ?>
-	<a class="api_new_token" href="<?php echo $this->new_token_link;?>"><?php echo JText::_('COM_JM_NEW_KEY');?></a>
+	<a class="jm_new_token" href="<?php echo $this->new_token_link;?>"><?php echo JText::_('COM_JM_NEW_KEY');?></a>
 <?php endif; ?>

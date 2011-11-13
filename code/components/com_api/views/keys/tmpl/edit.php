@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -29,16 +29,16 @@ JFactory::getDocument()->addScriptDeclaration("
 
 <h1 class="componentheading"><?php echo JText::_('COM_JM_COMPONENT_HEADING');?></h1>
 <h2 class="contentheading"><?php echo $this->key->id ? JText::_('COM_JM_EDIT_KEY_PAGE_TITLE') : JText::_('COM_JM_NEW_KEY_PAGE_TITLE');?></h2>
-<form action="index.php" method="post" name="adminForm" class="api_key_form">
+<form action="index.php" method="post" name="adminForm" class="jm_key_form">
 	<p>
-		<label class="api_form_label" for="domain"><?php echo JText::_('COM_JM_DOMAIN');?>:</label>
-		<input type="text" class="inputbox api_form_input" name="domain" size="55" value="<?php echo $this->key->domain;?>" />
+		<label class="jm_form_label" for="domain"><?php echo JText::_('COM_JM_DOMAIN');?>:</label>
+		<input type="text" class="inputbox jm_form_input" name="domain" size="55" value="<?php echo $this->key->domain;?>" />
 		<?php echo JHTML::tooltip(JText::_('COM_JM_DOMAIN_TOOLTIP'), JText::_('COM_JM_DOMAIN')); ?>
 	</p>
 	<?php if ($this->key->hash) : ?>
 		<p>
-			<label class="api_form_label"><?php echo JText::_('COM_JM_KEY');?>:</label>
-			<span class="api_form_key"><?php echo $this->key->hash;?></span>
+			<label class="jm_form_label"><?php echo JText::_('COM_JM_KEY');?>:</label>
+			<span class="jm_form_key"><?php echo $this->key->hash;?></span>
 		</p>
 	<?php endif; ?>
 	<p>

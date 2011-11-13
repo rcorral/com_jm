@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -25,6 +25,6 @@ class ApiTableLog extends JTable
 	 */
 	function __construct(&$db)
 	{
-		parent::__construct('#__api_logs', 'id', $db);
+		parent::__construct('#__jm_logs', 'id', $db);
 	}
 }

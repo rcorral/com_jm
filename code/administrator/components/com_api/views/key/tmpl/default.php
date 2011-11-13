@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -20,10 +20,10 @@ defined('_JEXEC') or die('Restricted access');
 					<?php echo JHTML::_('list.users', 'user_id', $this->row->user_id, false, null, 'name', false); ?>
 				</td>
 			</tr>
-			<tr>
+			<tr style="display:none;">
 				<td class="key"><?php echo JText::_('COM_JM_DOMAIN');?></td>
 				<td>
-					<input type="text" class="inputbox api_form_input" name="domain" size="55" value="<?php echo $this->row->domain;?>" />
+					<input type="text" class="inputbox jm_form_input" name="domain" size="55" value="<?php echo $this->row->domain;?>" />
 					<?php echo JHTML::tooltip(JText::_('COM_JM_DOMAIN_TOOLTIP'), JText::_('COM_JM_DOMAIN')); ?>
 				</td>
 			</tr>

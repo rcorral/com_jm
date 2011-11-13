@@ -1,6 +1,6 @@
 <?php 
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -37,7 +37,7 @@ class ApiAuthenticationKey extends ApiAuthentication
 	public function loadTokenByHash( $hash )
 	{
 		$db = JFactory::getDBO();
-		$db->setQuery( "SELECT * FROM #__api_keys WHERE hash = " . $db->Quote( $hash ) );
+		$db->setQuery( "SELECT * FROM #__jm_keys WHERE hash = " . $db->Quote( $hash ) );
 		$token = $db->loadObject();
 
 		return $token;

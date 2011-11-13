@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Rafael Corral
  * @link 	http://www.corephp.com
@@ -10,14 +10,14 @@
 
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-class APIHelper
+class JMHelper
 {
-	function getAPIUserID()
+	function getJMUserID()
 	{
 		static $user_id;
 
 		if ( !$user_id ) {
-			$user_id = APIAuthentication::getInstance()->authenticate();
+			$user_id = JMAuthentication::getInstance()->authenticate();
 		}
 
 		return $user_id;
@@ -26,7 +26,7 @@ class APIHelper
 	function setSessionUser( $user_id = false )
 	{
 		if ( false === $user_id ) {
-			$user_id = APIHelper::getAPIUserID();
+			$user_id = JMHelper::getJMUserID();
 		}
 
 		$session =& JFactory::getSession();

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `#__api_keys` (
+CREATE TABLE IF NOT EXISTS `#__jm_keys` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `hash` varchar(255) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `#__api_keys` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `#__api_logs` (
+CREATE TABLE IF NOT EXISTS `#__jm_logs` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `hash` varchar(20) NOT NULL,
   `ip_address` varchar(20) NOT NULL,

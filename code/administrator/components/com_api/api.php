@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -14,11 +14,11 @@ jimport('joomla.application.component.controller');
 
 $front_end = JPATH_SITE .DS. 'components' .DS. 'com_jm';
 
-JLoader::register( 'APIController', $front_end .DS. 'libraries' .DS. 'controller.php' );
+JLoader::register( 'JMController', $front_end .DS. 'libraries' .DS. 'controller.php' );
 JLoader::register( 'ApiControllerAdmin',
 	$front_end .DS. 'libraries' .DS. 'admin' .DS. 'controller.php' );
-JLoader::register( 'APIModel', $front_end .DS. 'libraries' .DS. 'model.php' );
-JLoader::register( 'APIView', $front_end .DS. 'libraries' .DS. 'view.php' );
+JLoader::register( 'JMModel', $front_end .DS. 'libraries' .DS. 'model.php' );
+JLoader::register( 'JMView', $front_end .DS. 'libraries' .DS. 'view.php' );
 
 $view       = JRequest::getCmd( 'view', '' );
 $controller = JRequest::getCmd( 'c', '' );

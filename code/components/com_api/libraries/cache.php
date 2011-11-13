@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die;
 
-class APICache {
+class JMCache {
 
 	const CACHE_GROUP 	= 'com_jm';
 	const DAY			= 86400;

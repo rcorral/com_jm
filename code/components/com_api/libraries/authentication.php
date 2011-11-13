@@ -1,6 +1,6 @@
 <?php 
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -37,7 +37,7 @@ abstract class ApiAuthentication extends JObject
 			return $instances[$method];
 		}
 
-		$className    = 'APIAuthentication' . ucwords( $method );
+		$className    = 'JMAuthentication' . ucwords( $method );
 		$auth_handler = new $className( $params->toArray() );
 		$instances[$method] = $auth_handler;
 
@@ -48,7 +48,7 @@ abstract class ApiAuthentication extends JObject
 
 	public function authenticateRequest()
 	{
-		$user_id = APIHelper::getAPIUserID();
+		$user_id = JMHelper::getJMUserID();
 
 		if ( $user_id === false ) {
 			return false;

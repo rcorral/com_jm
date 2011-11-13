@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -36,7 +36,7 @@ class ApiControllerHttp extends ApiController
 	private function sendError( $exception )
 	{
 		JResponse::setHeader( 'status', $exception->getCode() );
-		$error = new APIException( $exception->getMessage(), $exception->getCode() );
+		$error = new JMException( $exception->getMessage(), $exception->getCode() );
 		JFactory::getDocument()->setMimeEncoding( 'application/json' );
 		return json_encode( $error->toArray() );
 	}

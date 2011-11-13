@@ -1,6 +1,6 @@
 <?php 
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -38,7 +38,7 @@ class ApiModelKey extends ApiModel
 		endif;
 		
 		$query = "SELECT id, hash, domain, published, created "
-				."FROM #__api_keys "
+				."FROM #__jm_keys "
 				.$where
 				;
 		$this->_db->setQuery($query);
@@ -101,7 +101,7 @@ class ApiModelKey extends ApiModel
 			$where = "id = ".(int)$cid;
 		endif;
 		
-		$this->_db->setQuery("DELETE FROM #__api_keys WHERE ".$where);
+		$this->_db->setQuery("DELETE FROM #__jm_keys WHERE ".$where);
 		if (!$this->_db->query()) :
 			$this->setError($this->_db->getErrorMsg());
 			return false;
@@ -113,7 +113,7 @@ class ApiModelKey extends ApiModel
 		$seed	= $this->makeRandomSeed();
 		$hash	= sha1(uniqid($seed.microtime()));
 		
-		$this->_db->setQuery('SELECT COUNT(*) FROM #__api_keys WHERE hash = "'.$hash.'"');
+		$this->_db->setQuery('SELECT COUNT(*) FROM #__jm_keys WHERE hash = "'.$hash.'"');
 		$exists	= $this->_db->loadResult();
 		
 		if ($exists) :
@@ -143,7 +143,7 @@ class ApiModelKey extends ApiModel
 			$this->setError(JText::_('COM_JM_INVALID_DOMAIN_MSG'));
 			return false;
 		elseif ($sanitized != 'localhost') :
-			$this->_db->setQuery("SELECT COUNT(*) FROM #__api_keys WHERE domain = ".$this->_db->Quote($sanitized));
+			$this->_db->setQuery("SELECT COUNT(*) FROM #__jm_keys WHERE domain = ".$this->_db->Quote($sanitized));
 			$exists = $this->_db->loadResult();
 			if ($exists > 0) :
 				$this->setError(JText::_('COM_JM_DUPLICATE_DOMAIN_MSG'));

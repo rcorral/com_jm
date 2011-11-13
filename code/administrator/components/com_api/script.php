@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -81,8 +81,8 @@ class com_jmInstallerScript
 		$returns = array();
 		$enable = array();
 		$new_in_version = array(
-			'api/api', 'api/categories', 'api/content', 'api/core', 'api/language', 'api/menus',
-			'api/users', 'system/api'
+			'jm/api', 'jm/categories', 'jm/content', 'jm/core', 'jm/language', 'jm/menus',
+			'jm/users', 'system/jm'
 			);
 
 		if ( !JFolder::exists( $plgs_path ) ) {

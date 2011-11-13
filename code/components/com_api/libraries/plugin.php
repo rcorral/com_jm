@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -30,8 +30,8 @@ class ApiPlugin extends JPlugin
 		);
 
 	static	$instances  = array();
-	static	$plg_prefix = 'plgAPI';
-	static	$plg_path   = '/plugins/api/';
+	static	$plg_prefix = 'plgJM';
+	static	$plg_path   = '/plugins/jm/';
 
 	public static function getInstance($name) 
 	{	
@@ -39,7 +39,7 @@ class ApiPlugin extends JPlugin
 			return self::$instances[$name];
 		}
 
-		$plugin	= JPluginHelper::getPlugin( 'api', $name );
+		$plugin	= JPluginHelper::getPlugin( 'jm', $name );
 
 		if ( empty( $plugin ) ) {
 			throw new Exception( JText::_( 'COM_JM_PLUGIN_CLASS_NOT_FOUND' ), 400 );
@@ -62,7 +62,7 @@ class ApiPlugin extends JPlugin
 		}
 
 		$dispatcher = JDispatcher::getInstance();
-		$handler =  new $class( $dispatcher, array( 'name' => $name, 'type' => 'api' ) );
+		$handler =  new $class( $dispatcher, array( 'name' => $name, 'type' => 'jm' ) );
 
 		$cparams = JComponentHelper::getParams( 'com_jm' );
 		$params  = new JRegistry;
@@ -88,18 +88,18 @@ class ApiPlugin extends JPlugin
 	public function loadLanguage( $extension = '', $basePath = JPATH_ADMINISTRATOR )
 	{
 		if ( empty( $extension ) ) {
-			if ( !preg_match( '/plgAPI(.*)/i', get_class($this), $r ) ) {
+			if ( !preg_match( '/plgJM(.*)/i', get_class($this), $r ) ) {
 				return false;
 			}
 			$name = strtolower( $r[1] );
 
-			$extension = 'plg_api_' . $name;
+			$extension = 'plg_jm_' . $name;
 		}
 
 		parent::loadLanguage( $extension, $basePath );
 	}
 
-	public function register_api_plugin( $plugin = array() )
+	public function register_jm_plugin( $plugin = array() )
 	{
 		if ( !isset( $plugin['title'] ) ) {
 			return array();
@@ -200,7 +200,7 @@ class ApiPlugin extends JPlugin
 		$access = $this->getResourceAccess( $resource_name, $this->request_method );
 
 		if ( $access == 'protected' ) {
-			$auth_handler = APIAuthentication::getInstance();
+			$auth_handler = JMAuthentication::getInstance();
 			$user = $auth_handler->authenticateRequest();
 			if ( $user === false ) {
 				throw new Exception( $auth_handler->getError(), 403 );
@@ -277,7 +277,7 @@ class ApiPlugin extends JPlugin
 		$query_time = time() - $offset;
 
 		$db = JFactory::getDBO();
-		$query = "SELECT COUNT(*) FROM #__api_logs "
+		$query = "SELECT COUNT(*) FROM #__jm_logs "
 				."WHERE `time` >= ".$db->Quote($query_time)." "
 				."AND (`hash` = ".$db->Quote($hash)." OR `ip_address` = ".$db->Quote($ip_address).")"
 				;

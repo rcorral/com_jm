@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -14,18 +14,18 @@ jimport('joomla.application.component.controller');
 
 $library_path = JPATH_COMPONENT .DS. 'libraries';
 
-JLoader::register( 'APIController', $library_path .DS. 'controller.php' );
-JLoader::register( 'APIModel', $library_path .DS. 'model.php' );
-JLoader::register( 'APIView', $library_path .DS. 'view.php' );
-JLoader::register( 'APIHelper', $library_path .DS. 'helper.php' );
-JLoader::register( 'APIPlugin', $library_path .DS. 'plugin.php' );
-JLoader::register( 'APIError', $library_path .DS. 'error.php' );
-JLoader::register( 'APIException', $library_path .DS. 'exception.php' );
-JLoader::register( 'APICache', $library_path .DS. 'cache.php' );
-JLoader::register( 'APIResource', $library_path .DS. 'resource.php' );
-JLoader::register( 'APIAuthentication', $library_path .DS. 'authentication.php' );
-JLoader::register( 'APIAuthenticationKey', $library_path .DS. 'authentication' .DS. 'key.php' );
-JLoader::register( 'APIAuthenticationUser', $library_path .DS. 'authentication' .DS. 'user.php' );
+JLoader::register( 'JMController', $library_path .DS. 'controller.php' );
+JLoader::register( 'JMModel', $library_path .DS. 'model.php' );
+JLoader::register( 'JMView', $library_path .DS. 'view.php' );
+JLoader::register( 'JMHelper', $library_path .DS. 'helper.php' );
+JLoader::register( 'JMPlugin', $library_path .DS. 'plugin.php' );
+JLoader::register( 'JMError', $library_path .DS. 'error.php' );
+JLoader::register( 'JMException', $library_path .DS. 'exception.php' );
+JLoader::register( 'JMCache', $library_path .DS. 'cache.php' );
+JLoader::register( 'JMResource', $library_path .DS. 'resource.php' );
+JLoader::register( 'JMAuthentication', $library_path .DS. 'authentication.php' );
+JLoader::register( 'JMAuthenticationKey', $library_path .DS. 'authentication' .DS. 'key.php' );
+JLoader::register( 'JMAuthenticationUser', $library_path .DS. 'authentication' .DS. 'user.php' );
 
 $view	= JRequest::getCmd( 'view', '', 'method' );
 if ( $view ) {

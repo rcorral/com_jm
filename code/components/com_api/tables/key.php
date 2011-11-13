@@ -1,6 +1,6 @@
 <?php
 /**
- * @package	API
+ * @package	JM
  * @version 1.5
  * @author 	Brian Edgerton
  * @link 	http://www.edgewebworks.com
@@ -18,6 +18,6 @@ class ApiTableKey extends JTable
 	 */
 	function __construct( &$db )
 	{
-		parent::__construct( '#__api_keys', 'id', $db );
+		parent::__construct( '#__jm_keys', 'id', $db );
 	}
 }

@@ -18,7 +18,7 @@
     </install>
 
 	<files folder="site">
-        <file>api.php</file>
+        <file>jm.php</file>
         <file>LICENSE.php</file>
         <file>router.php</file>
         <file>index.html</file>
@@ -39,7 +39,7 @@
 		<menu>COM_JM_MENU</menu>
 
 		<files folder="admin">
-			<filename>api.php</filename>
+			<filename>jm.php</filename>
 			<filename>config.xml</filename>
 			<filename>index.html</filename>
 			<filename>LICENSE.php</filename>
@@ -58,6 +58,6 @@
 
 	<!-- UPDATESERVER DEFINITION -->
 	<updateservers>
-		<server type="extension" priority="1" name="API Update Site"><![CDATA[http://jommobile.com/media/downloads/update.xml]]></server>
+		<server type="extension" priority="1" name="jomMobile Update Site"><![CDATA[http://jommobile.com/media/downloads/update.xml]]></server>
 	</updateservers>
 </extension>

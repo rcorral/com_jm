@@ -1,4 +1,4 @@
-Joomla! API - Generic RESTful API framework for Joomla! 1.7
+Joomla! jomMobile API - Generic RESTful API framework for Joomla! 1.7
 ================================
 
 What is it?

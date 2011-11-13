@@ -42,13 +42,13 @@ if [ -L $SITE_PATH/administrator/components/com_jm ]; then
 	rm -rf $SITE_PATH/administrator/components/com_jm
 fi
 
-if [ -L $SITE_PATH/plugins/system/api ]; then
-	echo "Deleting old plugins system api directory"
-	rm -rf $SITE_PATH/plugins/system/api
+if [ -L $SITE_PATH/plugins/system/jm ]; then
+	echo "Deleting old plugins system jm directory"
+	rm -rf $SITE_PATH/plugins/system/jm
 fi
 
 # Delete old admin language files
-adminlangs=( com_jm plg_system_api )
+adminlangs=( com_jm plg_system_jm )
 for lang in ${adminlangs[@]}
 	do
 	if [ -L $SITE_PATH/administrator/language/en-GB/en-GB.$lang.ini ]; then
@@ -75,7 +75,7 @@ ln -s $CODE_PATH/components/com_jm $SITE_PATH/components/
 ln -s $CODE_PATH/administrator/components/com_jm $SITE_PATH/administrator/components/
 ln -s $CODE_PATH/language/en-GB/* $SITE_PATH/language/en-GB/
 ln -s $CODE_PATH/administrator/language/en-GB/* $SITE_PATH/administrator/language/en-GB/
-ln -s $CODE_PATH/plugins/system/api $SITE_PATH/plugins/system/
+ln -s $CODE_PATH/plugins/system/jm $SITE_PATH/plugins/system/
 
 echo "Links created successfully"
 exit
