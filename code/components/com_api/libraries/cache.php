@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 class APICache {
 
-	const CACHE_GROUP 	= 'com_api';
+	const CACHE_GROUP 	= 'com_jm';
 	const DAY			= 86400;
 	const HALF_DAY		= 43200;
 	const HOUR			= 3600;

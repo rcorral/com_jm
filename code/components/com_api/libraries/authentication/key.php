@@ -22,12 +22,12 @@ class ApiAuthenticationKey extends ApiAuthentication
 		$token = $this->loadTokenByHash( $key );
 
 		if ( !$token ) {
-			$this->setError( JText::_( 'COM_API_KEY_NOT_FOUND' ) );
+			$this->setError( JText::_( 'COM_JM_KEY_NOT_FOUND' ) );
 			return false;
 		}
 		
 		if ( !$token->published ) {
-			$this->setError( JText::_( 'COM_API_KEY_DISABLED' ) );
+			$this->setError( JText::_( 'COM_JM_KEY_DISABLED' ) );
 			return false;
 		}
 

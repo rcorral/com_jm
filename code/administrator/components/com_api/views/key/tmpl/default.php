@@ -15,20 +15,20 @@ defined('_JEXEC') or die('Restricted access');
 		<form action="index.php" method="post" name='adminForm'>
 		<table width='100%' cellpadding='5' cellspacing='0' class='admintable form-validate'>
 			<tr>
-				<td class="key"><?php echo JText::_('COM_API_USER');?></td>
+				<td class="key"><?php echo JText::_('COM_JM_USER');?></td>
 				<td>
 					<?php echo JHTML::_('list.users', 'user_id', $this->row->user_id, false, null, 'name', false); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="key"><?php echo JText::_('COM_API_DOMAIN');?></td>
+				<td class="key"><?php echo JText::_('COM_JM_DOMAIN');?></td>
 				<td>
 					<input type="text" class="inputbox api_form_input" name="domain" size="55" value="<?php echo $this->row->domain;?>" />
-					<?php echo JHTML::tooltip(JText::_('COM_API_DOMAIN_TOOLTIP'), JText::_('COM_API_DOMAIN')); ?>
+					<?php echo JHTML::tooltip(JText::_('COM_JM_DOMAIN_TOOLTIP'), JText::_('COM_JM_DOMAIN')); ?>
 				</td>
 			</tr>
 			<tr>
-				<td class="key"><?php echo JText::_('COM_API_PUBLISHED');?></td>
+				<td class="key"><?php echo JText::_('COM_JM_PUBLISHED');?></td>
 				<td>
 					<fieldset class="radio">
 						<?php echo JHTML::_( 'select.booleanlist', 'published', 'class="inputbox"', $this->row->published ); ?>
@@ -37,7 +37,7 @@ defined('_JEXEC') or die('Restricted access');
 			</tr>
 			<?php if ($this->row->hash) : ?>
 			<tr>
-				<td class="key"><?php echo JText::_('COM_API_KEY');?></td>
+				<td class="key"><?php echo JText::_('COM_JM_KEY');?></td>
 				<td><?php echo $this->row->hash; ?></td>
 			</tr>
 			<?php endif; ?>

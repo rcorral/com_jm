@@ -2,7 +2,7 @@
 /**
  * @version		$Id
  * @package		Joomla
- * @subpackage	com_api
+ * @subpackage	com_jm
  * @copyright	Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
  * @license		GNU/GPL, see LICENSE.php
  * Joomla! is free software. This version may have been modified pursuant
@@ -29,7 +29,7 @@ class ApiController extends JController
 	{
 		parent::__construct( $config );
 		$this->set( 'option', JRequest::getCmd( 'option' ) );
-		JModel::addIncludePath( JPATH_SITE .DS. 'components' .DS. 'com_api' .DS. 'models' );
-		JTable::addIncludePath( JPATH_SITE .DS. 'components' .DS. 'com_api' .DS. 'tables' );
+		JModel::addIncludePath( JPATH_SITE .DS. 'components' .DS. 'com_jm' .DS. 'models' );
+		JTable::addIncludePath( JPATH_SITE .DS. 'components' .DS. 'com_jm' .DS. 'tables' );
 	}
 }

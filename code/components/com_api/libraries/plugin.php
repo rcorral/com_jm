@@ -23,7 +23,7 @@ class ApiPlugin extends JPlugin
 	protected $request_headers    = null;
 	protected $skip_request_limit = false;
 	protected $resource_acl       = array();
-	protected $cache_folder       = 'com_api';
+	protected $cache_folder       = 'com_jm';
 	protected $content_types      = array(
 		'application/json' 	=> 'json',
 		'application/xml'	=> 'xml'
@@ -42,7 +42,7 @@ class ApiPlugin extends JPlugin
 		$plugin	= JPluginHelper::getPlugin( 'api', $name );
 
 		if ( empty( $plugin ) ) {
-			throw new Exception( JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ), 400 );
+			throw new Exception( JText::_( 'COM_JM_PLUGIN_CLASS_NOT_FOUND' ), 400 );
 		}
 
 		jimport( 'joomla.filesystem.file' );
@@ -51,20 +51,20 @@ class ApiPlugin extends JPlugin
 		$param_path = JPATH_BASE.self::$plg_path.$name.DS.$name.'.xml';
 
 		if ( !JFile::exists( $plgfile ) ) {
-			throw new Exception( JText::_( 'COM_API_FILE_NOT_FOUND' ), 400 );
+			throw new Exception( JText::_( 'COM_JM_FILE_NOT_FOUND' ), 400 );
 		}
 
 		include $plgfile;
 		$class 	= self::$plg_prefix . ucwords( $name );
 
 		if ( !class_exists( $class ) ) {
-			throw new Exception( JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ), 400 );
+			throw new Exception( JText::_( 'COM_JM_PLUGIN_CLASS_NOT_FOUND' ), 400 );
 		}
 
 		$dispatcher = JDispatcher::getInstance();
 		$handler =  new $class( $dispatcher, array( 'name' => $name, 'type' => 'api' ) );
 
-		$cparams = JComponentHelper::getParams( 'com_api' );
+		$cparams = JComponentHelper::getParams( 'com_jm' );
 		$params  = new JRegistry;
 		$params->loadString( $plugin->params );
 		$cparams->merge( $params );
@@ -210,7 +210,7 @@ class ApiPlugin extends JPlugin
 		}
 
 		if ( !$this->checkRequestLimit() )  {
-			throw new Exception( JText::_('COM_API_RATE_LIMIT_EXCEEDED'), 403 );
+			throw new Exception( JText::_('COM_JM_RATE_LIMIT_EXCEEDED'), 403 );
 		}
 
 		$this->log();
@@ -234,11 +234,11 @@ class ApiPlugin extends JPlugin
 	final private function checkInternally( $resource_name )
 	{
 		if ( !method_exists( $this, $resource_name ) ) {
-			throw new Exception( JText::_('COM_API_PLUGIN_METHOD_NOT_FOUND'), 404 );
+			throw new Exception( JText::_('COM_JM_PLUGIN_METHOD_NOT_FOUND'), 404 );
 		}
 
 		if ( !is_callable( array( $this, $resource_name ) ) ) {
-			throw new Exception( JText::_('COM_API_PLUGIN_METHOD_NOT_CALLABLE'), 404 );
+			throw new Exception( JText::_('COM_JM_PLUGIN_METHOD_NOT_CALLABLE'), 404 );
 		}
 
 		return true;
@@ -327,11 +327,11 @@ class ApiPlugin extends JPlugin
 		$method = 'to' . ucfirst( $format_name );
 
 		if ( !method_exists( $this, $method ) ) {
-			throw new Exception( JText::_( 'COM_API_PLUGIN_NO_ENCODER' ), 406 );
+			throw new Exception( JText::_( 'COM_JM_PLUGIN_NO_ENCODER' ), 406 );
 		}
 
 		if ( !is_callable( array( $this, $method ) ) ) {
-			throw new Exception( JText::_( 'COM_API_PLUGIN_NO_ENCODER' ), 404 );
+			throw new Exception( JText::_( 'COM_JM_PLUGIN_NO_ENCODER' ), 404 );
 		}
 
 		return $this->$method();

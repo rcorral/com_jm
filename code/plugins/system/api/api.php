@@ -39,12 +39,12 @@ if (  $app->isSite() && in_array( JRequest::getMethod(), array( 'PUT', 'DELETE' 
 	$putdata = plgSystemApi::getPutParameters(file_get_contents('php://input'));
 	$putdata['format'] = 'raw';
 
-	if ( isset( $putdata['option'] ) && 'com_api' == $putdata['option'] ) {
+	if ( isset( $putdata['option'] ) && 'com_jm' == $putdata['option'] ) {
 		$_REQUEST = array_merge( $_REQUEST, $putdata );
 		$_POST = array_merge( $_POST, $putdata );
 	}
 }
 
-if ( $app->isSite() && 'com_api' == JRequest::getVar( 'option' ) ) {
+if ( $app->isSite() && 'com_jm' == JRequest::getVar( 'option' ) ) {
 	JRequest::setVar( 'format', 'raw' );
 }

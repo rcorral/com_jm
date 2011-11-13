@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 /**
  * Script file of HelloWorld component
  */
-class com_apiInstallerScript
+class com_jmInstallerScript
 {
 	/**
 	 * method to install the component
@@ -21,7 +21,7 @@ class com_apiInstallerScript
 	 */
 	function install( $parent )
 	{	
-		echo '<p>' . JText::_('COM_API_INSTALL_TEXT') . '</p>';
+		echo '<p>' . JText::_('COM_JM_INSTALL_TEXT') . '</p>';
 	}
 
 	/**
@@ -31,7 +31,7 @@ class com_apiInstallerScript
 	 */
 	function uninstall( $parent ) 
 	{
-		echo '<p>' . JText::_('COM_API_UNINSTALL_TEXT') . '</p>';
+		echo '<p>' . JText::_('COM_JM_UNINSTALL_TEXT') . '</p>';
 	}
 
 	/**
@@ -41,7 +41,7 @@ class com_apiInstallerScript
 	 */
 	function update( $parent )
 	{
-		echo '<p>' . JText::_('COM_API_UPDATE_TEXT') . '</p>';
+		echo '<p>' . JText::_('COM_JM_UPDATE_TEXT') . '</p>';
 	}
 
 	/**
@@ -66,7 +66,7 @@ class com_apiInstallerScript
 			jimport('joomla.installer.installer');
 
 			if ( !$this->install_plugins( $type, $parent ) ) {
-				JError::raiseWarning( 21, JText::_( 'COM_API_ERROR_INSTALLING_PLUGINS' ) );
+				JError::raiseWarning( 21, JText::_( 'COM_JM_ERROR_INSTALLING_PLUGINS' ) );
 			}
 		}
 	}
@@ -100,12 +100,12 @@ class com_apiInstallerScript
 				// Install the package
 				if (!$installer->install($p_dir)) {
 					// There was an error installing the package
-					JError::raiseWarning( 21, JTEXT::sprintf( 'COM_API_PLUGIN_INSTALL_ERROR',
+					JError::raiseWarning( 21, JTEXT::sprintf( 'COM_JM_PLUGIN_INSTALL_ERROR',
 						$plg_type . '/' . $plugin ) );
 					$returns[] = false;
 				} else {
 					// Package installed sucessfully
-					$app->enqueueMessage( JTEXT::sprintf( 'COM_API_PLUGIN_INSTALL_SUCCESS',
+					$app->enqueueMessage( JTEXT::sprintf( 'COM_JM_PLUGIN_INSTALL_SUCCESS',
 						$plg_type . '/' . $plugin ) );
 					$returns[] = true;
 
@@ -124,7 +124,7 @@ class com_apiInstallerScript
 					WHERE ( " . implode( ' OR ', $enable ) . " ) AND `type` = 'plugin'" );
 
 			if ( !$db->query() ) {
-				JError::raiseWarning( 1, JText::_('COM_API_ERROR_ENABLING_PLUGINS') );
+				JError::raiseWarning( 1, JText::_('COM_JM_ERROR_ENABLING_PLUGINS') );
 
 				return false;
 			}

@@ -17,7 +17,7 @@ JFactory::getDocument()->addScriptDeclaration("
 			var sanitized = domain.replace(regex_sanitize, '');
 			var regex_validate = /^([0-9a-z-_\.]+\.+[0-9a-z\.])+|localhost$/i;
 			if (regex_validate.test(sanitized) == false) {
-				alert('".JText::_("COM_API_INVALID_DOMAIN_MSG")."');
+				alert('".JText::_("COM_JM_INVALID_DOMAIN_MSG")."');
 				return false;
 			}
 		}
@@ -27,17 +27,17 @@ JFactory::getDocument()->addScriptDeclaration("
 
 ?>
 
-<h1 class="componentheading"><?php echo JText::_('COM_API_COMPONENT_HEADING');?></h1>
-<h2 class="contentheading"><?php echo $this->key->id ? JText::_('COM_API_EDIT_KEY_PAGE_TITLE') : JText::_('COM_API_NEW_KEY_PAGE_TITLE');?></h2>
+<h1 class="componentheading"><?php echo JText::_('COM_JM_COMPONENT_HEADING');?></h1>
+<h2 class="contentheading"><?php echo $this->key->id ? JText::_('COM_JM_EDIT_KEY_PAGE_TITLE') : JText::_('COM_JM_NEW_KEY_PAGE_TITLE');?></h2>
 <form action="index.php" method="post" name="adminForm" class="api_key_form">
 	<p>
-		<label class="api_form_label" for="domain"><?php echo JText::_('COM_API_DOMAIN');?>:</label>
+		<label class="api_form_label" for="domain"><?php echo JText::_('COM_JM_DOMAIN');?>:</label>
 		<input type="text" class="inputbox api_form_input" name="domain" size="55" value="<?php echo $this->key->domain;?>" />
-		<?php echo JHTML::tooltip(JText::_('COM_API_DOMAIN_TOOLTIP'), JText::_('COM_API_DOMAIN')); ?>
+		<?php echo JHTML::tooltip(JText::_('COM_JM_DOMAIN_TOOLTIP'), JText::_('COM_JM_DOMAIN')); ?>
 	</p>
 	<?php if ($this->key->hash) : ?>
 		<p>
-			<label class="api_form_label"><?php echo JText::_('COM_API_KEY');?>:</label>
+			<label class="api_form_label"><?php echo JText::_('COM_JM_KEY');?>:</label>
 			<span class="api_form_key"><?php echo $this->key->hash;?></span>
 		</p>
 	<?php endif; ?>
@@ -45,7 +45,7 @@ JFactory::getDocument()->addScriptDeclaration("
 		<input type="submit" name="submit" value="Submit" onclick="return submitbutton('save');" />
 		<input type="submit" name="cancel" value="Cancel" onclick="return submitbutton('cancel');" />
 	</p>
-	<input type="hidden" name="option" id="option" value="com_api" />
+	<input type="hidden" name="option" id="option" value="com_jm" />
 	<input type="hidden" name="task" id="task" value="" />
 	<input type="hidden" name="id" id="id" value="<?php echo $this->key->id;?>" />
 	<input type="hidden" name="c" id="c" value="keys" />

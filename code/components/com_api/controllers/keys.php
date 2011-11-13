@@ -25,7 +25,7 @@ class ApiControllerKeys extends ApiController {
 			return true;
 		endif;
 		
-		$params	= JComponentHelper::getParams('com_api');
+		$params	= JComponentHelper::getParams('com_jm');
 		
 		if (!$params->get('key_registration')) :
 			return false;
@@ -41,16 +41,16 @@ class ApiControllerKeys extends ApiController {
 	}
 
 	public function cancel() {
-		JRequest::checkToken() or jexit(JText::_("COM_API_INVALID_TOKEN"));
-		$this->setRedirect(JRoute::_('index.php?option=com_api&view=keys', FALSE));
+		JRequest::checkToken() or jexit(JText::_("COM_JM_INVALID_TOKEN"));
+		$this->setRedirect(JRoute::_('index.php?option=com_jm&view=keys', FALSE));
 	}
 	
 	public function save() {
-		JRequest::checkToken() or jexit(JText::_("COM_API_INVALID_TOKEN"));
+		JRequest::checkToken() or jexit(JText::_("COM_JM_INVALID_TOKEN"));
 		
 		$id		= JRequest::getInt('id', 0, 'post');
 		if (!$id && !$this->checkAccess()) :
-			JFactory::getApplication()->redirect('index.php', JText::_('COM_API_NOT_AUTH_MSG'));
+			JFactory::getApplication()->redirect('index.php', JText::_('COM_JM_NOT_AUTH_MSG'));
 			exit();
 		endif;
 		
@@ -70,15 +70,15 @@ class ApiControllerKeys extends ApiController {
 			return false;
 		endif;
 		
-		$this->setRedirect(JRoute::_('index.php?option=com_api&view=keys'), JText::_('COM_API_KEY_SAVED'));
+		$this->setRedirect(JRoute::_('index.php?option=com_jm&view=keys'), JText::_('COM_JM_KEY_SAVED'));
 		
 	}
 	
 	public function delete() {
-		JRequest::checkToken('request') or jexit(JText::_("COM_API_INVALID_TOKEN"));
+		JRequest::checkToken('request') or jexit(JText::_("COM_JM_INVALID_TOKEN"));
 		
 		if (!$this->checkAccess()) :
-			JFactory::getApplication()->redirect('index.php', JText::_('COM_API_NOT_AUTH_MSG'));
+			JFactory::getApplication()->redirect('index.php', JText::_('COM_JM_NOT_AUTH_MSG'));
 			exit();
 		endif;
 		
@@ -89,13 +89,13 @@ class ApiControllerKeys extends ApiController {
 		$table->load($id);
 		
 		if ($user_id != $table->user_id) :
-			$this->setRedirect($_SERVER['HTTP_REFERER'], JText::_("COM_API_UNAUTHORIZED_DELETE_KEY"), 'error');
+			$this->setRedirect($_SERVER['HTTP_REFERER'], JText::_("COM_JM_UNAUTHORIZED_DELETE_KEY"), 'error');
 			return false;
 		endif;
 		
 		$table->delete($id);
 		
-		$this->setRedirect($_SERVER['HTTP_REFERER'], JText::_("COM_API_SUCCESSFUL_DELETE_KEY"));
+		$this->setRedirect($_SERVER['HTTP_REFERER'], JText::_("COM_JM_SUCCESSFUL_DELETE_KEY"));
 		
 	}
 	

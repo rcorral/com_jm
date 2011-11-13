@@ -22,11 +22,11 @@ class ApiViewKeys extends ApiView {
 		
 		if (!$user->get('id'))
 		{
-			JFactory::getApplication()->redirect('index.php', JText::_('COM_API_NOT_AUTH_MSG'));
+			JFactory::getApplication()->redirect('index.php', JText::_('COM_JM_NOT_AUTH_MSG'));
 			exit();
 		}
 		
-		$params = JComponentHelper::getParams('com_api');
+		$params = JComponentHelper::getParams('com_jm');
 		
 		$this->set('can_register', $params->get('key_registration', false) && $user->get('gid') >= $params->get('key_registration_access', 18));
 		
@@ -34,7 +34,7 @@ class ApiViewKeys extends ApiView {
 	
 	public function display($tpl = null) {
 		
-		JHTML::stylesheet('com_api.css', 'components/com_api/assets/css/');
+		JHTML::stylesheet('com_jm.css', 'components/com_jm/assets/css/');
 		
 		if ($this->routeLayout($tpl)) :
 			return;
@@ -46,7 +46,7 @@ class ApiViewKeys extends ApiView {
 		$model->setState('user_id', $user->get('id'));
 		$tokens	= $model->getList();
 		
-		$new_token_link = JRoute::_('index.php?option=com_api&view=keys&layout=new');
+		$new_token_link = JRoute::_('index.php?option=com_jm&view=keys&layout=new');
 		
 		$this->assignRef('session_token', JUtility::getToken());
 		$this->assignRef('new_token_link', $new_token_link);
@@ -71,11 +71,11 @@ class ApiViewKeys extends ApiView {
 		if ($id = JRequest::getInt('id', 0)) :
 			$key->load($id);
 			if ($key->user_id != JFactory::getUser()->get('id')) :
-				JFactory::getApplication()->redirect($_SERVER['HTTP_REFERER'], JText::_('COM_API_UNAUTHORIZED_EDIT_KEY'));
+				JFactory::getApplication()->redirect($_SERVER['HTTP_REFERER'], JText::_('COM_JM_UNAUTHORIZED_EDIT_KEY'));
 				return false;
 			endif;
 		elseif (!$this->can_register) :
-			JFactory::getApplication()->redirect(JRoute::_('index.php?option=com_api&view=keys'), JText::_('COM_API_UNAUTHORIZED_REGISTER'));
+			JFactory::getApplication()->redirect(JRoute::_('index.php?option=com_jm&view=keys'), JText::_('COM_JM_UNAUTHORIZED_REGISTER'));
 			return false;
 		endif;
 		

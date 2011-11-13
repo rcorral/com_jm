@@ -52,7 +52,7 @@ class APIHelper
 		$user   = JFactory::getUser();
 		$result = new JObject;
 
-		$assetName = 'com_api';
+		$assetName = 'com_jm';
 
 		$actions = array(
 			'core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.state', 'core.delete'

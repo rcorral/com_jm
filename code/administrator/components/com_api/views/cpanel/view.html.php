@@ -31,8 +31,8 @@ class ApiViewCpanel extends ApiView {
 	}
 	
 	private function generateToolbar() {
-		JToolBarHelper::title(JText::_('COM_API').': '.JText::_('COM_API_CONTROL_PANEL'));
-		JToolBarHelper::preferences('com_api', 500, 500);
+		JToolBarHelper::title(JText::_('COM_JM').': '.JText::_('COM_JM_CONTROL_PANEL'));
+		JToolBarHelper::preferences('com_jm', 500, 500);
 	}
 	
 }

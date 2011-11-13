@@ -27,7 +27,7 @@ abstract class ApiAuthentication extends JObject
 		static $instances = array();
 		
 		jimport('joomla.application.component.helper');
-		$params = JComponentHelper::getParams( 'com_api' );
+		$params = JComponentHelper::getParams( 'com_jm' );
 
 		if ( null == $method ) {
 			$method = $params->get( 'auth_method', 'key' );
@@ -55,12 +55,12 @@ abstract class ApiAuthentication extends JObject
 		} else {
 			$user = JFactory::getUser( $user_id );
 			if ( !$user->id ) {
-				$this->setError( JText::_( 'COM_API_USER_NOT_FOUND' ) );
+				$this->setError( JText::_( 'COM_JM_USER_NOT_FOUND' ) );
 				return false;
 			}
 
 			if ( $user->block == 1 ) {
-				$this->setError( JText::_( 'COM_API_BLOCKED_USER' ) );
+				$this->setError( JText::_( 'COM_JM_BLOCKED_USER' ) );
 				return false;
 			}
 

@@ -39,7 +39,7 @@ if ( file_exists( $c_path ) ) {
 	include_once $c_path;
 	$c_name	= 'ApiController' . ucwords( $controller );
 } else {
-	JError::raiseError( 404, JText::_( 'COM_API_CONTROLLER_NOT_FOUND' ) );
+	JError::raiseError( 404, JText::_( 'COM_JM_CONTROLLER_NOT_FOUND' ) );
 }
 
 $controller = new $c_name();

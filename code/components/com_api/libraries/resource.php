@@ -32,7 +32,7 @@ abstract class ApiResource extends JObject
 		) {
 			$this->$method_name();
 		} else {
-			throw new Exception( JText::_( 'COM_API_PLUGIN_METHOD_NOT_FOUND' ), 404 );
+			throw new Exception( JText::_( 'COM_JM_PLUGIN_METHOD_NOT_FOUND' ), 404 );
 		}
 	}
 

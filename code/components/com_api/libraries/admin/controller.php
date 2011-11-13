@@ -69,11 +69,11 @@ class ApiControllerAdmin extends ApiController {
 				$msg	= $model->getError();
 				$type	= 'error';
 			else :
-				$msg	= JText::_('COM_API_DELETE_SUCCESS');
+				$msg	= JText::_('COM_JM_DELETE_SUCCESS');
 				$type	= 'message';
 			endif;
 		else :
-			$msg	= JText::_('COM_API_NO_SELECTION');
+			$msg	= JText::_('COM_JM_NO_SELECTION');
 			$type	= 'error';
 		endif;
 		
@@ -95,7 +95,7 @@ class ApiControllerAdmin extends ApiController {
 		endif;
 		
 		$name = strtolower($name);
-		$msg = JText::_("COM_API_SAVE_SUCCESSFUL");
+		$msg = JText::_("COM_JM_SAVE_SUCCESSFUL");
 		if($this->getTask() == 'apply') :
 			$url = "index.php?option=".$this->get('option')."&view=".$name."&cid[]=".$item->id;
 		elseif (isset($post['ret'])) :
@@ -114,7 +114,7 @@ class ApiControllerAdmin extends ApiController {
 			$msg = $error;
 			$type = 'error';
 		else :
-			$msg = JText::_("COM_API_PUBLISH_SUCCESS");
+			$msg = JText::_("COM_JM_PUBLISH_SUCCESS");
 			$type = 'message';
 		endif;
 		
@@ -128,7 +128,7 @@ class ApiControllerAdmin extends ApiController {
 			$msg = $error;
 			$type = 'error';
 		else :
-			$msg = JText::_("COM_API_UNPUBLISH_SUCCESS");
+			$msg = JText::_("COM_JM_UNPUBLISH_SUCCESS");
 			$type = 'message';
 		endif;
 		

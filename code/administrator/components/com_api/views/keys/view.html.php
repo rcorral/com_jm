@@ -29,7 +29,7 @@ class ApiViewKeys extends ApiView {
 	}
 	
 	private function generateToolbar() {
-		JToolBarHelper::title(JText::_('COM_API').': '.JText::_('COM_API_KEYS'));
+		JToolBarHelper::title(JText::_('COM_JM').': '.JText::_('COM_JM_KEYS'));
 		JToolBarHelper::publishList();
 		JToolBarHelper::unpublishList();
 		JToolBarHelper::divider();

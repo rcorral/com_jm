@@ -12,7 +12,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-$front_end = JPATH_SITE .DS. 'components' .DS. 'com_api';
+$front_end = JPATH_SITE .DS. 'components' .DS. 'com_jm';
 
 JLoader::register( 'APIController', $front_end .DS. 'libraries' .DS. 'controller.php' );
 JLoader::register( 'ApiControllerAdmin',
