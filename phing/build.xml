@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Joomla API Component" default="build_package" basedir="code">
-	<property name="component.short" value="api" />
+<project name="Joomla jomMobile Component" default="build_package" basedir="code">
+	<property name="component.short" value="jm" />
 	<property name="component.name" value="com_${component.short}" />
 	<property name="component.admin_path" value="administrator/components/${component.name}" />
 	<property name="component.admin_languages" value="administrator/language/en-GB" />

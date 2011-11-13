@@ -21,7 +21,7 @@ if [ -z $CODE_PATH ]; then
 		PARENT=$(dirname $CWD)
 		CODE_PATH=$PARENT/code
 		if [ ! -d $CODE_PATH ]; then
-			echo "Could not find code path.  Please enter path to the code directory of the com_api repository:"
+			echo "Could not find code path.  Please enter path to the code directory of the com_jm repository:"
 			read CODE_PATH
 			if [ ! -d $CODE_PATH ]; then
 				echo "Path to code not found"
@@ -32,23 +32,23 @@ if [ -z $CODE_PATH ]; then
 fi
 
 # Delete old links and create new symlinks
-if [ -L $SITE_PATH/components/com_api ]; then
+if [ -L $SITE_PATH/components/com_jm ]; then
 	echo "Deleting old site component directory"
-	rm -rf $SITE_PATH/components/com_api
+	rm -rf $SITE_PATH/components/com_jm
 fi
 
-if [ -L $SITE_PATH/administrator/components/com_api ]; then
+if [ -L $SITE_PATH/administrator/components/com_jm ]; then
 	echo "Deleting old administrator component directory"
-	rm -rf $SITE_PATH/administrator/components/com_api
+	rm -rf $SITE_PATH/administrator/components/com_jm
 fi
 
-if [ -L $SITE_PATH/plugins/system/api ]; then
-	echo "Deleting old plugins system api directory"
-	rm -rf $SITE_PATH/plugins/system/api
+if [ -L $SITE_PATH/plugins/system/jm ]; then
+	echo "Deleting old plugins system jm directory"
+	rm -rf $SITE_PATH/plugins/system/jm
 fi
 
 # Delete old admin language files
-adminlangs=( com_api plg_system_api )
+adminlangs=( com_jm plg_system_jm )
 for lang in ${adminlangs[@]}
 	do
 	if [ -L $SITE_PATH/administrator/language/en-GB/en-GB.$lang.ini ]; then
@@ -62,7 +62,7 @@ for lang in ${adminlangs[@]}
 done
 
 # Delete old site language files
-sitelangs=( com_api )
+sitelangs=( com_jm )
 for lang in ${sitelangs[@]}
 	do
 	if [ -L $SITE_PATH/language/en-GB/en-GB.$lang.ini ]; then
@@ -71,11 +71,11 @@ for lang in ${sitelangs[@]}
 	fi
 done
 
-ln -s $CODE_PATH/components/com_api $SITE_PATH/components/
-ln -s $CODE_PATH/administrator/components/com_api $SITE_PATH/administrator/components/
+ln -s $CODE_PATH/components/com_jm $SITE_PATH/components/
+ln -s $CODE_PATH/administrator/components/com_jm $SITE_PATH/administrator/components/
 ln -s $CODE_PATH/language/en-GB/* $SITE_PATH/language/en-GB/
 ln -s $CODE_PATH/administrator/language/en-GB/* $SITE_PATH/administrator/language/en-GB/
-ln -s $CODE_PATH/plugins/system/api $SITE_PATH/plugins/system/
+ln -s $CODE_PATH/plugins/system/jm $SITE_PATH/plugins/system/
 
 echo "Links created successfully"
 exit

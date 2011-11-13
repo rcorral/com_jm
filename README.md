@@ -1,4 +1,4 @@
-Joomla! API - Generic RESTful API framework for Joomla! 1.7
+Joomla! jomMobile API - Generic RESTful API framework for Joomla! 1.7
 ================================
 
 What is it?
@@ -35,7 +35,7 @@ That should create a folder at phing/packages with an installable zip.
 
 	./scripts/symlink.sh
 	
-It will then ask you for the full path to your site root.  You will then need to run the SQL found in administrator/components/com_api/install.mysql.sql on your site database.
+It will then ask you for the full path to your site root.  You will then need to run the SQL found in administrator/components/com_jm/install.mysql.sql on your site database.
 
 **`Manual Install`**: This is the same concept as using the symlink, except you'll need to copy the component files to your site (or run your site from within the "code" folder) and then run install.mysql.sql.
 
