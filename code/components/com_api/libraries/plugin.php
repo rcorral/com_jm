@@ -61,7 +61,8 @@ class ApiPlugin extends JPlugin
 			throw new Exception( JText::_( 'COM_API_PLUGIN_CLASS_NOT_FOUND' ), 400 );
 		}
 
-		$handler =  new $class();
+		$dispatcher = JDispatcher::getInstance();
+		$handler =  new $class( $dispatcher, array( 'name' => $name, 'type' => 'api' ) );
 
 		$cparams = JComponentHelper::getParams( 'com_api' );
 		$params  = new JRegistry;
@@ -79,9 +80,9 @@ class ApiPlugin extends JPlugin
 		return self::$instances[$name];
 	}
 
-	public function __construct()
+	public function __construct( &$subject, $config )
 	{
-		
+		return parent::__construct( $subject, $config );
 	}
 
 	public function loadLanguage( $extension = '', $basePath = JPATH_ADMINISTRATOR )
@@ -98,9 +99,21 @@ class ApiPlugin extends JPlugin
 		parent::loadLanguage( $extension, $basePath );
 	}
 
-	//public function __call($name, $arguments) {
-	//	throw new Exception( JText::_('COM_API_PLUGIN_METHOD_UNREACHABLE'), 400 );
-	//}
+	public function register_api_plugin( $plugin = array() )
+	{
+		if ( !isset( $plugin['title'] ) ) {
+			return array();
+		}
+
+		$extension = JTable::getInstance('extension');
+		$extension->load(array( 'type' => 'plugin', 'element' => $this->_name, 'folder' => $this->_type ));
+		$manifest = json_decode( $extension->manifest_cache );
+
+		$plugin['version'] = $manifest->version;
+		$plugin['plugin'] = $this->_name;
+
+		return (object) $plugin;
+	}
 	
 	/**
 	 * Intelligently negotiates the content type based on explicit declaration or header (HTTP_ACCEPT) declaration. If neither is present, it will default to the component parameter default.
