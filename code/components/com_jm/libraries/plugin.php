@@ -99,7 +99,7 @@ class JMPlugin extends JPlugin
 		parent::loadLanguage( $extension, $basePath );
 	}
 
-	public function register_jm_plugin( $plugin = array() )
+	public function register_api_plugin( $plugin = array() )
 	{
 		if ( !isset( $plugin['title'] ) ) {
 			return array();
