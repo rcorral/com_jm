@@ -8,10 +8,10 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 */
 
-class ApiException extends JException
+class JMException extends JException
 {
 	public function toArray()
 	{
-		return ApiResource::getErrorResponse( $this->code, $this->message );
+		return JMResource::getErrorResponse( $this->code, $this->message );
 	}
 }

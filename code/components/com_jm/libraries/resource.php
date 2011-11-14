@@ -12,12 +12,12 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-abstract class ApiResource extends JObject
+abstract class JMResource extends JObject
 {
 	protected $plugin;
 	protected $allowed_methods = array( 'GET', 'POST', 'PUT', 'DELETE', 'HEAD' );
 
-	public function __construct( ApiPlugin $plugin )
+	public function __construct( JMPlugin $plugin )
 	{
 		$this->plugin = $plugin;
 	}
@@ -36,10 +36,10 @@ abstract class ApiResource extends JObject
 		}
 	}
 
-	final public function getInstance( $name, ApiPlugin $plugin, $prefix = null )
+	final public function getInstance( $name, JMPlugin $plugin, $prefix = null )
 	{
 		if ( is_null( $prefix ) ) {
-			$prefix = $plugin->get( 'component' ) . 'ApiResource';
+			$prefix = $plugin->get( 'component' ) . 'JMResource';
 		}
 
 		$type = preg_replace( '/[^A-Z0-9_\.-]/i', '', $name );

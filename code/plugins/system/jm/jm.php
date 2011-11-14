@@ -12,7 +12,7 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class plgSystemApi extends JPlugin
+class plgSystemJM extends JPlugin
 {	
 	function __construct( &$subject, $config )
 	{
@@ -36,7 +36,7 @@ $app = JFactory::getApplication();
 
 // Temporary hack until it is possible to get Joomla to add PUT, DELETE support
 if (  $app->isSite() && in_array( JRequest::getMethod(), array( 'PUT', 'DELETE' ) ) ) {
-	$putdata = plgSystemApi::getPutParameters(file_get_contents('php://input'));
+	$putdata = plgSystemJM::getPutParameters(file_get_contents('php://input'));
 	$putdata['format'] = 'raw';
 
 	if ( isset( $putdata['option'] ) && 'com_jm' == $putdata['option'] ) {

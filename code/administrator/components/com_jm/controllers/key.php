@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die('Restricted Access');
 
-class ApiControllerKey extends ApiControllerAdmin {
+class JMControllerKey extends JMControllerAdmin {
 	
 
 }

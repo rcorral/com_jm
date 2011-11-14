@@ -12,7 +12,7 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.plugin.plugin');
 
-class ApiPlugin extends JPlugin
+class JMPlugin extends JPlugin
 {
 	protected $user               = null;
 	public    $params             = null;
@@ -99,7 +99,7 @@ class ApiPlugin extends JPlugin
 		parent::loadLanguage( $extension, $basePath );
 	}
 
-	public function register_jm_plugin( $plugin = array() )
+	public function register_api_plugin( $plugin = array() )
 	{
 		if ( !isset( $plugin['title'] ) ) {
 			return array();
@@ -191,7 +191,7 @@ class ApiPlugin extends JPlugin
 			$resource_name = $this->get( 'resource' );
 		}
 
-		$resource_obj = ApiResource::getInstance( $resource_name, $this );
+		$resource_obj = JMResource::getInstance( $resource_name, $this );
 
 		if ( $resource_obj === false ) {
 			$this->checkInternally( $resource_name );
@@ -297,7 +297,7 @@ class ApiPlugin extends JPlugin
 	 */
 	final private function log() 
 	{
-		$table = JTable::getInstance( 'Log', 'ApiTable' );
+		$table = JTable::getInstance( 'Log', 'JMTable' );
 		$table->hash = JRequest::getVar( 'key', '' );
 		$table->ip_address = JRequest::getVar( 'REMOTE_ADDR', '', 'server' );
 		$table->time = time();

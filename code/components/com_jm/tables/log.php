@@ -11,7 +11,7 @@
 // no direct access
 defined('_JEXEC') or die;
 
-class ApiTableLog extends JTable
+class JMTableLog extends JTable
 {
 	
 	var $id			= null;

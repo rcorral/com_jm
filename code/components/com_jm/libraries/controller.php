@@ -16,7 +16,7 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport( 'joomla.application.component.controller' );
 
-class ApiController extends JController
+class JMController extends JController
 {	
 	/**
 	 * Base Controller Constructor

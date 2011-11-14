@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 jimport( 'joomla.application.component.model' );
 
-class ApiAuthenticationKey extends ApiAuthentication
+class JMAuthenticationKey extends JMAuthentication
 {
 	protected $auth_method     = null;
 	protected $domain_checking = null;

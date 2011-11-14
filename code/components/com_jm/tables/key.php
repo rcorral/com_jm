@@ -11,7 +11,7 @@
 // no direct access
 defined('_JEXEC') or die;
 
-class ApiTableKey extends JTable
+class JMTableKey extends JTable
 {
 	/**
 	 * @param	JDatabase	A database connector object

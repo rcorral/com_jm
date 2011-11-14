@@ -8,4 +8,4 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 */
 
-class ApiError extends JError {}
+class JMError extends JError {}

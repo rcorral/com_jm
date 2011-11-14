@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 */
 
-function ApiBuildRoute( &$query )
+function JMBuildRoute( &$query )
 {
 	$segments = array();
 
@@ -37,7 +37,7 @@ function ApiBuildRoute( &$query )
  * @param	array
  * @return	array
  */
-function ApiParseRoute( $segments )
+function JMParseRoute( $segments )
 {
 	$vars = array();
 

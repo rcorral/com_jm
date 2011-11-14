@@ -12,7 +12,7 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-class ApiControllerHttp extends ApiController
+class JMControllerHttp extends JMController
 {
 	public function __construct( $config = array() )
 	{
@@ -27,7 +27,7 @@ class ApiControllerHttp extends ApiController
 		$name = JRequest::getCmd( 'app' );
 
 		try {
-			echo ApiPlugin::getInstance( $name )->fetchResource();
+			echo JMPlugin::getInstance( $name )->fetchResource();
 		}  catch ( Exception $e ) {
 			echo $this->sendError( $e );
 		}
