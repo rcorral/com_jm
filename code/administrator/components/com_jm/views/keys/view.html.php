@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ApiViewKeys extends ApiView {
+class JMViewKeys extends JMView {
 	
 	public function display($tpl = null) {
 		

@@ -11,7 +11,7 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access'); 
 
-class ApiViewKeys extends ApiView {
+class JMViewKeys extends JMView {
 	
 	public $can_register = null;
 	
@@ -42,7 +42,7 @@ class ApiViewKeys extends ApiView {
 		
 		$user	= JFactory::getUser();
 	
-		$model	= JModel::getInstance('Key', 'ApiModel');
+		$model	= JModel::getInstance('Key', 'JMModel');
 		$model->setState('user_id', $user->get('id'));
 		$tokens	= $model->getList();
 		
@@ -67,7 +67,7 @@ class ApiViewKeys extends ApiView {
 		
 		$this->assignRef('return', $_SERVER['HTTP_REFERER']);
 		
-		$key	= JTable::getInstance('Key', 'ApiTable');
+		$key	= JTable::getInstance('Key', 'JMTable');
 		if ($id = JRequest::getInt('id', 0)) :
 			$key->load($id);
 			if ($key->user_id != JFactory::getUser()->get('id')) :

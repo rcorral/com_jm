@@ -15,7 +15,7 @@ jimport('joomla.application.component.controller');
 $front_end = JPATH_SITE .DS. 'components' .DS. 'com_jm';
 
 JLoader::register( 'JMController', $front_end .DS. 'libraries' .DS. 'controller.php' );
-JLoader::register( 'ApiControllerAdmin',
+JLoader::register( 'JMControllerAdmin',
 	$front_end .DS. 'libraries' .DS. 'admin' .DS. 'controller.php' );
 JLoader::register( 'JMModel', $front_end .DS. 'libraries' .DS. 'model.php' );
 JLoader::register( 'JMView', $front_end .DS. 'libraries' .DS. 'view.php' );
@@ -30,9 +30,9 @@ $c_path	= JPATH_COMPONENT_ADMINISTRATOR .DS. 'controllers' .DS. strtolower( $con
 
 if ( file_exists( $c_path ) ) {
 	include_once $c_path;
-	$c_name	= 'ApiController' . ucwords( $controller );
+	$c_name	= 'JMController' . ucwords( $controller );
 } else {
-	$c_name = 'ApiControllerAdmin';
+	$c_name = 'JMControllerAdmin';
 }
 
 $controller = new $c_name();

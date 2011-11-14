@@ -12,7 +12,7 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-class ApiControllerAdmin extends ApiController {
+class JMControllerAdmin extends JMController {
 	
 	public function __construct($config=array()) {
 		parent::__construct($config);
@@ -142,7 +142,7 @@ class ApiControllerAdmin extends ApiController {
 		
 		$table_class = $table_class ? $table_class : $this->getEntityName();
 		
-		$table 	= JTable::getInstance($table_class, 'ApiTable');
+		$table 	= JTable::getInstance($table_class, 'JMTable');
 		
 		if (!$table->publish($cids, $state)) :
 			$this->setError($table->getError());

@@ -12,7 +12,7 @@ defined('_JEXEC') or die( 'Restricted access' );
 
 jimport('joomla.application.component.controller');
 
-class ApiControllerKeys extends ApiController {
+class JMControllerKeys extends JMController {
 	
 	public function display() {
 		parent::display();
@@ -63,7 +63,7 @@ class ApiControllerKeys extends ApiController {
 			'enabled'	=> 1
 		);
 		
-		$model	= JModel::getInstance('Key', 'ApiModel');
+		$model	= JModel::getInstance('Key', 'JMModel');
 		
 		if ($model->save($data) === false) :
 			$this->setRedirect($_SERVER['HTTP_REFERER'], $model->getError(), 'error');
@@ -85,7 +85,7 @@ class ApiControllerKeys extends ApiController {
 		$user_id	= JFactory::getUser()->get('id');
 		$id 		= JRequest::getInt('id', 0);
 		
-		$table 	= JTable::getInstance('Key', 'ApiTable');
+		$table 	= JTable::getInstance('Key', 'JMTable');
 		$table->load($id);
 		
 		if ($user_id != $table->user_id) :

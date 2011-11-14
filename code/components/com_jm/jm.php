@@ -37,7 +37,7 @@ if ( $view ) {
 $c_path	= JPATH_COMPONENT .DS. 'controllers' .DS. strtolower( $controller ) . '.php';
 if ( file_exists( $c_path ) ) {
 	include_once $c_path;
-	$c_name	= 'ApiController' . ucwords( $controller );
+	$c_name	= 'JMController' . ucwords( $controller );
 } else {
 	JError::raiseError( 404, JText::_( 'COM_JM_CONTROLLER_NOT_FOUND' ) );
 }

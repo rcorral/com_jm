@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ApiViewKey extends ApiView {
+class JMViewKey extends JMView {
 	
 	public function display($tpl = null) {
 		$this->generateToolbar();

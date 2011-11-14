@@ -10,7 +10,7 @@
 
 defined('_JEXEC') or die;
 
-class ApiAuthenticationUser extends ApiAuthentication
+class JMAuthenticationUser extends JMAuthentication
 {
 	protected $auth_method     = null;
 	protected $domain_checking = null;

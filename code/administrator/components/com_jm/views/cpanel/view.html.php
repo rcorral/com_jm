@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.application.component.view');
 
-class ApiViewCpanel extends ApiView {
+class JMViewCpanel extends JMView {
 	
 	public function display($tpl = null) {
 		

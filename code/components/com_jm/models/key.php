@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 jimport('joomla.application.component.model');
 
-class ApiModelKey extends ApiModel
+class JMModelKey extends JMModel
 {	
 	public function __construct( $config = array() )
 	{
@@ -48,9 +48,9 @@ class ApiModelKey extends ApiModel
 	
 	public function save($data) {
 		$creator			= JFactory::getUser()->get('id');
-		$table 				= JTable::getInstance('Key', 'ApiTable');
+		$table 				= JTable::getInstance('Key', 'JMTable');
 		
-		$old	= JTable::getInstance('Key', 'ApiTable');
+		$old	= JTable::getInstance('Key', 'JMTable');
 		if ($data['id']) :
 			$old->load($data['id']);
 		endif;
@@ -87,7 +87,7 @@ class ApiModelKey extends ApiModel
 	
 	public function getData() {
 		
-		$table = JTable::getInstance('Key', 'ApiTable');
+		$table = JTable::getInstance('Key', 'JMTable');
 		if ($this->getState('id', 0))
 			$table->load($this->getState('id'));
 			
