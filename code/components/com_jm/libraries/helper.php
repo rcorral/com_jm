@@ -26,7 +26,7 @@ class JMHelper
 	function setSessionUser( $user_id = false )
 	{
 		if ( false === $user_id ) {
-			$user_id = JMHelper::getJMUserID();
+			$user_id = self::getJMUserID();
 		}
 
 		$session =& JFactory::getSession();
@@ -65,4 +65,43 @@ class JMHelper
 		return $result;
 	}
 
+	public function getField( $type, $attributes = array(), $field_value = '' )
+	{
+		static $types = null;
+
+		$defaults = array( 'name' => '', 'id' => '' );
+
+		if ( !$types ) {
+			jimport('joomla.form.helper');
+			$types = array();
+		}
+
+		if ( !in_array( $type, $types ) ) {
+			JFormHelper::loadFieldClass( $type );
+		}
+
+		try {
+			$attributes = array_merge( $defaults, $attributes );
+
+			$xml = new JXMLElement( '<?xml version="1.0" encoding="utf-8"?><field />' );
+			foreach ( $attributes as $key => $value ) {
+				if ( '_options' == $key ) {
+					foreach ( $value as $_opt_value ) {
+						$xml->addChild( 'option', $_opt_value->text )
+							->addAttribute( 'value', $_opt_value->value );
+					}
+					continue;
+				}
+				$xml->addAttribute( $key, $value );
+			}
+
+			$class = 'JFormField' . $type;
+			$field = new $class();
+			$field->setup( $xml, $field_value );
+
+			return $field;
+		} catch( Exception $e ) {
+			return false;
+		}
+	}
 }
