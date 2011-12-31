@@ -2,11 +2,11 @@
 <extension type="component" version="1.7" method="upgrade">
 	<name>com_jm</name>
 	<creationDate>September 2011</creationDate>
-	<author>Brian Edgerton</author>
-	<copyright>2011 Edge Web Works, LLC</copyright>
-	<authorEmail>brian@edgewebworks.com</authorEmail>
-	<authorUrl>edgewebworks.com</authorUrl>
-	<version>0.1.3</version>
+	<author>Rafael Corral</author>
+	<copyright>2012 Rafael Corral</copyright>
+	<authorEmail>contact@jommobile.com</authorEmail>
+	<authorUrl>http://jommobile.com</authorUrl>
+	<version>0.2</version>
 	<description>COM_JM_XML_DESCRIPTION</description>
 
 	<scriptfile>script.php</scriptfile>
