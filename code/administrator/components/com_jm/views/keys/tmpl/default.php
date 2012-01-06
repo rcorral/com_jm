@@ -16,11 +16,10 @@ defined('_JEXEC') or die( 'Restricted access' );
 			<th width="20">#</th>
 			<th width="20">&nbsp;</th>
 			<th width="30"><?php echo JHTML::_('grid.sort',   JText::_('COM_JM_ID'), 'k.id', $this->model->getState('filter.order_dir'), $this->model->getState('filter.order') ); ?></th>
-			<th><?php echo JHTML::_('grid.sort',   JText::_('COM_JM_DOMAIN'), 'k.domain', $this->model->getState('filter.order_dir'), $this->model->getState('filter.order') ); ?></th>
 			</th>
 			<th><?php echo JHTML::_('grid.sort',   JText::_('COM_JM_USER'), 'u.name', $this->model->getState('filter.order_dir'), $this->model->getState('filter.order') ); ?></th>
 			<th><?php echo JText::_('COM_JM_KEY');?></th>
-			<th><?php echo JHTML::_('grid.sort',   JText::_('COM_JM_PUBLISHED'), 'k.published', $this->model->getState('filter.order_dir'), $this->model->getState('filter.order') ); ?></th>
+			<th width="5%"><?php echo JHTML::_('grid.sort',   JText::_('COM_JM_PUBLISHED'), 'k.published', $this->model->getState('filter.order_dir'), $this->model->getState('filter.order') ); ?></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -34,14 +33,9 @@ defined('_JEXEC') or die( 'Restricted access' );
 			<td><?php echo $this->pagination->getRowOffset($i);?></td>
 			<td><?php echo $row->checked;?></td>
 			<td><?php echo $row->id; ?></td>
-			<td>
-				<a href="<?php echo $row->admin_link;?>">
-					<?php echo $row->domain; ?>
-				</a>
-			</td>
 			<td><?php echo $row->name." (".$row->username.")"; ?></td>
 			<td><?php echo $row->hash;?></td>
-			<td><?php echo $row->published_html; ?></td>
+			<td align="center"><?php echo $row->published_html; ?></td>
 		</tr>
 	<?php endfor; ?>
 	</tbody>
